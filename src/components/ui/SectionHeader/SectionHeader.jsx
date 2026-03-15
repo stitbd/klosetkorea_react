@@ -4,7 +4,7 @@ import './SectionHeader.scss';
 
 /**
  * Reusable section header used across all product sections.
- * Matches the Fimon design: bold left title + red "See All" badge on right.
+ * Matches the Elonis design: bold left title + red "See All" badge on right.
  */
 const SectionHeader = ({ title, viewAllLink = '#', viewAllText = 'See All' }) => (
   <div className="section-header d-flex align-items-center justify-content-between mb-3">

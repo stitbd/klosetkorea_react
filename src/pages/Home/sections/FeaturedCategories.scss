@@ -44,22 +44,10 @@
       grid-template-columns: repeat(4, 1fr);
     }
 
-    // Tall row cards are portrait (4:5 ratio)
-    &--tall .cat-card__img {
-      aspect-ratio: 4 / 5;
-
-      @media (min-width: 576px) {
-        aspect-ratio: 3 / 4;
-      }
-    }
-
-    // Normal row cards are landscape (4:3 ratio)
+    // All cards — same fixed height across both rows
+    &--tall .cat-card__img,
     &--normal .cat-card__img {
-      aspect-ratio: 4 / 3;
-
-      @media (min-width: 576px) {
-        aspect-ratio: 16 / 9;
-      }
+      aspect-ratio: 3 / 4;
     }
   }
 }
@@ -82,7 +70,7 @@
       opacity: 0.45;
     }
     .cat-card__label {
-      background: #FF6503;
+      background: var(--brand-red);
       color: #fff;
     }
   }

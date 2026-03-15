@@ -6,7 +6,7 @@ import { formatPrice, PLACEHOLDER_IMG } from '../../../utils';
 import './ProductCard.scss';
 
 /**
- * ProductCard — reusable card matching Fimon's design.
+ * ProductCard — reusable card matching Elonis's design.
  * Shows image, name, SKU, price, Add to Cart + Buy Now actions.
  */
 const ProductCard = ({ product }) => {

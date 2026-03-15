@@ -35,7 +35,6 @@
     width: auto;
     display: block;
     object-fit: contain;
-
     @media (min-width: 992px) { height: 55px; }
   }
 
@@ -47,7 +46,6 @@
     border-radius: 6px 0 0 6px !important;
     font-size: 0.9rem;
     padding: 0.5rem 0.85rem;
-
     &:focus { box-shadow: none; border-color: #FF6503; }
   }
 
@@ -60,7 +58,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     &:hover { background: #e05500 !important; }
   }
 
@@ -68,15 +65,14 @@
   &__phone-link {
     color: #1a1a1a;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     white-space: nowrap;
     transition: color 0.2s;
     gap: 4px;
-
     &:hover { color: #FF6503; }
   }
 
-  // ── Actions ────────────────────────────────────────────────
+  // ── Cart ───────────────────────────────────────────────────
   &__action {
     color: #1a1a1a;
     display: flex;
@@ -84,7 +80,6 @@
     gap: 0.3rem;
     text-decoration: none;
     transition: color 0.2s;
-
     &:hover { color: #FF6503; }
   }
 
@@ -144,7 +139,6 @@
     font-weight: 600;
     white-space: nowrap;
     transition: border-color 0.2s, color 0.2s;
-
     &:hover { border-color: #FF6503; color: #FF6503; }
   }
 
@@ -153,7 +147,6 @@
   &__login-chevron {
     transition: transform 0.25s ease;
     flex-shrink: 0;
-
     &--open { transform: rotate(180deg); }
   }
 
@@ -170,18 +163,15 @@
     letter-spacing: 0.03em;
     display: block;
     transition: color 0.2s;
-
-    &:hover,
-    &.active { color: #FF6503; }
+    &:hover, &.active { color: #FF6503; }
   }
 }
 
-// ─── Desktop Nav (click-based, full-width bars) ───────────────────
+// ─── Desktop Hover Nav ────────────────────────────────────────────
 .desktop-nav {
   background: #fff;
-  border-bottom: 1px solid #ebebeb;
 
-  // ── Row 1: Top-level ───────────────────────────────────────
+  // ── Row 1: Top-level items ─────────────────────────────────
   &__top-bar {
     background: #fff;
     border-bottom: 1px solid #ebebeb;
@@ -198,7 +188,6 @@
     border-right: 1px solid #ebebeb;
     flex-shrink: 0;
     transition: color 0.18s, background 0.18s;
-
     &:hover { color: #FF6503; background: #fff5ef; }
   }
 
@@ -215,6 +204,7 @@
     background: none;
     border: none;
     border-left: 1px solid #ebebeb;
+    text-decoration: none;
     cursor: pointer;
     white-space: nowrap;
     transition: color 0.18s, background 0.18s;
@@ -231,13 +221,12 @@
   &__chevron {
     display: inline-flex;
     align-items: center;
-    opacity: 0.5;
+    opacity: 0.45;
     transition: transform 0.22s ease, opacity 0.2s;
-
     &--open { transform: rotate(180deg); opacity: 1; }
   }
 
-  // ── Row 2: Sub-level ───────────────────────────────────────
+  // ── Row 2: Sub-level items ─────────────────────────────────
   &__sub-bar {
     background: #fafafa;
     border-bottom: 1px solid #e0e0e0;
@@ -247,7 +236,7 @@
   &__sub-item {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     padding: 0 1.1rem;
     min-height: 40px;
     font-size: 0.8rem;
@@ -255,7 +244,8 @@
     color: #333;
     background: none;
     border: none;
-    border-right: 1px solid #e8e8e8;
+    border-right: 1px solid #e4e4e4;
+    text-decoration: none;
     cursor: pointer;
     white-space: nowrap;
     transition: color 0.15s, background 0.15s;
@@ -268,23 +258,21 @@
       font-weight: 600;
     }
 
-    // Sub item that has children — subtle chevron indicator
-    &--has-child {
-      &::after {
-        content: '';
-        display: inline-block;
-        width: 5px;
-        height: 5px;
-        border-right: 1.5px solid currentColor;
-        border-bottom: 1.5px solid currentColor;
-        transform: rotate(-45deg);
-        margin-left: 4px;
-        opacity: 0.5;
-        transition: transform 0.2s, opacity 0.2s;
-      }
+    // Small right-arrow indicator for items with children
+    &--has-child::after {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(-45deg);
+      margin-left: 4px;
+      opacity: 0.45;
+      transition: transform 0.2s, opacity 0.2s;
     }
 
-    // When active AND has-child — arrow points down
+    // Active + has-child: arrow points down
     &--active.desktop-nav__sub-item--has-child {
       &::after {
         opacity: 1;
@@ -293,7 +281,7 @@
     }
   }
 
-  // ── Row 3: Child-level ─────────────────────────────────────
+  // ── Row 3: Child-level items ───────────────────────────────
   &__child-bar {
     background: #f0f0f0;
     border-bottom: 2px solid #FF6503;
@@ -312,7 +300,6 @@
     border-right: 1px solid #ddd;
     white-space: nowrap;
     transition: color 0.15s, background 0.15s;
-
     &:hover { color: #FF6503; background: #ffe8d6; }
   }
 }
@@ -368,9 +355,7 @@
     background: #fff;
     outline: none;
     transition: border-color 0.2s;
-
     &:focus { border-color: #FF6503; }
-
     .login-dropdown__input-wrap & { padding-right: 2.5rem; }
   }
 
@@ -387,7 +372,6 @@
     align-items: center;
     padding: 0;
     transition: color 0.2s;
-
     &:hover { color: #FF6503; }
   }
 
@@ -403,7 +387,6 @@
     cursor: pointer;
     margin-top: 0.5rem;
     transition: background 0.2s;
-
     &:hover { background: #e05500; }
   }
 
@@ -411,12 +394,10 @@
     text-align: right;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-
     a {
       font-size: 0.78rem;
       color: #2563eb;
       text-decoration: underline;
-
       &:hover { color: #1d4ed8; text-decoration: none; }
     }
   }
@@ -425,14 +406,11 @@
     font-size: 0.78rem;
     color: #1a1a1a;
     margin-bottom: 0.25rem;
-
     span { margin-right: 0.3rem; }
-
     a {
       font-weight: 700;
       color: #1a1a1a;
       text-decoration: none;
-
       &:hover { color: #FF6503; }
     }
   }
@@ -447,11 +425,10 @@
   }
 }
 
-// ─── Mobile accordion nav ─────────────────────────────────────────
+// ─── Mobile Accordion Nav ─────────────────────────────────────────
 .mobile-nav {
   &__item {
     border-bottom: 1px solid #f0f0f0;
-
     &--d1 { background: #fafafa; }
     &--d2 { background: #f4f4f4; }
   }
@@ -491,7 +468,6 @@
     display: flex;
     align-items: center;
     transition: transform 0.22s ease, color 0.2s;
-
     &--open { transform: rotate(180deg); color: #FF6503; }
   }
 

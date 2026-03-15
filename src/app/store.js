@@ -37,7 +37,7 @@ const useCartStore = create(
         return get().items.reduce((acc, i) => acc + i.price * i.quantity, 0);
       },
     }),
-    { name: 'fimon-cart' },
+    { name: 'elonis-cart' },
   ),
 );
 

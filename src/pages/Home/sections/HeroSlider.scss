@@ -1,34 +1,45 @@
 .hero-slider {
   width: 100%;
   overflow: hidden;
+  position: relative;  // needed for absolute nav buttons
 
   &__swiper {
     width: 100%;
     height: 320px;
 
-    @media (min-width: 576px)  { height: 380px; }
-    @media (min-width: 768px)  { height: 440px; }
-    @media (min-width: 992px)  { height: 520px; }
-    @media (min-width: 1200px) { height: 580px; }
+    @media (min-width: 576px)  { height: 400px; }
+    @media (min-width: 768px)  { height: 460px; }
+    @media (min-width: 992px)  { height: 540px; }
+    @media (min-width: 1200px) { height: 600px; }
   }
 
   &__slide {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 2rem 1.5rem;
     height: 100%;
-    gap: 1.5rem;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
 
-    @media (min-width: 768px) { padding: 3rem 4rem; }
-    @media (min-width: 992px) { padding: 4rem 5rem; }
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
   }
 
   &__content {
-    flex: 1;
-    max-width: 520px;
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+    padding: 2rem 1.5rem;
     animation: fadeInUp 0.6s ease both;
     animation-delay: 0.2s;
+
+    @media (min-width: 768px) { padding: 3rem 4rem; }
+    @media (min-width: 992px) { padding: 4rem 5rem; }
   }
 
   &__tag {
@@ -41,6 +52,7 @@
     padding: 0.2em 0.7em;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
+    background: rgba(255,255,255,0.1);
   }
 
   &__title {
@@ -48,28 +60,23 @@
     font-size: clamp(1.4rem, 3.5vw, 2.6rem);
     font-weight: 800;
     line-height: 1.2;
-    color: #1a1a1a;
+    color: #fff;
     margin-bottom: 0.35rem;
-
-    .hero-slider__slide--light & { color: #fff; }
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
   }
 
   &__title-en {
     font-size: clamp(0.9rem, 1.8vw, 1.1rem);
     font-weight: 600;
-    color: #555;
+    color: rgba(255,255,255,0.9);
     margin-bottom: 0.5rem;
-
-    .hero-slider__slide--light & { color: #ccc; }
   }
 
   &__subtitle {
     font-size: clamp(0.8rem, 1.4vw, 0.95rem);
-    color: #666;
+    color: rgba(255,255,255,0.8);
     margin-bottom: 1.5rem;
     line-height: 1.5;
-
-    .hero-slider__slide--light & { color: #bbb; }
   }
 
   &__cta {
@@ -91,49 +98,99 @@
       color: #fff;
     }
   }
+}
 
-  &__image-wrapper {
-    flex-shrink: 0;
-    width: 45%;
-    max-width: 480px;
-    display: none;
+// ── Custom nav buttons ─────────────────────────────────────────────
+.hero-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    @media (min-width: 576px) { display: block; }
+  // Size
+  width: 46px;
+  height: 46px;
+
+  // Style — semi-transparent dark pill
+  background: rgba(0, 0, 0, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.22s ease, border-color 0.22s ease,
+              transform 0.22s ease, box-shadow 0.22s ease;
+
+  // Hover — brand orange fill
+  &:hover {
+    background: #FF6503;
+    border-color: #FF6503;
+    box-shadow: 0 4px 18px rgba(255, 101, 3, 0.45);
+    transform: translateY(-50%) scale(1.08);
   }
 
-  &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 8px;
-    animation: fadeInUp 0.7s ease both;
-    animation-delay: 0.35s;
+  // Active press
+  &:active {
+    transform: translateY(-50%) scale(0.95);
   }
 
-  // Swiper arrow overrides
-  .swiper-button-prev,
-  .swiper-button-next {
-    width: 38px;
-    height: 38px;
-    background: rgba(255,255,255,0.85);
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,.15);
-    transition: background 0.2s;
+  // Position — left edge
+  &--prev {
+    left: 16px;
 
-    &:hover { background: #fff; }
-    &::after { font-size: 0.85rem !important; color: #1a1a1a !important; }
+    @media (min-width: 992px) { left: 24px; }
   }
 
-  .swiper-pagination-bullet {
+  // Position — right edge
+  &--next {
+    right: 16px;
+
+    @media (min-width: 992px) { right: 24px; }
+  }
+
+  svg { flex-shrink: 0; }
+}
+
+// ── Custom pagination dots ─────────────────────────────────────────
+.hero-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &__dot {
+    display: block;
     width: 8px;
     height: 8px;
-    background: rgba(255,255,255,.6);
-    opacity: 1;
-  }
-  .swiper-pagination-bullet-active {
-    background: #FF6503 !important;
-    width: 22px;
     border-radius: 4px;
-    transition: width 0.3s;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.3s ease, background 0.3s ease;
+
+    &--active {
+      width: 26px;
+      border-radius: 4px;
+      background: #FF6503;
+    }
+
+    &:hover:not(.hero-dots__dot--active) {
+      background: rgba(255, 255, 255, 0.85);
+    }
   }
+}
+
+// ── Fade-in animation ──────────────────────────────────────────────
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

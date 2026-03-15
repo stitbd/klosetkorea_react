@@ -102,14 +102,14 @@
     }
 
     &--buy {
-      background: var(--brand-red);
+      background: #FF6503;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
 
       &:hover {
-        background: var(--brand-red-dark);
+        background: #e45700;
         color: #fff;
       }
     }

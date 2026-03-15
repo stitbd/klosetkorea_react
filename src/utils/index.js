@@ -1,6 +1,6 @@
 // formatPrice.js
 export const formatPrice = (amount, currency = '৳') =>
-  `${currency}${Number(amount).toLocaleString('bn-BD')}`;
+  `${currency}${Number(amount).toLocaleString('en-US')}`;
 
 // constants.js
 export const PLACEHOLDER_IMG = 'https://placehold.co/400x400/f0f0f0/aaa?text=Elonis';

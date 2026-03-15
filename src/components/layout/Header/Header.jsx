@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Container, Offcanvas, Form, InputGroup, Button } from 'react-bootstrap';
 import useCartStore from '../../../app/store';
@@ -8,8 +8,8 @@ import './Header.scss';
 import logo from '../../../assets/images/logo.png';
 
 // ─── Icons ────────────────────────────────────────────────────────
-const HomeIcon     = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>);
-const ChevronDown  = () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>);
+const HomeIcon    = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>);
+const ChevronDown = () => (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>);
 
 // ─── Nav Data ─────────────────────────────────────────────────────
 export const NAV_LINKS = [
@@ -119,76 +119,88 @@ export const NAV_LINKS = [
   { label: 'GIFT VOUCHER', href: '/gift-voucher' },
 ];
 
-// ─── Desktop Mega Menu ────────────────────────────────────────────
-// Full-width click-based nav: click top item → sub-bar appears
-// click sub-item with children → child-bar appears below
+// ─── Desktop Hover Nav ────────────────────────────────────────────
+// Row 1: top items  →  hover shows Row 2 sub-bar
+// Row 2: sub items  →  hover shows Row 3 child-bar
 const DesktopNav = () => {
-  const [activeTop, setActiveTop]   = useState(null); // label of active top item
-  const [activeSub, setActiveSub]   = useState(null); // label of active sub item
-  const navRef                      = useRef(null);
-  const location                    = useLocation();
+  const [activeTop, setActiveTop] = useState(null);
+  const [activeSub, setActiveSub] = useState(null);
+  const navRef                    = useRef(null);
+  const leaveTimerRef             = useRef(null);
+  const location                  = useLocation();
 
-  // Close everything on route change
+  // Close all on route change
   useEffect(() => {
     setActiveTop(null);
     setActiveSub(null);
   }, [location]);
 
-  // Close on outside click
-  useEffect(() => {
-    const handler = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) {
-        setActiveTop(null);
-        setActiveSub(null);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+  // Debounced close — gives user time to move mouse to sub-bar / child-bar
+  const scheduleClose = useCallback(() => {
+    leaveTimerRef.current = setTimeout(() => {
+      setActiveTop(null);
+      setActiveSub(null);
+    }, 120);
   }, []);
+
+  const cancelClose = useCallback(() => {
+    if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
+  }, []);
+
+  useEffect(() => () => cancelClose(), [cancelClose]);
 
   const activeTopItem = NAV_LINKS.find((n) => n.label === activeTop);
   const activeSubItem = activeTopItem?.children?.find((c) => c.label === activeSub);
 
-  const handleTopClick = (item) => {
-    if (!item.children?.length) {
-      setActiveTop(null);
-      setActiveSub(null);
-      return;
-    }
-    if (activeTop === item.label) {
-      setActiveTop(null);
+  // When top item changes, reset sub selection
+  const handleTopEnter = (item) => {
+    cancelClose();
+    if (item.children?.length) {
+      setActiveTop(item.label);
       setActiveSub(null);
     } else {
-      setActiveTop(item.label);
+      setActiveTop(null);
       setActiveSub(null);
     }
   };
 
-  const handleSubClick = (item) => {
-    if (!item.children?.length) {
+  const handleSubEnter = (sub) => {
+    cancelClose();
+    if (sub.children?.length) {
+      setActiveSub(sub.label);
+    } else {
       setActiveSub(null);
-      return;
     }
-    setActiveSub(activeSub === item.label ? null : item.label);
+  };
+
+  const closeAll = () => {
+    setActiveTop(null);
+    setActiveSub(null);
   };
 
   return (
-    <div ref={navRef} className="desktop-nav">
-
-      {/* ── Row 1: Top-level items ── */}
+    <div
+      ref={navRef}
+      className="desktop-nav"
+      onMouseLeave={scheduleClose}
+      onMouseEnter={cancelClose}
+    >
+      {/* ── Row 1: Top-level ── */}
       <div className="desktop-nav__top-bar">
         <Container fluid="xl">
           <div className="d-flex align-items-center">
 
-            <Link to="/" className="desktop-nav__home" onClick={() => { setActiveTop(null); setActiveSub(null); }}>
+            <Link to="/" className="desktop-nav__home" onClick={closeAll}>
               <HomeIcon />
             </Link>
 
             {NAV_LINKS.map((item) => (
-              <button
+              <Link
                 key={item.href}
+                to={item.href}
                 className={`desktop-nav__top-item ${activeTop === item.label ? 'desktop-nav__top-item--active' : ''}`}
-                onClick={() => handleTopClick(item)}
+                onMouseEnter={() => handleTopEnter(item)}
+                onClick={closeAll}
               >
                 {item.label}
                 {item.children?.length > 0 && (
@@ -196,32 +208,36 @@ const DesktopNav = () => {
                     <ChevronDown />
                   </span>
                 )}
-              </button>
+              </Link>
             ))}
           </div>
         </Container>
       </div>
 
-      {/* ── Row 2: Sub-level items (shown when top item clicked) ── */}
+      {/* ── Row 2: Sub-level (visible when top item hovered) ── */}
       {activeTopItem?.children?.length > 0 && (
         <div className="desktop-nav__sub-bar">
           <Container fluid="xl">
             <div className="d-flex align-items-center flex-wrap">
               {activeTopItem.children.map((sub) => (
-                <button
+                <Link
                   key={sub.href}
-                  className={`desktop-nav__sub-item ${activeSub === sub.label ? 'desktop-nav__sub-item--active' : ''} ${sub.children?.length ? 'desktop-nav__sub-item--has-child' : ''}`}
-                  onClick={() => handleSubClick(sub)}
+                  to={sub.href}
+                  className={`desktop-nav__sub-item
+                    ${activeSub === sub.label ? 'desktop-nav__sub-item--active' : ''}
+                    ${sub.children?.length ? 'desktop-nav__sub-item--has-child' : ''}`}
+                  onMouseEnter={() => handleSubEnter(sub)}
+                  onClick={sub.children?.length ? (e) => e.preventDefault() : closeAll}
                 >
                   {sub.label}
-                </button>
+                </Link>
               ))}
             </div>
           </Container>
         </div>
       )}
 
-      {/* ── Row 3: Child-level items (shown when sub item clicked) ── */}
+      {/* ── Row 3: Child-level (visible when sub item hovered) ── */}
       {activeSubItem?.children?.length > 0 && (
         <div className="desktop-nav__child-bar">
           <Container fluid="xl">
@@ -231,7 +247,7 @@ const DesktopNav = () => {
                   key={child.href}
                   to={child.href}
                   className="desktop-nav__child-item"
-                  onClick={() => { setActiveTop(null); setActiveSub(null); }}
+                  onClick={closeAll}
                 >
                   {child.label}
                 </Link>
@@ -244,7 +260,7 @@ const DesktopNav = () => {
   );
 };
 
-// ─── Mobile accordion item ────────────────────────────────────────
+// ─── Mobile Accordion Item ────────────────────────────────────────
 const MobileNavItem = ({ item, depth = 0, onClose }) => {
   const [open, setOpen] = useState(false);
   const hasChildren     = item.children?.length > 0;
@@ -310,7 +326,7 @@ const LoginDropdown = ({ onClose }) => {
               value={loginData.password}
               onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
             />
-            <button type="button" className="login-dropdown__eye" onClick={() => setShowPass(!showPass)} aria-label="Toggle password">
+            <button type="button" className="login-dropdown__eye" onClick={() => setShowPass(!showPass)}>
               {showPass ? (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
@@ -412,8 +428,12 @@ const Header = () => {
 
             <Form onSubmit={handleSearch} className="site-header__search d-none d-lg-flex flex-grow-1">
               <InputGroup>
-                <Form.Control placeholder="Search products..." value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)} className="site-header__search-input" />
+                <Form.Control
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="site-header__search-input"
+                />
                 <Button type="submit" className="site-header__search-btn" aria-label="Search">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -422,20 +442,22 @@ const Header = () => {
               </InputGroup>
             </Form>
 
+            <div className="d-flex align-items-center gap-2">
+
+
             <Link to="tel:+8801886899103" className="site-header__phone-link d-none d-lg-flex align-items-center gap-1">
-              📞 <span className="fw-bold">{PHONE}</span>
+              📞<span className="fw-bold">{PHONE}</span>
             </Link>
-
-            <div className="d-flex align-items-center gap-3">
-
               <div className="site-header__login-wrap d-none d-lg-block" ref={loginRef}>
                 <button className="site-header__login-btn" onClick={() => setShowLoginDrop((v) => !v)} aria-label="Account">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                   </svg>
                   <span className="site-header__login-label">Login | Sign Up</span>
-                  <svg className={`site-header__login-chevron ${showLoginDrop ? 'site-header__login-chevron--open' : ''}`}
-                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <svg
+                    className={`site-header__login-chevron ${showLoginDrop ? 'site-header__login-chevron--open' : ''}`}
+                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                  >
                     <polyline points="6 9 12 15 18 9"/>
                   </svg>
                 </button>
@@ -455,7 +477,7 @@ const Header = () => {
         </Container>
       </div>
 
-      {/* ── Desktop mega nav (click-based, full-width bars) ── */}
+      {/* ── Desktop hover nav ── */}
       <div className="d-none d-lg-block">
         <DesktopNav />
       </div>
@@ -470,8 +492,11 @@ const Header = () => {
         <Offcanvas.Body>
           <Form onSubmit={handleSearch} className="mb-3">
             <InputGroup>
-              <Form.Control placeholder="Search products..." value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)} />
+              <Form.Control
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
               <Button type="submit" variant="danger">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -487,10 +512,7 @@ const Header = () => {
           </div>
 
           <div className="mt-4 pt-3 border-top">
-            <Link to="/login"    className="site-header__offcanvas-link d-block mb-2" onClick={() => setShowOffcanvas(false)}>Login</Link>
-            <Link to="/register" className="site-header__offcanvas-link d-block mb-2" onClick={() => setShowOffcanvas(false)}>Sign Up</Link>
-            <Link to="/account"  className="site-header__offcanvas-link d-block mb-2" onClick={() => setShowOffcanvas(false)}>My Account</Link>
-            <Link to="/wishlist" className="site-header__offcanvas-link d-block mb-2" onClick={() => setShowOffcanvas(false)}>Wishlist</Link>
+            <Link to="/login"    className="site-header__offcanvas-link d-block mb-2" onClick={() => setShowOffcanvas(false)}>Login | Sign Up</Link>
             <p className="fw-bold mt-3 mb-0" style={{ fontSize: '0.85rem' }}>📞 {PHONE}</p>
           </div>
         </Offcanvas.Body>

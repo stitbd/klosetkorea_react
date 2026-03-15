@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://api.fimon.com.bd/api/v1',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://api.elonis.com.bd/api/v1',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
