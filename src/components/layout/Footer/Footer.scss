@@ -1,0 +1,120 @@
+.site-footer {
+  background: #f5f5f5;
+  color: var(--brand-black);
+  margin-top: 3rem;
+
+  &__main {
+    border-bottom: 1px solid #ddd;
+  }
+
+  // ── Logo ─────────────────────────────────────────────────
+  &__logo-img {
+    height: 35px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+
+    @media (min-width: 992px) {
+      height: 55px;
+    }
+  }
+
+  // ── Social Media ─────────────────────────────────────────
+  &__social {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid #fff;
+    border-radius: 50%;
+    transition: border-color 0.2s, background 0.2s;
+
+    &:hover {
+      border-color: #FF6503;
+    }
+  }
+
+  &__social-img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  // ── Contact ──────────────────────────────────────────────
+  &__tagline {
+    font-size: 0.82rem;
+    color: #666;
+    margin-bottom: 0;
+  }
+
+  &__contact li {
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+    color: var(--brand-black);
+  }
+
+  // ── Headings ─────────────────────────────────────────────
+  &__heading {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--brand-black);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  // ── Links ────────────────────────────────────────────────
+  &__links li {
+    margin-bottom: 0.5rem;
+  }
+
+  &__link {
+    color: #555;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #FF6503;
+    }
+  }
+
+  // ── Payments ─────────────────────────────────────────────
+  &__payments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  &__payment-badge {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: var(--brand-black);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+  }
+
+  // ── Bottom bar ───────────────────────────────────────────
+  &__bottom {
+    padding: 1rem 0;
+    font-size: 0.8rem;
+    color: #666;
+    border-top: 1px solid #ddd;
+  }
+
+  &__brand {
+    color: #FF6503;
+    font-weight: 700;
+  }
+}
