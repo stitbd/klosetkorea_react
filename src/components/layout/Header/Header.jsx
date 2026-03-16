@@ -16,7 +16,7 @@ export const NAV_LINKS = [
   {
     label: 'MAN', href: '/categories/man',
     children: [
-      { label: 'Eid 26',         href: '/categories/eid-26' },
+      { label: 'Eid 26',         href: '/categories/eid-man' },
       { label: 'Ethnic Wear',    href: '/categories/ethnic-wear', children: [
         { label: 'Panjabi', href: '/categories/panjabi' },
         { label: 'Kabli',   href: '/categories/kabli'   },
@@ -67,7 +67,7 @@ export const NAV_LINKS = [
   {
     label: 'WOMAN', href: '/categories/woman',
     children: [
-      { label: 'Eid 26',          href: '/categories/eid-26-woman' },
+      { label: 'Eid 26',          href: '/categories/eid-woman' },
       { label: 'Western Wear',    href: '/categories/western-wear', children: [
         { label: 'Tops',          href: '/categories/tops'          },
         { label: 'T-Shirt',       href: '/categories/t-shirt-woman' },
