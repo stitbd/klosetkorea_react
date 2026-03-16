@@ -1,12 +1,19 @@
 import React from 'react';
-import HeroSlider           from './sections/HeroSlider';
-import NewArrivals          from './sections/NewArrivals';
-import FeaturedCategories   from './sections/FeaturedCategories';
+import HeroSlider         from './sections/HeroSlider';
+import TrustBar           from './sections/TrustBar';
+import FeaturedCategories from './sections/FeaturedCategories';
+import NewArrivals        from './sections/NewArrivals';
+import FeaturedSlider     from './sections/Featuredslider';
 import WalletSection      from './sections/WalletSection';
 import LuxuryShirtSection from './sections/LuxuryShirtSection';
 import BeltsSection       from './sections/BeltsSection';
 import CapSection         from './sections/CapSection';
-import TrustBar             from './sections/TrustBar';
+import {
+  useLatestProducts,
+  usePanjabiCollection,
+  useLongWallets,
+} from '../../features/products/hooks/useProducts';
+ 
 // import PanjabiCollection  from './sections/PanjabiCollection';
 // import LatestProducts     from './sections/LatestProducts';
 // import LongWalletSection  from './sections/LongWalletSection';
@@ -17,22 +24,29 @@ const HomePage = () => (
     <HeroSlider />
 
     {/* 2. New Arrivals */}
-    <NewArrivals />
+    {/* <NewArrivals /> */}
+
+ {/* 3. Panjabi Collection — Swiper slider after NewArrivals */}
+    <FeaturedSlider
+      title="NEW ARRIVALS"
+      viewAllLink="/categories/panjabi"
+      useHook={usePanjabiCollection}
+    />
 
     {/* Featured Categories */}
     <FeaturedCategories />
 
     {/* 5. Sneakers */}
-    <WalletSection />
+    {/* <WalletSection /> */}
 
     {/* 9. Sandal */}
-    <CapSection />
+    {/* <CapSection /> */}
 
     {/* 7. Apparel */}
-    <LuxuryShirtSection />
+    {/* <LuxuryShirtSection /> */}
 
     {/* 8. Accessories */}
-    <BeltsSection />
+    {/* <BeltsSection /> */}
 
     {/* 3. Eid al-Fitr 26 Panjabi Collection */}
     {/* <PanjabiCollection /> */}

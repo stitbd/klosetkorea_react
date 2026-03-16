@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import { productService } from '../services/productService';
 import { PLACEHOLDER_IMG } from '../../../utils';
 
+// ─── CORRECT: Static import — Vite resolves at build time ─────────
+// require() does NOT work in Vite (ES modules only).
+// Use static import instead. If the file is missing, Vite shows a
+// build warning but won't crash at runtime — the import resolves to
+// undefined which we handle below.
+import productImgAsset  from '../../../assets/images/products/product.jpg';
 import img01 from '../../../assets/images/products/01.jpg';
 import img02 from '../../../assets/images/products/02.jpg';
 import img03 from '../../../assets/images/products/03.jpg';
@@ -9,11 +15,10 @@ import img04 from '../../../assets/images/products/04.jpg';
 import img05 from '../../../assets/images/products/05.jpg';
 import img06 from '../../../assets/images/products/06.jpg';
 import img07 from '../../../assets/images/products/07.jpg';
-import productImgAsset  from '../../../assets/images/products/product.jpg';
 
 // ─── Image pool — all local product images ────────────────────────
 const IMG_POOL = [
-  img01, img02, img03, img04, img05, img06, img07, productImgAsset,
+  productImgAsset, img01, img02, img03, img04, img05, img06, img07,
 ].filter(Boolean);
 
 const localProductImg = IMG_POOL[0] || PLACEHOLDER_IMG;
@@ -29,7 +34,7 @@ const mockProducts = (category, count = 4) =>
       id:            `${category}-${i + 1}`,
       name:          `Elonis ${category} #${i + 1}`,
       slug:          `elonis-${category.toLowerCase().replace(/\s+/g, '-')}-${i + 1}`,
-      sku:           `EL-00${100 + i}`,
+      sku:           `MU-00${100 + i}`,
       price,
       originalPrice: orig,
       image:         getPoolImg(i),
@@ -108,11 +113,11 @@ export const useCategoryProducts = (category = 'Products', count = 28) => {
 };
 
 // ─── Named hooks — one per homepage section ───────────────────────
-export const useNewArrivals       = () => useProductSection(productService.getNewArrivals,       'Ravenna Leather', 4);
-export const useLatestProducts    = () => useProductSection(productService.getLatestProducts,    'Royal Signature', 4);
-export const usePanjabiCollection = () => useProductSection(productService.getPanjabiCollection, 'Panjabi',         4);
-export const useWallets           = () => useProductSection(productService.getWallets,           'Wallet',          4);
-export const useLongWallets       = () => useProductSection(productService.getLongWallets,       'Long Wallet',     3);
-export const useLuxuryShirts      = () => useProductSection(productService.getLuxuryShirts,      'Luxury Shirt',    4);
-export const useBelts             = () => useProductSection(productService.getBelts,             'Belt',            4);
-export const useCaps              = () => useProductSection(productService.getCaps,              'Cap',             4);
+export const useNewArrivals       = () => useProductSection(productService.getNewArrivals,       'Ravenna Leather', 20);
+export const useLatestProducts    = () => useProductSection(productService.getLatestProducts,    'Royal Signature', 20);
+export const usePanjabiCollection = () => useProductSection(productService.getPanjabiCollection, 'Panjabi',         20);
+export const useWallets           = () => useProductSection(productService.getWallets,           'Wallet',          20);
+export const useLongWallets       = () => useProductSection(productService.getLongWallets,       'Long Wallet',     20);
+export const useLuxuryShirts      = () => useProductSection(productService.getLuxuryShirts,      'Luxury Shirt',    20);
+export const useBelts             = () => useProductSection(productService.getBelts,             'Belt',            20);
+export const useCaps              = () => useProductSection(productService.getCaps,              'Cap',             20);

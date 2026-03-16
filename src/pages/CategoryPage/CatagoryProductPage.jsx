@@ -45,20 +45,6 @@ const CATEGORY_TITLES = {
   'sunglass-woman':     'SUNGLASS - WOMAN',
   'eid-26':             'EID 26',
   'eid-26-woman':       'EID 26 - WOMAN',
-  'new-arrivals':       'NEW ARRIVALS',
-  'ramadan-offer':      'RAMADAN OFFER',
-  'cricket-wear':       'CRICKET WEAR',
-  'long-wallet':        'LONG WALLET',
-  'luxury-shirt':       'LUXURY SHIRT',
-  't-shirt-woman':      'T-SHIRT',
-  'casual-shirt-woman': 'CASUAL SHIRT',
-  'hoodie-woman':       'HOODIE',
-  'jacket-woman':       'JACKET',
-  'sweater-woman':      'SWEATER',
-  'jeans-woman':        'JEANS',
-  'joggers-woman':      'JOGGERS',
-  'winterwear-woman':   'WINTERWEAR',
-  'bottoms-woman':      'BOTTOMS',
 };
 
 const slugToTitle = (slug) =>

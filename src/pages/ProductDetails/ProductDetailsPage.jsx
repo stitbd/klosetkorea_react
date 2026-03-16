@@ -54,7 +54,7 @@ const ProductDetailsPage = () => {
         setProduct({
           id: slug, name: 'Elonis Royal Signature – Eid Edition | Dark Chocolate',
           slug, price: 2990, originalPrice: 3500,
-          image: localProductImg, sku: 'SKU-0002856',
+          image: localProductImg, sku: 'EL-0002856',
           description: 'প্রিমিয়াম Luxury Katan ফ্যারিকে তৈরি এই Eid Edition পাঞ্জাবি আপনার মুকে দেবে রাজকীয় ও এলিগ্যান্ট উপস্থিতি।',
           brand: 'Elonis', inStock: true, badge: 'New', category: 'Panjabi',
           sizes: ['M', 'L', 'XL'],
