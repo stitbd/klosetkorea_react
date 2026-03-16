@@ -11,9 +11,9 @@ const FEATURES = [
 const TrustBar = () => (
   <div className="trust-bar">
     <Container fluid="xl">
-      <Row className="gy-3">
+      <Row className="gy-3 justify-content-center">
         {FEATURES.map((f) => (
-          <Col key={f.title} xs={12} sm={4}>
+          <Col key={f.title} xs={12} sm={4} md={3}>
             <div className="trust-bar__item">
               <span className="trust-bar__icon">{f.icon}</span>
               <div>

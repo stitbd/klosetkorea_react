@@ -14,128 +14,130 @@ const ChevronDown = () => (<svg width="12" height="12" viewBox="0 0 24 24" fill=
 // ─── Nav Data ─────────────────────────────────────────────────────
 export const NAV_LINKS = [
   {
-    label: 'MAN', href: '/man',
+    label: 'MAN', href: '/categories/man',
     children: [
-      { label: 'Eid 26',         href: '/product-list/68' },
-      { label: 'Ethnic Wear',    href: '/product-list/18', children: [
-        { label: 'Panjabi', href: '/products/20' },
-        { label: 'Kabli',   href: '/products/21' },
-        { label: 'Vest',    href: '/products/22' },
+      { label: 'Eid 26',         href: '/categories/eid-26' },
+      { label: 'Ethnic Wear',    href: '/categories/ethnic-wear', children: [
+        { label: 'Panjabi', href: '/categories/panjabi' },
+        { label: 'Kabli',   href: '/categories/kabli'   },
+        { label: 'Vest',    href: '/categories/vest'    },
       ]},
-      { label: 'T-Shirt',        href: '/product-list/19' },
-      { label: 'Shirt',          href: '/product-list/4', children: [
-        { label: 'Formal',      href: '/products/1'  },
-        { label: 'Casual',      href: '/products/2'  },
-        { label: 'Half Sleeve', href: '/products/72' },
-        { label: 'Full Sleeve', href: '/products/76' },
-        { label: 'Printed',     href: '/products/73' },
-        { label: 'Solid',       href: '/products/74' },
-        { label: 'Club',        href: '/products/75' },
+      { label: 'T-Shirt',        href: '/categories/t-shirt' },
+      { label: 'Shirt',          href: '/categories/shirt', children: [
+        { label: 'Formal',      href: '/categories/formal-shirt'       },
+        { label: 'Casual',      href: '/categories/casual-shirt'       },
+        { label: 'Half Sleeve', href: '/categories/half-sleeve-shirt'  },
+        { label: 'Full Sleeve', href: '/categories/full-sleeve-shirt'  },
+        { label: 'Printed',     href: '/categories/printed-shirt'      },
+        { label: 'Solid',       href: '/categories/solid-shirt'        },
+        { label: 'Club',        href: '/categories/club-shirt'         },
       ]},
-      { label: 'Polo',           href: '/product-list/3' },
-      { label: 'Bottom',         href: '/product-list/5', children: [
-        { label: 'Jeans',   href: '/products/7'  },
-        { label: 'Chinos',  href: '/products/4'  },
-        { label: 'Formal',  href: '/products/3'  },
-        { label: 'Joggers', href: '/products/5'  },
-        { label: 'Cargo',   href: '/products/71' },
-        { label: 'Shorts',  href: '/products/6'  },
-        { label: 'Pajama',  href: '/products/44' },
+      { label: 'Polo',           href: '/categories/polo' },
+      { label: 'Bottom',         href: '/categories/bottom', children: [
+        { label: 'Jeans',   href: '/categories/jeans'   },
+        { label: 'Chinos',  href: '/categories/chinos'  },
+        { label: 'Formal',  href: '/categories/formal-pant'  },
+        { label: 'Joggers', href: '/categories/joggers' },
+        { label: 'Cargo',   href: '/categories/cargo'   },
+        { label: 'Shorts',  href: '/categories/shorts'  },
+        { label: 'Pajama',  href: '/categories/pajama'  },
       ]},
-      { label: 'Suits & Blazer', href: '/product-list/72' },
-      { label: 'Winterwear',     href: '/product-list/70', children: [
-        { label: 'Winter Shirt', href: '/products/85' },
-        { label: 'Jacket',       href: '/products/61' },
-        { label: 'Sweater',      href: '/products/62' },
-        { label: 'Sweatshirt',   href: '/products/63' },
-        { label: 'Hoodie',       href: '/products/64' },
+      { label: 'Suits & Blazer', href: '/categories/suits-blazer' },
+      { label: 'Winterwear',     href: '/categories/winterwear', children: [
+        { label: 'Winter Shirt', href: '/categories/winter-shirt' },
+        { label: 'Jacket',       href: '/categories/jacket'       },
+        { label: 'Sweater',      href: '/categories/sweater'      },
+        { label: 'Sweatshirt',   href: '/categories/sweatshirt'   },
+        { label: 'Hoodie',       href: '/categories/hoodie'       },
       ]},
-      { label: 'Underwear',      href: '/product-list/57' },
-      { label: 'Footwear',       href: '/product-list/6', children: [
-        { label: 'Sneakers', href: '/products/32' },
-        { label: 'Sandal',   href: '/products/30' },
-        { label: 'Boot',     href: '/products/33' },
+      { label: 'Underwear',      href: '/categories/underwear' },
+      { label: 'Footwear',       href: '/categories/footwear', children: [
+        { label: 'Sneakers', href: '/categories/sneakers' },
+        { label: 'Sandal',   href: '/categories/sandal'   },
+        { label: 'Boot',     href: '/categories/boot'     },
       ]},
-      { label: 'Accessories',    href: '/product-list/42', children: [
-        { label: 'Mask',  href: '/products/27' },
-        { label: 'Socks', href: '/products/28' },
-        { label: 'Tie',   href: '/products/41' },
-        { label: 'Belt',  href: '/products/52' },
+      { label: 'Accessories',    href: '/categories/accessories', children: [
+        { label: 'Mask',  href: '/categories/mask'  },
+        { label: 'Socks', href: '/categories/socks' },
+        { label: 'Tie',   href: '/categories/tie'   },
+        { label: 'Belt',  href: '/categories/belt'  },
       ]},
     ],
   },
   {
-    label: 'WOMAN', href: '/woman',
+    label: 'WOMAN', href: '/categories/woman',
     children: [
-      { label: 'Eid 26',          href: '/product-list/69' },
-      { label: 'Western Wear',    href: '/product-list/8', children: [
-        { label: 'Tops',          href: '/products/77' },
-        { label: 'T-Shirt',       href: '/products/78' },
-        { label: 'Summer Blazer', href: '/products/84' },
-        { label: 'Casual Shirt',  href: '/products/9'  },
-        { label: 'Long Shirt',    href: '/products/10' },
+      { label: 'Eid 26',          href: '/categories/eid-26-woman' },
+      { label: 'Western Wear',    href: '/categories/western-wear', children: [
+        { label: 'Tops',          href: '/categories/tops'          },
+        { label: 'T-Shirt',       href: '/categories/t-shirt-woman' },
+        { label: 'Summer Blazer', href: '/categories/summer-blazer' },
+        { label: 'Casual Shirt',  href: '/categories/casual-shirt-woman' },
+        { label: 'Long Shirt',    href: '/categories/long-shirt'    },
       ]},
-      { label: 'Traditional Wear',href: '/product-list/9', children: [
-        { label: 'Kameez', href: '/products/79' },
-        { label: 'Kurti',  href: '/products/80' },
-        { label: 'Kaftan', href: '/products/81' },
+      { label: 'Traditional Wear',href: '/categories/traditional-wear', children: [
+        { label: 'Kameez', href: '/categories/kameez' },
+        { label: 'Kurti',  href: '/categories/kurti'  },
+        { label: 'Kaftan', href: '/categories/kaftan' },
       ]},
-      { label: 'Dress',           href: '/product-list/34' },
-      { label: 'Co-ord Sets',     href: '/product-list/71' },
-      { label: 'Winterwear',      href: '/product-list/39', children: [
-        { label: 'Hoodie',   href: '/products/86' },
-        { label: 'Jacket',   href: '/products/34' },
-        { label: 'Overcoat', href: '/products/36' },
-        { label: 'Poncho',   href: '/products/53' },
-        { label: 'Sweater',  href: '/products/55' },
+      { label: 'Dress',           href: '/categories/dress' },
+      { label: 'Co-ord Sets',     href: '/categories/co-ord-sets' },
+      { label: 'Winterwear',      href: '/categories/winterwear-woman', children: [
+        { label: 'Hoodie',   href: '/categories/hoodie-woman'   },
+        { label: 'Jacket',   href: '/categories/jacket-woman'   },
+        { label: 'Overcoat', href: '/categories/overcoat'       },
+        { label: 'Poncho',   href: '/categories/poncho'         },
+        { label: 'Sweater',  href: '/categories/sweater-woman'  },
       ]},
-      { label: 'Shrug',           href: '/product-list/13' },
-      { label: 'Bottoms',         href: '/product-list/11', children: [
-        { label: 'Jeans',          href: '/products/11' },
-        { label: 'Skirts/Palazzo', href: '/products/14' },
-        { label: 'Pants',          href: '/products/15' },
-        { label: 'Joggers',        href: '/products/29' },
+      { label: 'Shrug',           href: '/categories/shrug' },
+      { label: 'Bottoms',         href: '/categories/bottoms-woman', children: [
+        { label: 'Jeans',          href: '/categories/jeans-woman'  },
+        { label: 'Skirts/Palazzo', href: '/categories/skirts'       },
+        { label: 'Pants',          href: '/categories/pants'        },
+        { label: 'Joggers',        href: '/categories/joggers-woman'},
       ]},
     ],
   },
   {
-    label: 'LIFESTYLE', href: '/lifestyle',
+    label: 'LIFESTYLE', href: '/categories/lifestyle',
     children: [
-      { label: 'Wallet/Money Clip',        href: '/product-list/22' },
-      { label: 'Perfume',                  href: '/product-list/23', children: [
-        { label: 'Man', href: '/products/65' },
+      { label: 'Wallet/Money Clip',        href: '/categories/wallet' },
+      { label: 'Perfume',                  href: '/categories/perfume', children: [
+        { label: 'Man', href: '/categories/perfume-man' },
       ]},
-      { label: 'Privilege Card/Gold Card', href: '/product-list/27' },
-      { label: 'Bag',                      href: '/product-list/29', children: [
-        { label: 'Man',   href: '/products/67' },
-        { label: 'Woman', href: '/products/68' },
+      { label: 'Privilege Card/Gold Card', href: '/categories/privilege-card' },
+      { label: 'Bag',                      href: '/categories/bag', children: [
+        { label: 'Man',   href: '/categories/bag-man'   },
+        { label: 'Woman', href: '/categories/bag-woman' },
       ]},
-      { label: 'Sunglass',                 href: '/product-list/59', children: [
-        { label: 'Man',   href: '/products/69' },
-        { label: 'Woman', href: '/products/70' },
+      { label: 'Sunglass',                 href: '/categories/sunglass', children: [
+        { label: 'Man',   href: '/categories/sunglass-man'   },
+        { label: 'Woman', href: '/categories/sunglass-woman' },
       ]},
     ],
   },
-  { label: 'GIFT VOUCHER', href: '/gift-voucher' },
-];
+  { label: 'GIFT VOUCHER', href: '/categories/gift-voucher' },
+];;
 
 // ─── Desktop Hover Nav ────────────────────────────────────────────
-// Row 1: top items  →  hover shows Row 2 sub-bar
-// Row 2: sub items  →  hover shows Row 3 child-bar
+// Sub-bars use position:fixed with measured top so they FLOAT over
+// the page — the hero slider never shifts down.
 const DesktopNav = () => {
-  const [activeTop, setActiveTop] = useState(null);
-  const [activeSub, setActiveSub] = useState(null);
-  const navRef                    = useRef(null);
-  const leaveTimerRef             = useRef(null);
-  const location                  = useLocation();
+  const [activeTop, setActiveTop]   = useState(null);
+  const [activeSub, setActiveSub]   = useState(null);
+  const [subBarTop,  setSubBarTop]  = useState(0);
+  const [childBarTop,setChildBarTop]= useState(0);
+  const navRef        = useRef(null);
+  const topBarRef     = useRef(null);
+  const subBarRef     = useRef(null);
+  const leaveTimerRef = useRef(null);
+  const location      = useLocation();
 
-  // Close all on route change
   useEffect(() => {
     setActiveTop(null);
     setActiveSub(null);
   }, [location]);
 
-  // Debounced close — gives user time to move mouse to sub-bar / child-bar
   const scheduleClose = useCallback(() => {
     leaveTimerRef.current = setTimeout(() => {
       setActiveTop(null);
@@ -149,12 +151,42 @@ const DesktopNav = () => {
 
   useEffect(() => () => cancelClose(), [cancelClose]);
 
+  // Measure top-bar bottom → that is where sub-bar should appear
+  const measureSubBarTop = useCallback(() => {
+    if (topBarRef.current) {
+      const rect = topBarRef.current.getBoundingClientRect();
+      setSubBarTop(rect.bottom);
+    }
+  }, []);
+
+  // Re-measure on scroll / resize (header is sticky so rect changes)
+  useEffect(() => {
+    measureSubBarTop();
+    window.addEventListener('scroll', measureSubBarTop, { passive: true });
+    window.addEventListener('resize', measureSubBarTop);
+    return () => {
+      window.removeEventListener('scroll', measureSubBarTop);
+      window.removeEventListener('resize', measureSubBarTop);
+    };
+  }, [measureSubBarTop]);
+
   const activeTopItem = NAV_LINKS.find((n) => n.label === activeTop);
   const activeSubItem = activeTopItem?.children?.find((c) => c.label === activeSub);
 
-  // When top item changes, reset sub selection
+  // Child-bar top = measured from sub-bar bottom after it renders
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      if (subBarRef.current) {
+        const rect = subBarRef.current.getBoundingClientRect();
+        setChildBarTop(rect.bottom);
+      }
+    });
+    return () => cancelAnimationFrame(id);
+  }, [activeSub, activeTop, subBarTop]);
+
   const handleTopEnter = (item) => {
     cancelClose();
+    measureSubBarTop();
     if (item.children?.length) {
       setActiveTop(item.label);
       setActiveSub(null);
@@ -185,15 +217,13 @@ const DesktopNav = () => {
       onMouseLeave={scheduleClose}
       onMouseEnter={cancelClose}
     >
-      {/* ── Row 1: Top-level ── */}
-      <div className="desktop-nav__top-bar">
+      {/* ── Row 1: Top-level — stays in normal flow ── */}
+      <div className="desktop-nav__top-bar" ref={topBarRef}>
         <Container fluid="xl">
           <div className="d-flex align-items-center">
-
             <Link to="/" className="desktop-nav__home" onClick={closeAll}>
               <HomeIcon />
             </Link>
-
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.href}
@@ -214,9 +244,14 @@ const DesktopNav = () => {
         </Container>
       </div>
 
-      {/* ── Row 2: Sub-level (visible when top item hovered) ── */}
+      {/* ── Row 2: Sub-bar — FIXED, floats over page content ── */}
       {activeTopItem?.children?.length > 0 && (
-        <div className="desktop-nav__sub-bar">
+        <div
+          ref={subBarRef}
+          className="desktop-nav__sub-bar"
+          style={{ top: subBarTop }}
+          onMouseEnter={cancelClose}
+        >
           <Container fluid="xl">
             <div className="d-flex align-items-center flex-wrap">
               {activeTopItem.children.map((sub) => (
@@ -237,9 +272,13 @@ const DesktopNav = () => {
         </div>
       )}
 
-      {/* ── Row 3: Child-level (visible when sub item hovered) ── */}
+      {/* ── Row 3: Child-bar — FIXED, floats below sub-bar ── */}
       {activeSubItem?.children?.length > 0 && (
-        <div className="desktop-nav__child-bar">
+        <div
+          className="desktop-nav__child-bar"
+          style={{ top: childBarTop }}
+          onMouseEnter={cancelClose}
+        >
           <Container fluid="xl">
             <div className="d-flex align-items-center flex-wrap">
               {activeSubItem.children.map((child) => (
@@ -308,14 +347,12 @@ const LoginDropdown = ({ onClose }) => {
   return (
     <div className="login-dropdown">
       <h3 className="login-dropdown__title">Login to My Account</h3>
-
       <form onSubmit={handleLogin}>
         <div className="login-dropdown__field">
           <label className="login-dropdown__label">Mobile Number</label>
           <input type="text" placeholder="Number or User name" className="login-dropdown__input"
             value={loginData.mobile} onChange={(e) => setLoginData({ ...loginData, mobile: e.target.value })} />
         </div>
-
         <div className="login-dropdown__field">
           <label className="login-dropdown__label">Password</label>
           <div className="login-dropdown__input-wrap">
@@ -342,13 +379,11 @@ const LoginDropdown = ({ onClose }) => {
             </button>
           </div>
         </div>
-
         <button type="submit" className="login-dropdown__btn">Login</button>
         <div className="login-dropdown__forgot">
           <Link to="/forgot-password" onClick={onClose}>Forgot Password?</Link>
         </div>
       </form>
-
       <div className="login-dropdown__meta">
         <span>New customer?</span>
         <Link to="/register" onClick={onClose}>Create your account</Link>
@@ -357,7 +392,6 @@ const LoginDropdown = ({ onClose }) => {
         <span>Lost password?</span>
         <Link to="/forgot-password" onClick={onClose}>Reset account</Link>
       </div>
-
       <form onSubmit={handleTrack} className="login-dropdown__track">
         <label className="login-dropdown__label">Track Your Order</label>
         <input type="text" placeholder="Order ID or phone number" className="login-dropdown__input"
@@ -428,12 +462,8 @@ const Header = () => {
 
             <Form onSubmit={handleSearch} className="site-header__search d-none d-lg-flex flex-grow-1">
               <InputGroup>
-                <Form.Control
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="site-header__search-input"
-                />
+                <Form.Control placeholder="Search products..." value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)} className="site-header__search-input" />
                 <Button type="submit" className="site-header__search-btn" aria-label="Search">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -443,21 +473,18 @@ const Header = () => {
             </Form>
 
             <div className="d-flex align-items-center gap-2">
+              <Link to="tel:+8801886899103" className="site-header__phone-link d-none d-lg-flex align-items-center gap-1">
+                📞<span className="fw-bold">{PHONE}</span>
+              </Link>
 
-
-            <Link to="tel:+8801886899103" className="site-header__phone-link d-none d-lg-flex align-items-center gap-1">
-              📞<span className="fw-bold">{PHONE}</span>
-            </Link>
               <div className="site-header__login-wrap d-none d-lg-block" ref={loginRef}>
                 <button className="site-header__login-btn" onClick={() => setShowLoginDrop((v) => !v)} aria-label="Account">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                   </svg>
                   <span className="site-header__login-label">Login | Sign Up</span>
-                  <svg
-                    className={`site-header__login-chevron ${showLoginDrop ? 'site-header__login-chevron--open' : ''}`}
-                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-                  >
+                  <svg className={`site-header__login-chevron ${showLoginDrop ? 'site-header__login-chevron--open' : ''}`}
+                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <polyline points="6 9 12 15 18 9"/>
                   </svg>
                 </button>
@@ -492,11 +519,8 @@ const Header = () => {
         <Offcanvas.Body>
           <Form onSubmit={handleSearch} className="mb-3">
             <InputGroup>
-              <Form.Control
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+              <Form.Control placeholder="Search products..." value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} />
               <Button type="submit" variant="danger">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -504,15 +528,13 @@ const Header = () => {
               </Button>
             </InputGroup>
           </Form>
-
           <div className="mobile-nav">
             {NAV_LINKS.map((link) => (
               <MobileNavItem key={link.href} item={link} onClose={() => setShowOffcanvas(false)} />
             ))}
           </div>
-
           <div className="mt-4 pt-3 border-top">
-            <Link to="/login"    className="site-header__offcanvas-link d-block mb-2" onClick={() => setShowOffcanvas(false)}>Login | Sign Up</Link>
+            <Link to="/login" className="site-header__offcanvas-link d-block mb-2" onClick={() => setShowOffcanvas(false)}>Login | Sign Up</Link>
             <p className="fw-bold mt-3 mb-0" style={{ fontSize: '0.85rem' }}>📞 {PHONE}</p>
           </div>
         </Offcanvas.Body>

@@ -226,10 +226,15 @@
     &--open { transform: rotate(180deg); opacity: 1; }
   }
 
-  // ── Row 2: Sub-level items ─────────────────────────────────
+  // ── Row 2: Sub-bar — FIXED, floats over page content ──────
   &__sub-bar {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
     background: #fafafa;
     border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
     animation: navBarIn 0.18s ease both;
   }
 
@@ -281,10 +286,15 @@
     }
   }
 
-  // ── Row 3: Child-level items ───────────────────────────────
+  // ── Row 3: Child-bar — FIXED, floats below sub-bar ─────────
   &__child-bar {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 9998;
     background: #f0f0f0;
     border-bottom: 2px solid #FF6503;
+    box-shadow: 0 4px 12px rgba(0,0,0,.07);
     animation: navBarIn 0.16s ease both;
   }
 

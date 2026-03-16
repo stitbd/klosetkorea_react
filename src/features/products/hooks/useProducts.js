@@ -2,15 +2,25 @@ import { useState, useEffect } from 'react';
 import { productService } from '../services/productService';
 import { PLACEHOLDER_IMG } from '../../../utils';
 
-// ─── CORRECT: Static import — Vite resolves at build time ─────────
-// require() does NOT work in Vite (ES modules only).
-// Use static import instead. If the file is missing, Vite shows a
-// build warning but won't crash at runtime — the import resolves to
-// undefined which we handle below.
-import productImgAsset from '../../../assets/images/products/product.jpg';
+// ─── Static imports — Vite resolves at build time ─────────────────
+import img01 from '../../../assets/images/products/01.jpg';
+import img02 from '../../../assets/images/products/02.jpg';
+import img03 from '../../../assets/images/products/03.jpg';
+import img04 from '../../../assets/images/products/04.jpg';
+import img05 from '../../../assets/images/products/05.jpg';
+import img06 from '../../../assets/images/products/06.jpg';
+import img07 from '../../../assets/images/products/07.jpg';
 
-// Resolved fallback: local asset if it loaded, else PLACEHOLDER_IMG
-const localProductImg = productImgAsset || PLACEHOLDER_IMG;
+// ─── Image pool — falls back to PLACEHOLDER_IMG if file missing ───
+const PRODUCT_IMAGES = [
+  img01, img02, img03, img04,
+  img05, img06, img07,
+].filter(Boolean).length > 0
+  ? [img01, img02, img03, img04, img05, img06, img07].filter(Boolean)
+  : [PLACEHOLDER_IMG];
+
+// Returns image by index, cycling through the pool
+const getProductImg = (index) => PRODUCT_IMAGES[index % PRODUCT_IMAGES.length];
 
 // ─── Mock data for development ────────────────────────────────────
 const mockProducts = (category, count = 4) =>
@@ -21,7 +31,7 @@ const mockProducts = (category, count = 4) =>
     sku:           `MU-00${100 + i}`,
     price:         Math.floor(Math.random() * 3000) + 500,
     originalPrice: Math.floor(Math.random() * 5000) + 2000,
-    image:         localProductImg,
+    image:         getProductImg(i),   // ← rotates through all 7 images
     badge:         i === 0 ? 'New' : i === 1 ? 'Sale' : null,
     category,
     inStock:       true,
@@ -43,10 +53,10 @@ const useProductSection = (fetcher, mockCategory, mockCount = 4) => {
         if (!cancelled) {
           const data = res?.data ?? res ?? [];
           const resolved = Array.isArray(data)
-            ? data.map((p) => ({
+            ? data.map((p, i) => ({
                 ...p,
-                // API image → local asset → PLACEHOLDER_IMG
-                image: p.image || localProductImg,
+                // API image → pool image by index → PLACEHOLDER_IMG
+                image: p.image || getProductImg(i),
               }))
             : [];
           setProducts(resolved);

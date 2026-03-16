@@ -10,11 +10,11 @@ import ttIcon       from '../../../assets/icons/tiktok.png';
 import ytIcon       from '../../../assets/icons/youtube.png';
 
 const SOCIALS = [
-  { href: 'https://facebook.com',  icon: fbIcon, label: 'Facebook'  },
-  { href: 'https://instagram.com', icon: igIcon, label: 'Instagram' },
-  { href: 'https://linkedin.com',  icon: liIcon, label: 'LinkedIn'  },
-  { href: 'https://tiktok.com',    icon: ttIcon, label: 'TikTok'    },
-  { href: 'https://youtube.com',   icon: ytIcon, label: 'YouTube'   },
+  { href: 'https://www.facebook.com/elonis.official',  icon: fbIcon, label: 'Facebook'  },
+  { href: 'https://www.instagram.com/elonis.official', icon: igIcon, label: 'Instagram' },
+  { href: 'https://tiktok.com/@elonis.official',    icon: ttIcon, label: 'TikTok'    },
+  { href: 'https://youtube.com/@elonis.official',   icon: ytIcon, label: 'YouTube'   },
+  { href: 'https://www.linkedin.com/company/elonis-official',  icon: liIcon, label: 'LinkedIn'  },
 ];
 
 const Footer = () => (
@@ -30,8 +30,9 @@ const Footer = () => (
             {/* <p className="site-footer__tagline">Bangladesh's Premium Lifestyle Brand</p> */}
             <ul className="site-footer__contact list-unstyled mt-3">
               <li>📞 +88 01886 899103</li>
-              <li>📧 info@elonis.com.bd</li>
-              <li>📍 Ka3/C, 3rd Floor, Joynob Ali Sarak, Jamuna Future Park Pocket Gate, Bashundhara Rd, Dhaka, Bangladesh</li>
+              {/* <li>📧 info@elonis.com.bd</li> */}
+              <li>📧 elonis.official@gmail.com</li>
+              <li>📍 Hajiganj, Chittagong Division, Bangladesh</li>
             </ul>
             <div className="site-footer__social mt-3">
               {SOCIALS.map((s) => (
@@ -93,8 +94,11 @@ const Footer = () => (
     <div className="site-footer__bottom">
       <Container>
         <p className="mb-0 text-center">
-          © {new Date().getFullYear()} Elonis Life Style | All rights reserved | Powered by{' '}
-          <span className="site-footer__brand">STITBD</span>
+          © {new Date().getFullYear()} ELONIS Lifestyle | All rights reserved | Powered by{' '}
+          <Link to="https://stitbd.com/" className="" target='_blank'>
+              <span className="site-footer__brand">STITBD</span>
+          </Link>
+          
         </p>
       </Container>
     </div>
