@@ -5,6 +5,7 @@ import useCartStore from '../../app/store';
 import { formatPrice, PLACEHOLDER_IMG } from '../../utils';
 import './CatagoryProductPage.scss';
 
+// ─── Static image imports (Vite resolves at build time) ───────────
 import img01 from '../../assets/images/products/01.jpg';
 import img02 from '../../assets/images/products/02.jpg';
 import img03 from '../../assets/images/products/03.jpg';
@@ -13,134 +14,63 @@ import img05 from '../../assets/images/products/05.jpg';
 import img06 from '../../assets/images/products/06.jpg';
 import img07 from '../../assets/images/products/07.jpg';
 
-const IMGS = [img01,img02,img03,img04,img05,img06,img07].filter(Boolean);
-const gi   = (i) => IMGS.length ? IMGS[i % IMGS.length] : PLACEHOLDER_IMG;
+// Pool — filter out any undefined (missing files)
+const IMG_POOL = [img01, img02, img03, img04, img05, img06, img07].filter(Boolean);
+const poolImg  = (i) => IMG_POOL.length ? IMG_POOL[i % IMG_POOL.length] : PLACEHOLDER_IMG;
 
-// ── Category title map — covers ALL nav + sub + child menu hrefs ──
+// ── Category title map ────────────────────────────────────────────
 const CATEGORY_TITLES = {
-  // ── Top-level nav ─────────────────────────────────────────
-  man:                  'MAN',
-  woman:                'WOMAN',
-  women:                'WOMEN',
-  lifestyle:            'LIFESTYLE',
-  'gift-voucher':       'GIFT VOUCHER',
-  products:             'ALL PRODUCTS',
-
-  // ── Sub-menu (slug-based) ──────────────────────────────────
-  shirt:                'SHIRT',
-  shirts:               'SHIRTS',
-  panjabi:              'PANJABI',
-  'ethnic-wear':        'ETHNIC WEAR',
-  't-shirt':            'T-SHIRT',
-  polo:                 'POLO',
-  bottom:               'BOTTOM',
   'suits-blazer':       'SUITS & BLAZER',
-  winterwear:           'WINTERWEAR',
-  underwear:            'UNDERWEAR',
-  footwear:             'FOOTWEAR',
-  accessories:          'ACCESSORIES',
   'co-ord-sets':        'CO-ORD SETS',
-  shrug:                'SHRUG',
-  dress:                'DRESS',
-  wallet:               'WALLET',
-  'long-wallet':        'LONG WALLET',
-  belt:                 'BELT',
-  'luxury-shirt':       'LUXURY SHIRT',
-  leather:              'LEATHER',
-  perfume:              'PERFUME',
-  bag:                  'BAG',
-  sunglass:             'SUNGLASS',
-  cap:                  'CAP',
-  'eid-collection-26':  'EID COLLECTION 2026',
+  'co-ord-sets-woman':  'CO-ORD SETS',
+  'gift-voucher':       'GIFT VOUCHER',
+  'ethnic-wear':        'ETHNIC WEAR',
+  'western-wear':       'WESTERN WEAR',
+  'traditional-wear':   'TRADITIONAL WEAR',
+  'privilege-card':     'PRIVILEGE CARD / GOLD CARD',
+  'wallet':             'WALLET / MONEY CLIP',
+  'formal-shirt':       'FORMAL SHIRT',
+  'casual-shirt':       'CASUAL SHIRT',
+  'half-sleeve-shirt':  'HALF SLEEVE SHIRT',
+  'full-sleeve-shirt':  'FULL SLEEVE SHIRT',
+  'printed-shirt':      'PRINTED SHIRT',
+  'solid-shirt':        'SOLID SHIRT',
+  'club-shirt':         'CLUB SHIRT',
+  'winter-shirt':       'WINTER SHIRT',
+  'formal-pant':        'FORMAL PANT',
+  'perfume-man':        'PERFUME - MAN',
+  'bag-man':            'BAG - MAN',
+  'bag-woman':          'BAG - WOMAN',
+  'sunglass-man':       'SUNGLASS - MAN',
+  'sunglass-woman':     'SUNGLASS - WOMAN',
+  'eid-26':             'EID 26',
+  'eid-26-woman':       'EID 26 - WOMAN',
   'new-arrivals':       'NEW ARRIVALS',
-  'latest':             'LATEST PRODUCTS',
   'ramadan-offer':      'RAMADAN OFFER',
   'cricket-wear':       'CRICKET WEAR',
-
-  // ── product-list/:id — sub-menu ───────────────────────────
-  '3':   'POLO',
-  '4':   'SHIRT',
-  '5':   'BOTTOM',
-  '6':   'FOOTWEAR',
-  '8':   'WESTERN WEAR',
-  '9':   'TRADITIONAL WEAR',
-  '11':  'BOTTOMS',
-  '13':  'SHRUG',
-  '18':  'ETHNIC WEAR',
-  '19':  'T-SHIRT',
-  '22':  'WALLET / MONEY CLIP',
-  '23':  'PERFUME',
-  '27':  'PRIVILEGE CARD / GOLD CARD',
-  '29':  'BAG',
-  '34':  'DRESS',
-  '39':  'WINTERWEAR',
-  '42':  'ACCESSORIES',
-  '57':  'UNDERWEAR',
-  '59':  'SUNGLASS',
-  '68':  'EID 26',
-  '69':  'EID 26 - WOMAN',
-  '70':  'WINTERWEAR',
-  '71':  'CO-ORD SETS',
-  '72':  'SUITS & BLAZER',
-
-  // ── products/:id — child menu ─────────────────────────────
-  '1':   'FORMAL SHIRT',
-  '2':   'CASUAL SHIRT',
-  '7':   'JEANS',
-  '10':  'LONG SHIRT',
-  '14':  'SKIRTS / PALAZZO',
-  '15':  'PANTS',
-  '20':  'PANJABI',
-  '21':  'KABLI',
-  '22':  'VEST',
-  '27':  'MASK',
-  '28':  'SOCKS',
-  '29':  'JOGGERS',
-  '30':  'SANDAL',
-  '32':  'SNEAKERS',
-  '33':  'BOOT',
-  '36':  'OVERCOAT',
-  '41':  'TIE',
-  '44':  'PAJAMA',
-  '52':  'BELT',
-  '53':  'PONCHO',
-  '55':  'SWEATER',
-  '61':  'JACKET',
-  '62':  'SWEATER',
-  '63':  'SWEATSHIRT',
-  '64':  'HOODIE',
-  '65':  'PERFUME - MAN',
-  '67':  'BAG - MAN',
-  '68':  'BAG - WOMAN',
-  '70':  'SUNGLASS - MAN',
-  '73':  'PRINTED SHIRT',
-  '74':  'SOLID SHIRT',
-  '75':  'CLUB SHIRT',
-  '76':  'FULL SLEEVE SHIRT',
-  '77':  'TOPS',
-  '78':  'T-SHIRT',
-  '79':  'KAMEEZ',
-  '80':  'KURTI',
-  '81':  'KAFTAN',
-  '84':  'SUMMER BLAZER',
-  '85':  'WINTER SHIRT',
-  '86':  'HOODIE',
+  'long-wallet':        'LONG WALLET',
+  'luxury-shirt':       'LUXURY SHIRT',
+  't-shirt-woman':      'T-SHIRT',
+  'casual-shirt-woman': 'CASUAL SHIRT',
+  'hoodie-woman':       'HOODIE',
+  'jacket-woman':       'JACKET',
+  'sweater-woman':      'SWEATER',
+  'jeans-woman':        'JEANS',
+  'joggers-woman':      'JOGGERS',
+  'winterwear-woman':   'WINTERWEAR',
+  'bottoms-woman':      'BOTTOMS',
 };
 
-const SORT_OPTIONS = [
-  { value: 'default',    label: 'Default'           },
-  { value: 'price_asc',  label: 'Price: Low → High' },
-  { value: 'price_desc', label: 'Price: High → Low' },
-  { value: 'name_asc',   label: 'Name: A → Z'       },
-  { value: 'name_desc',  label: 'Name: Z → A'       },
-];
+const slugToTitle = (slug) =>
+  CATEGORY_TITLES[slug] ||
+  slug?.replace(/-/g, ' ').toUpperCase() ||
+  'PRODUCTS';
 
-const PER_PAGE_OPTIONS = [12, 25, 50, 100];
-
+// ── Mock product generator — uses IMG_POOL so images always show ──
 const makeMockProducts = (category, total = 28) =>
   Array.from({ length: total }, (_, i) => {
-    const orig    = Math.floor(Math.random() * 1500) + 800;
-    const discPct = [20, 25, 30, 33][Math.floor(Math.random() * 4)];
+    const orig    = [800, 900, 1000, 1200, 1400, 1500, 1800, 2000, 2200, 2500][i % 10];
+    const discPct = [20, 25, 30, 33][i % 4];
     const price   = Math.round(orig * (1 - discPct / 100) / 5) * 5;
     return {
       id:            `${category}-${i + 1}`,
@@ -149,13 +79,21 @@ const makeMockProducts = (category, total = 28) =>
       sku:           `SKU-${String(2500 + i).padStart(6, '0')}`,
       price,
       originalPrice: orig,
-      discountPct,
-      image:         gi(i),
+      image:         poolImg(i),   // ← always a real imported image
       badge:         `${discPct}% Off`,
       inStock:       true,
       category,
     };
   });
+
+const SORT_OPTIONS = [
+  { value: 'default',    label: 'Default'           },
+  { value: 'price_asc',  label: 'Price: Low → High' },
+  { value: 'price_desc', label: 'Price: High → Low' },
+  { value: 'name_asc',   label: 'Name: A → Z'       },
+  { value: 'name_desc',  label: 'Name: Z → A'       },
+];
+const PER_PAGE_OPTIONS = [12, 25, 50, 100];
 
 // ── Product Card ──────────────────────────────────────────────────
 const ProductCard = ({ product, addToCart }) => {
@@ -202,36 +140,29 @@ const ProductCard = ({ product, addToCart }) => {
 
 // ── Main Page ─────────────────────────────────────────────────────
 const CatagoryProductPage = () => {
-  const { slug, id }                  = useParams();
-  const location                      = useLocation();
+  const { slug, id }      = useParams();
+  const location          = useLocation();
+  const addToCart         = useCartStore((s) => s.addToCart);
+
+  const rawKey = slug || id ||
+    location.pathname.replace(/^\//, '').split('/').pop() || '';
+  const title = slugToTitle(rawKey);
+
   const [allProducts, setAllProducts] = useState([]);
   const [loading,     setLoading]     = useState(true);
   const [sortBy,      setSortBy]      = useState('default');
   const [perPage,     setPerPage]     = useState(25);
   const [currentPage, setCurrentPage] = useState(1);
-  const addToCart                     = useCartStore((s) => s.addToCart);
 
-  // Derive title directly from URL slug — clean and readable
-  // /categories/panjabi       → PANJABI
-  // /categories/ethnic-wear   → ETHNIC WEAR
-  // /categories/suits-blazer  → SUITS & BLAZER
-  // /product-list/:id / /products/:id  → mapped via CATEGORY_TITLES
-  const rawKey = slug || id ||
-    location.pathname.replace(/^\//, '').split('/').pop() || '';
-
-  const title =
-    CATEGORY_TITLES[rawKey] ||
-    CATEGORY_TITLES[rawKey.toLowerCase()] ||
-    rawKey.replace(/-/g, ' ').toUpperCase() ||
-    'PRODUCTS';
-
+  // Load products — mock data with real images, no API needed
   useEffect(() => {
     setLoading(true);
     setCurrentPage(1);
+    // Use setTimeout to simulate async so skeleton shows briefly
     const t = setTimeout(() => {
       setAllProducts(makeMockProducts(title, 28));
       setLoading(false);
-    }, 350);
+    }, 300);
     return () => clearTimeout(t);
   }, [title]);
 
@@ -287,7 +218,7 @@ const CatagoryProductPage = () => {
         {/* Title */}
         <h1 className="ccat-page__title">{title}</h1>
 
-        {/* Filter / Sort bar */}
+        {/* Filter bar */}
         <div className="ccat-page__filter-bar d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
           <p className="ccat-page__count mb-0">
             Showing {sorted.length === 0 ? 0 : startIndex + 1}–{Math.min(startIndex + perPage, sorted.length)} of {sorted.length} products
@@ -308,7 +239,7 @@ const CatagoryProductPage = () => {
           </div>
         </div>
 
-        {/* Product grid */}
+        {/* Grid */}
         {loading ? (
           <div className="ccat-page__skeleton-grid">
             {Array.from({ length: 12 }).map((_, i) => (
@@ -340,11 +271,9 @@ const CatagoryProductPage = () => {
         {!loading && totalPages > 1 && (
           <div className="ccat-page__pagination-wrap d-flex align-items-center justify-content-between flex-wrap gap-3 mt-4">
             <div className="ccat-page__pagination d-flex align-items-center gap-1">
-              <button
-                className="ccat-page__page-btn ccat-page__page-btn--arrow"
+              <button className="ccat-page__page-btn ccat-page__page-btn--arrow"
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-              >
+                disabled={currentPage === 1}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <polyline points="15 18 9 12 15 6"/>
                 </svg>
@@ -354,21 +283,17 @@ const CatagoryProductPage = () => {
                 page === '...' ? (
                   <span key={`e-${i}`} className="ccat-page__page-ellipsis">…</span>
                 ) : (
-                  <button
-                    key={page}
+                  <button key={page}
                     className={`ccat-page__page-btn ${currentPage === page ? 'ccat-page__page-btn--active' : ''}`}
-                    onClick={() => setCurrentPage(page)}
-                  >
+                    onClick={() => setCurrentPage(page)}>
                     {page}
                   </button>
                 )
               )}
 
-              <button
-                className="ccat-page__page-btn ccat-page__page-btn--arrow"
+              <button className="ccat-page__page-btn ccat-page__page-btn--arrow"
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-              >
+                disabled={currentPage === totalPages}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <polyline points="9 18 15 12 9 6"/>
                 </svg>

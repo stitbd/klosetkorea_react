@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { productService } from '../services/productService';
 import { PLACEHOLDER_IMG } from '../../../utils';
 
-// ─── Static imports — Vite resolves at build time ─────────────────
+import productImgAsset  from '../../../assets/images/products/product.jpg';
 import img01 from '../../../assets/images/products/01.jpg';
 import img02 from '../../../assets/images/products/02.jpg';
 import img03 from '../../../assets/images/products/03.jpg';
@@ -11,31 +11,33 @@ import img05 from '../../../assets/images/products/05.jpg';
 import img06 from '../../../assets/images/products/06.jpg';
 import img07 from '../../../assets/images/products/07.jpg';
 
-// ─── Image pool — falls back to PLACEHOLDER_IMG if file missing ───
-const PRODUCT_IMAGES = [
-  img01, img02, img03, img04,
-  img05, img06, img07,
-].filter(Boolean).length > 0
-  ? [img01, img02, img03, img04, img05, img06, img07].filter(Boolean)
-  : [PLACEHOLDER_IMG];
+// ─── Image pool — all local product images ────────────────────────
+const IMG_POOL = [
+  productImgAsset, img01, img02, img03, img04, img05, img06, img07,
+].filter(Boolean);
 
-// Returns image by index, cycling through the pool
-const getProductImg = (index) => PRODUCT_IMAGES[index % PRODUCT_IMAGES.length];
+const localProductImg = IMG_POOL[0] || PLACEHOLDER_IMG;
+const getPoolImg = (i) => IMG_POOL.length ? IMG_POOL[i % IMG_POOL.length] : PLACEHOLDER_IMG;
 
 // ─── Mock data for development ────────────────────────────────────
 const mockProducts = (category, count = 4) =>
-  Array.from({ length: count }, (_, i) => ({
-    id:            `${category}-${i + 1}`,
-    name:          `Elonis ${category} #${i + 1}`,
-    slug:          `elonis-${category.toLowerCase().replace(/\s+/g, '-')}-${i + 1}`,
-    sku:           `MU-00${100 + i}`,
-    price:         Math.floor(Math.random() * 3000) + 500,
-    originalPrice: Math.floor(Math.random() * 5000) + 2000,
-    image:         getProductImg(i),   // ← rotates through all 7 images
-    badge:         i === 0 ? 'New' : i === 1 ? 'Sale' : null,
-    category,
-    inStock:       true,
-  }));
+  Array.from({ length: count }, (_, i) => {
+    const orig    = Math.floor(Math.random() * 1500) + 800;
+    const discPct = [20, 25, 30, 33][Math.floor(Math.random() * 4)];
+    const price   = Math.round(orig * (1 - discPct / 100) / 5) * 5;
+    return {
+      id:            `${category}-${i + 1}`,
+      name:          `Elonis ${category} #${i + 1}`,
+      slug:          `elonis-${category.toLowerCase().replace(/\s+/g, '-')}-${i + 1}`,
+      sku:           `EL-00${100 + i}`,
+      price,
+      originalPrice: orig,
+      image:         getPoolImg(i),
+      badge:         `${discPct}% Off`,
+      category,
+      inStock:       true,
+    };
+  });
 
 // ─── Generic product section hook ─────────────────────────────────
 const useProductSection = (fetcher, mockCategory, mockCount = 4) => {
@@ -55,8 +57,8 @@ const useProductSection = (fetcher, mockCategory, mockCount = 4) => {
           const resolved = Array.isArray(data)
             ? data.map((p, i) => ({
                 ...p,
-                // API image → pool image by index → PLACEHOLDER_IMG
-                image: p.image || getProductImg(i),
+                // API image → pool image → PLACEHOLDER_IMG
+                image: p.image || getPoolImg(i),
               }))
             : [];
           setProducts(resolved);
@@ -73,6 +75,36 @@ const useProductSection = (fetcher, mockCategory, mockCount = 4) => {
   }, []);
 
   return { products, loading, error };
+};
+
+// ─── Generic category hook — used by CatagoryProductPage ─────────
+export const useCategoryProducts = (category = 'Products', count = 28) => {
+  const [products, setProducts] = useState([]);
+  const [loading,  setLoading]  = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+
+    productService.getCategoryProducts?.(category)
+      .then((res) => {
+        if (!cancelled) {
+          const data = res?.data ?? res ?? [];
+          const resolved = Array.isArray(data) && data.length > 0
+            ? data.map((p, i) => ({ ...p, image: p.image || getPoolImg(i) }))
+            : mockProducts(category, count);
+          setProducts(resolved);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setProducts(mockProducts(category, count));
+      })
+      .finally(() => { if (!cancelled) setLoading(false); });
+
+    return () => { cancelled = true; };
+  }, [category]);
+
+  return { products, loading };
 };
 
 // ─── Named hooks — one per homepage section ───────────────────────
