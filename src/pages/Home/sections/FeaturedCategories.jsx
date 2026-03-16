@@ -3,62 +3,40 @@ import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import './FeaturedCategories.scss';
 
+import productImgAsset  from '../../../assets/images/products/product.jpg';
+import img01 from '../../../assets/images/products/01.jpg';
+import img02 from '../../../assets/images/products/07.jpg';
+import img03 from '../../../assets/images/products/03.jpg';
+import img04 from '../../../assets/images/products/04.jpg';
+
 const CATEGORIES = [
   {
     id: 1,
-    label: 'WOMEN',
-    slug: 'women',
-    image: 'https://splayd.com.bd/cdn/shop/files/01254.png?v=1750746694&width=600',
+    label: 'SNEAKERS',
+    slug: 'sneakers',
+    image: img01,
     span: 'tall',   // tall card (spans 2 rows)
   },
   {
     id: 2,
-    label: 'PANJABI',
-    slug: 'panjabi',
-    image: 'https://splayd.com.bd/cdn/shop/files/598.jpg?v=1773496395&width=600',
+    label: 'SANDAL',
+    slug: 'sandal',
+    image: img02,
     span: 'tall',
   },
   {
     id: 3,
-    label: 'COLLECTION',
-    slug: 'collection',
-    image: 'https://splayd.com.bd/cdn/shop/files/499.jpg?v=1773396761&width=600',
+    label: 'APPAREL',
+    slug: 'apparel',
+    image: 'https://splayd.com.bd/cdn/shop/files/489.jpg?v=1773393969&width=600',
     span: 'tall',
   },
   {
     id: 4,
-    label: 'POLO',
-    slug: 'polo',
-    image: 'https://splayd.com.bd/cdn/shop/files/359_6cd4791b-2dd0-40f6-b654-a687a7cc61c8.jpg?v=1772957003&width=600',
-    span: 'tall',
-  },
-  {
-    id: 5,
-    label: 'PERFUME',
-    slug: 'perfume',
+    label: 'ACCESSORIES',
+    slug: 'accessories',
     image: 'https://splayd.com.bd/cdn/shop/files/01_cb47467f-8bdb-4047-9952-9e31eb4e6983.png?v=1767881920&width=600',
-    span: 'normal',
-  },
-  {
-    id: 6,
-    label: 'SHIRTS',
-    slug: 'shirts',
-    image: 'https://splayd.com.bd/cdn/shop/files/489.jpg?v=1773393969&width=600',
-    span: 'normal',
-  },
-  {
-    id: 7,
-    label: 'FASHION',
-    slug: 'fashion',
-    image: 'https://splayd.com.bd/cdn/shop/files/01copy_b89f9bf0-651a-4e58-ad0e-28b2b58388d2.jpg?v=1765882987&width=600',
-    span: 'normal',
-  },
-  {
-    id: 8,
-    label: 'AIR FORCE',
-    slug: 'air-force',
-    image: 'https://splayd.com.bd/cdn/shop/files/01_9ba91a80-9022-448e-9a15-2ebf754068f7.png?v=1771248161&width=600',
-    span: 'normal',
+    span: 'tall',
   },
 ];
 

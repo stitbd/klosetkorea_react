@@ -93,7 +93,7 @@ const SORT_OPTIONS = [
   { value: 'name_asc',   label: 'Name: A → Z'       },
   { value: 'name_desc',  label: 'Name: Z → A'       },
 ];
-const PER_PAGE_OPTIONS = [12, 25, 50, 100];
+const PER_PAGE_OPTIONS = [12, 24, 50, 100];
 
 // ── Product Card ──────────────────────────────────────────────────
 const ProductCard = ({ product, addToCart }) => {

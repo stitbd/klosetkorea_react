@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { productService } from '../services/productService';
 import { PLACEHOLDER_IMG } from '../../../utils';
 
-import productImgAsset  from '../../../assets/images/products/product.jpg';
 import img01 from '../../../assets/images/products/01.jpg';
 import img02 from '../../../assets/images/products/02.jpg';
 import img03 from '../../../assets/images/products/03.jpg';
@@ -10,10 +9,11 @@ import img04 from '../../../assets/images/products/04.jpg';
 import img05 from '../../../assets/images/products/05.jpg';
 import img06 from '../../../assets/images/products/06.jpg';
 import img07 from '../../../assets/images/products/07.jpg';
+import productImgAsset  from '../../../assets/images/products/product.jpg';
 
 // ─── Image pool — all local product images ────────────────────────
 const IMG_POOL = [
-  productImgAsset, img01, img02, img03, img04, img05, img06, img07,
+  img01, img02, img03, img04, img05, img06, img07, productImgAsset,
 ].filter(Boolean);
 
 const localProductImg = IMG_POOL[0] || PLACEHOLDER_IMG;

@@ -9,7 +9,7 @@ const LuxuryShirtSection = () => {
   return (
     <section className="section-wrapper">
       <Container fluid="xl">
-        <SectionHeader title="LUXURY SHIRT" viewAllLink="/category/luxury-shirt" />
+        <SectionHeader title="APPAREL" viewAllLink="/category/apparel" />
         <ProductGrid products={products} loading={loading} cols={4} />
       </Container>
     </section>

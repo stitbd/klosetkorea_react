@@ -12,7 +12,7 @@ import useCartStore from '../../app/store';
 import { formatPrice, PLACEHOLDER_IMG } from '../../utils';
 import './ProductDetailsPage.scss';
 
-import productImgAsset from '../../assets/images/products/product.jpg';
+import productImgAsset from '../../assets/images/products/01.jpg';
 const localProductImg = productImgAsset || PLACEHOLDER_IMG;
 
 // ─── Mock related products ────────────────────────────────────────

@@ -9,7 +9,7 @@ const CapSection = () => {
   return (
     <section className="section-wrapper">
       <Container fluid="xl">
-        <SectionHeader title="CAP" viewAllLink="/category/cap" />
+        <SectionHeader title="SANDAL" viewAllLink="/category/sandal" />
         <ProductGrid products={products} loading={loading} cols={4} />
       </Container>
     </section>

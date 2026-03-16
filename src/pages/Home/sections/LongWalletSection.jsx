@@ -9,8 +9,8 @@ const LongWalletSection = () => {
   return (
     <section className="section-wrapper">
       <Container fluid="xl">
-        <SectionHeader title="LONG WALLETS" viewAllLink="/category/long-wallet" />
-        <ProductGrid products={products} loading={loading} cols={3} />
+        <SectionHeader title="SANDAL" viewAllLink="/category/sandal" />
+        <ProductGrid products={products} loading={loading} cols={4} />
       </Container>
     </section>
   );

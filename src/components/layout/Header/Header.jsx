@@ -14,66 +14,24 @@ const ChevronDown = () => (<svg width="12" height="12" viewBox="0 0 24 24" fill=
 // ─── Nav Data ─────────────────────────────────────────────────────
 export const NAV_LINKS = [
   {
-    label: 'MAN', href: '/categories/man',
+    label: 'SNEAKERS', href: '/categories/sneakers',
     children: [
-      { label: 'Eid 26',         href: '/categories/eid-man' },
-      { label: 'Ethnic Wear',    href: '/categories/ethnic-wear', children: [
-        { label: 'Panjabi', href: '/categories/panjabi' },
-        { label: 'Kabli',   href: '/categories/kabli'   },
-        { label: 'Vest',    href: '/categories/vest'    },
-      ]},
-      { label: 'T-Shirt',        href: '/categories/t-shirt' },
-      { label: 'Shirt',          href: '/categories/shirt', children: [
-        { label: 'Formal',      href: '/categories/formal-shirt'       },
-        { label: 'Casual',      href: '/categories/casual-shirt'       },
-        { label: 'Half Sleeve', href: '/categories/half-sleeve-shirt'  },
-        { label: 'Full Sleeve', href: '/categories/full-sleeve-shirt'  },
-        { label: 'Printed',     href: '/categories/printed-shirt'      },
-        { label: 'Solid',       href: '/categories/solid-shirt'        },
-        { label: 'Club',        href: '/categories/club-shirt'         },
-      ]},
-      { label: 'Polo',           href: '/categories/polo' },
-      { label: 'Bottom',         href: '/categories/bottom', children: [
-        { label: 'Jeans',   href: '/categories/jeans'   },
-        { label: 'Chinos',  href: '/categories/chinos'  },
-        { label: 'Formal',  href: '/categories/formal-pant'  },
-        { label: 'Joggers', href: '/categories/joggers' },
-        { label: 'Cargo',   href: '/categories/cargo'   },
-        { label: 'Shorts',  href: '/categories/shorts'  },
-        { label: 'Pajama',  href: '/categories/pajama'  },
-      ]},
-      { label: 'Suits & Blazer', href: '/categories/suits-blazer' },
-      { label: 'Winterwear',     href: '/categories/winterwear', children: [
-        { label: 'Winter Shirt', href: '/categories/winter-shirt' },
-        { label: 'Jacket',       href: '/categories/jacket'       },
-        { label: 'Sweater',      href: '/categories/sweater'      },
-        { label: 'Sweatshirt',   href: '/categories/sweatshirt'   },
-        { label: 'Hoodie',       href: '/categories/hoodie'       },
-      ]},
-      { label: 'Underwear',      href: '/categories/underwear' },
-      { label: 'Footwear',       href: '/categories/footwear', children: [
-        { label: 'Sneakers', href: '/categories/sneakers' },
-        { label: 'Sandal',   href: '/categories/sandal'   },
-        { label: 'Boot',     href: '/categories/boot'     },
-      ]},
-      { label: 'Accessories',    href: '/categories/accessories', children: [
-        { label: 'Mask',  href: '/categories/mask'  },
-        { label: 'Socks', href: '/categories/socks' },
-        { label: 'Tie',   href: '/categories/tie'   },
-        { label: 'Belt',  href: '/categories/belt'  },
-      ]},
+      { label: 'Nike',        href: '/categories/nike' },
+      { label: 'Adidas',      href: '/categories/adidas'       },
+      { label: 'Puma',      href: '/categories/puma'       },
+      { label: 'Air Jordan', href: '/categories/air-jordan'  },
+      { label: 'Converse', href: '/categories/converse'  },
+      { label: 'Vans',     href: '/categories/vans'      },
+      { label: 'New Balance',       href: '/categories/new-balance'        },
     ],
   },
+  
+  { label: 'SANDAL', href: '/categories/sandal' },
   {
-    label: 'WOMAN', href: '/categories/woman',
+    label: 'APPAREL', href: '/categories/apparel',
     children: [
       { label: 'Eid 26',          href: '/categories/eid-woman' },
       { label: 'Western Wear',    href: '/categories/western-wear', children: [
-        { label: 'Tops',          href: '/categories/tops'          },
-        { label: 'T-Shirt',       href: '/categories/t-shirt-woman' },
-        { label: 'Summer Blazer', href: '/categories/summer-blazer' },
-        { label: 'Casual Shirt',  href: '/categories/casual-shirt-woman' },
-        { label: 'Long Shirt',    href: '/categories/long-shirt'    },
       ]},
       { label: 'Traditional Wear',href: '/categories/traditional-wear', children: [
         { label: 'Kameez', href: '/categories/kameez' },
@@ -99,7 +57,7 @@ export const NAV_LINKS = [
     ],
   },
   {
-    label: 'LIFESTYLE', href: '/categories/lifestyle',
+    label: 'ACCESSORIES', href: '/categories/accessories',
     children: [
       { label: 'Wallet/Money Clip',        href: '/categories/wallet' },
       { label: 'Perfume',                  href: '/categories/perfume', children: [
@@ -116,7 +74,9 @@ export const NAV_LINKS = [
       ]},
     ],
   },
+
   { label: 'GIFT VOUCHER', href: '/categories/gift-voucher' },
+  
 ];;
 
 // ─── Desktop Hover Nav ────────────────────────────────────────────
@@ -436,7 +396,7 @@ const Header = () => {
   return (
     <header className={`site-header ${scrolled ? 'site-header--scrolled' : ''}`}>
 
-      {/* ── Top info bar ── */}
+      {/* ── Top info bar ──
       <div className="site-header__topbar d-none d-lg-block">
         <Container>
           <div className="d-flex justify-content-between align-items-center py-1">
@@ -445,7 +405,7 @@ const Header = () => {
             </p>
           </div>
         </Container>
-      </div>
+      </div> */}
 
       {/* ── Main row ── */}
       <div className="site-header__main">
