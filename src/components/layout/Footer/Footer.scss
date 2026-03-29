@@ -36,7 +36,7 @@
     transition: border-color 0.2s, background 0.2s;
 
     &:hover {
-      border-color: #FF6503;
+      border-color: #FF6600;
     }
   }
 
@@ -50,7 +50,7 @@
   // ── Contact ──────────────────────────────────────────────
   &__tagline {
     font-size: 0.82rem;
-    color: #666;
+    color: #000000;
     margin-bottom: 0;
   }
 
@@ -65,7 +65,7 @@
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: var(--brand-black);
+    color: #000000;
     text-transform: uppercase;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
@@ -78,13 +78,13 @@
   }
 
   &__link {
-    color: #555;
+    color: #000000;
     font-size: 0.85rem;
     text-decoration: none;
     transition: color 0.2s;
 
     &:hover {
-      color: #FF6503;
+      color: #FF6600;
     }
   }
 
@@ -114,7 +114,7 @@
   }
 
   &__brand {
-    color: #FF6503;
+    color: #FF6600;
     font-weight: 700;
   }
 }

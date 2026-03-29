@@ -43,7 +43,60 @@
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #ebebeb;
   }
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
+.payment-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: #fff;
+  position: relative;
+
+  input {
+    display: none;
+  }
+
+  &:hover {
+    border-color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  &.active {
+    border-color: #000;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__icon {
+    font-size: 22px;
+  }
+
+  &__label {
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  &__check {
+    font-size: 18px;
+    color: #FF6600;
+    font-weight: bold;
+  }
+}
   &__payment-options {
     display: flex;
     flex-direction: column;
@@ -134,4 +187,5 @@
     text-decoration: none;
     &:hover { background: var(--brand-red-dark); color: #fff; }
   }
+
 }

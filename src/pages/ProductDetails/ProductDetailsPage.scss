@@ -26,7 +26,7 @@
   to { transform: rotate(360deg); }
 }
 
-// ── Topbar: breadcrumb + back ─────────────────────────────────────
+// ── Topbar ────────────────────────────────────────────────────────
 .pdp__topbar {
   padding: 0.5rem 0;
   border-bottom: 1px solid #f0f0f0;
@@ -60,9 +60,44 @@
   &:hover { border-color: #FF6503; color: #FF6503; }
 }
 
-// ── Gallery ───────────────────────────────────────────────────────
+// ── Gallery wrapper — holds gallery + zoom result side by side ────
+.pdp__gallery-wrap {
+  position: relative; // anchor for the zoom result panel
+}
+
 .pdp__gallery { position: relative; }
 
+// ── Zoom result panel ─────────────────────────────────────────────
+// Appears to the RIGHT of the main image on desktop (md+)
+// On mobile it's hidden (no hover on touch)
+.pdp__zoom-result {
+  display: none; // hidden by default & on mobile
+
+  @media (min-width: 992px) {
+    display: block;
+    position: absolute;
+    top: 0;
+    // Sits just outside the Col (gallery column is ~50% width of container)
+    // We push it beyond the right edge of this column
+    left: calc(100% + 16px);
+    width: 100%;
+    height: 500px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    background-color: #f9f9f9;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+
+    &--visible {
+      opacity: 1;
+    }
+  }
+}
+
+// ── Main swiper ───────────────────────────────────────────────────
 .pdp__main-swiper-wrap {
   position: relative;
   margin-bottom: 10px;
@@ -75,7 +110,6 @@
   border: 1px solid #ebebeb;
   background: #f9f9f9;
 
-  // Disable default swiper arrows
   .swiper-button-prev,
   .swiper-button-next { display: none; }
 }
@@ -85,13 +119,19 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
+  cursor: crosshair;
+
+  // When zooming: dim the image slightly so lens square is visible
+  &--zooming .pdp__main-img {
+    opacity: 0.85;
+  }
 }
 
 .pdp__badge {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 2;
+  z-index: 3;
   background: #FF6503;
   color: #fff;
   font-size: 0.7rem;
@@ -106,14 +146,66 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.35s ease;
-  &:hover { transform: scale(1.04); }
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.2s;
 }
 
-// Thumbnails
+// ── Lens square (follows cursor on the main image) ────────────────
+.pdp__zoom-lens {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  // Center the lens on the cursor
+  transform: translate(-50%, -50%);
+  border: 1.5px solid #FF6503;
+  background: rgba(255, 101, 3, 0.08);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.15s;
+
+  &--visible {
+    opacity: 1;
+  }
+}
+
+// ── "Hover to zoom" hint badge ────────────────────────────────────
+.pdp__zoom-hint {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.52);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.28em 0.65em;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s;
+
+  &--hidden {
+    opacity: 0;
+  }
+
+  // Only show on desktop (hover devices)
+  @media (max-width: 991px) {
+    display: none;
+  }
+}
+
+// ── Thumbnails ────────────────────────────────────────────────────
 .pdp__thumb-swiper-wrap {
   position: relative;
-  padding: 0 28px; // space for side buttons
+  padding: 0 28px;
 }
 
 .pdp__thumb-swiper {
@@ -144,7 +236,7 @@
   display: block;
 }
 
-// Description card below image
+// ── Description card ─────────────────────────────────────────────
 .pdp__desc-card {
   background: #fff;
   border: 1px solid #ebebeb;
@@ -187,7 +279,6 @@
   margin-bottom: 0.6rem;
 }
 
-// SKU + share row
 .pdp__sku-share {
   display: flex;
   align-items: center;
@@ -222,15 +313,14 @@
   font-size: 0.7rem;
 
   &:hover { opacity: 0.85; transform: scale(1.1); color: #fff; }
-
   &--fb { background: #1877f2; }
   &--tw { background: #000; }
   &--li { background: #0077b5; }
   &--wa { background: #25d366; }
-  &--em { background: #888; color: #fff; }
+  &--em { background: #888; }
 }
 
-// Price row
+// ── Price ─────────────────────────────────────────────────────────
 .pdp__price-row {
   display: flex;
   align-items: baseline;
@@ -270,10 +360,8 @@
   padding: 0.15em 0.5em;
 }
 
-// Size selector
-.pdp__size-row {
-  margin-bottom: 0.9rem;
-}
+// ── Size / Color selector ─────────────────────────────────────────
+.pdp__size-row { margin-bottom: 0.9rem; }
 
 .pdp__size-label {
   font-size: 0.82rem;
@@ -281,7 +369,6 @@
   color: #333;
   display: block;
   margin-bottom: 0.5rem;
-
   strong { color: #FF6503; }
 }
 
@@ -313,7 +400,7 @@
   }
 }
 
-// Brand / Status fields
+// ── Brand / Status ────────────────────────────────────────────────
 .pdp__field-row {
   display: flex;
   align-items: center;
@@ -337,12 +424,10 @@
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-
   &--in  { color: #2e7d32; }
   &--out { color: #c62828; }
 }
 
-// Short description + features
 .pdp__short-desc {
   font-size: 0.85rem;
   color: #444;
@@ -352,7 +437,6 @@
 
 .pdp__features {
   margin-bottom: 0.85rem;
-
   p {
     font-size: 0.82rem;
     color: #444;
@@ -361,7 +445,7 @@
   }
 }
 
-// Quantity
+// ── Quantity ──────────────────────────────────────────────────────
 .pdp__qty-row {
   display: flex;
   align-items: center;
@@ -410,7 +494,7 @@
   }
 }
 
-// Primary action buttons
+// ── Primary action buttons ────────────────────────────────────────
 .pdp__actions {
   display: flex;
   gap: 0.6rem;
@@ -451,7 +535,7 @@
   }
 }
 
-// Secondary action buttons
+// ── Secondary action buttons ──────────────────────────────────────
 .pdp__secondary-actions {
   display: flex;
   flex-direction: column;
@@ -474,7 +558,6 @@
   color: #fff;
 
   &:hover { opacity: 0.9; color: #fff; transform: translateY(-1px); }
-
   &--call      { background: #4caf50; }
   &--whatsapp  { background: #25d366; }
   &--messenger { background: #1877f2; }
@@ -505,7 +588,7 @@
 
 .pdp__more-swiper-wrap {
   position: relative;
-  padding: 0 44px; // space for side buttons
+  padding: 0 44px;
 
   .swiper-button-prev,
   .swiper-button-next { display: none; }
@@ -536,13 +619,9 @@
     transform: translateY(-50%) scale(1.08);
   }
 
-  &:active {
-    transform: translateY(-50%) scale(0.95);
-  }
+  &:active { transform: translateY(-50%) scale(0.95); }
 
-  // Main image swiper — medium size, on image edges
-  &--main-prev,
-  &--main-next {
+  &--main-prev, &--main-next {
     width: 38px;
     height: 38px;
     background: rgba(255,255,255,0.88);
@@ -554,7 +633,6 @@
   &--main-prev { left: 10px; }
   &--main-next { right: 10px; }
 
-  // Thumbnail swiper — small size, outside thumb strip
   &--sm {
     width: 24px;
     height: 24px;
@@ -567,11 +645,10 @@
   &--thumb-prev { left: 0; }
   &--thumb-next { right: 0; }
 
-  // More products swiper — medium size, outside cards
   &--more {
     width: 40px;
     height: 40px;
-    top: 35%; // aligns to image center
+    top: 35%;
     background: #fff;
     box-shadow: 0 2px 12px rgba(0,0,0,.1);
   }
@@ -579,7 +656,6 @@
   &--more-prev { left: 0; }
   &--more-next { right: 0; }
 
-  // Disabled state
   &.swiper-button-disabled {
     opacity: 0.35;
     cursor: not-allowed;
@@ -587,7 +663,7 @@
   }
 }
 
-// Related product card
+// ── Related product card ──────────────────────────────────────────
 .pdp__related-card {
   border: 1px solid #ebebeb;
   border-radius: 8px;
@@ -614,35 +690,24 @@
   object-fit: cover;
   display: block;
   transition: transform 0.3s;
-
   .pdp__related-card:hover & { transform: scale(1.04); }
 }
 
-.pdp__related-body {
-  padding: 0.65rem;
-}
+.pdp__related-body { padding: 0.65rem; }
 
 .pdp__related-name {
   font-size: 0.78rem;
   font-weight: 600;
   color: #1a1a1a;
-  display: block;
-  text-decoration: none;
-  line-height: 1.35;
-  margin-bottom: 0.25rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  transition: color 0.2s;
-
-  &:hover { color: #FF6503; }
-}
-
-.pdp__related-sku {
-  font-size: 0.68rem;
-  color: #aaa;
+  text-decoration: none;
+  line-height: 1.35;
   margin-bottom: 0.25rem;
+  transition: color 0.2s;
+  &:hover { color: #FF6503; }
 }
 
 .pdp__related-price {

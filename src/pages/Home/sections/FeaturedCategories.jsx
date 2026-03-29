@@ -42,7 +42,7 @@ const CATEGORIES = [
 
 const FeaturedCategories = () => (
   <section className="featured-cats section-wrapper">
-    <Container fluid="xl">
+    <Container fluid className="featured-cats__container">
       {/* Section heading — centred rule style from reference */}
       <div className="featured-cats__heading">
         <span className="featured-cats__heading-line" />

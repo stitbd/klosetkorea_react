@@ -22,12 +22,20 @@
 html {
   scroll-behavior: smooth;
 }
-
-body {
+/* Prevent horizontal scroll globally */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
   font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
   background: #fff;
   color: var(--brand-black);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Ensure box-sizing consistency */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 a {

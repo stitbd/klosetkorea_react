@@ -1,58 +1,64 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import useCartStore from '../../../app/store';
-import { formatPrice, PLACEHOLDER_IMG } from '../../../utils';
 import './ProductCardNewArrivels.scss';
 
+/**
+ * ProductCardNewArrivels
+ *
+ * Matches the card design seen in the mobile screenshot:
+ *   • Tall portrait image (3:4 aspect ratio)
+ *   • Black "NEW" pill badge — top-left of image
+ *   • Product name in uppercase semi-bold below image
+ *   • Bold price below name
+ *   • Subtle hover: image scales, card gets a soft shadow
+ */
 const ProductCardNewArrivels = ({ product }) => {
-  const [imgError, setImgError] = useState(false);
-  const addToCart = useCartStore((s) => s.addToCart);
+  const {
+    id,
+    slug,
+    name,
+    price,
+    image,
+    images,
+    isNew = true,
+  } = product;
 
-  if (!product) return null;
-
-  const { slug, name, sku, price, originalPrice, image, badge, inStock } = product;
+  const imgSrc  = image || images?.[0] || '';
+  const imgHover= images?.[1] || imgSrc;
+  const link    = `/products/${slug || id}`;
 
   return (
-    <div className="pcard-new">
-      {/* Image */}
-      <Link to={`/product/${slug}`} className="pcard-new__img-link">
-        {badge && <span className="pcard-new__badge">{badge}</span>}
+    <Link to={link} className="product-card-new-arrival" aria-label={name}>
+      {/* ── Image ─────────────────────────────────────────── */}
+      <div className="product-card-new-arrival__image-wrap">
         <img
-          src={imgError ? PLACEHOLDER_IMG : (image || PLACEHOLDER_IMG)}
+          src={imgSrc}
           alt={name}
-          className="pcard-new__img"
-          onError={() => setImgError(true)}
+          className="product-card-new-arrival__image product-card-new-arrival__image--main"
           loading="lazy"
         />
-      </Link>
+        {imgHover !== imgSrc && (
+          <img
+            src={imgHover}
+            alt={name}
+            className="product-card-new-arrival__image product-card-new-arrival__image--hover"
+            loading="lazy"
+          />
+        )}
 
-      {/* Body */}
-      <div className="pcard-new__body">
-        <Link to={`/product/${slug}`} className="pcard-new__name">
-          {name}
-        </Link>
-
-        <div className="pcard-new__price-row">
-          <span className="pcard-new__price-curr">{formatPrice(price)}</span>
-          {originalPrice && originalPrice > price && (
-            <span className="pcard-new__price-orig">{formatPrice(originalPrice)}</span>
-          )}
-        </div>
-
-        {/* <div className="pcard-new__actions">
-          <button
-            className="pcard-new__btn pcard-new__btn--cart"
-            onClick={() => addToCart(product, 1)}
-            disabled={!inStock}
-          >
-            Add to Cart
-          </button>
-          <Link to={`/product/${slug}`} className="pcard-new__btn pcard-new__btn--buy">
-            Buy Now
-          </Link>
-        </div> */}
+        {isNew && (
+          <span className="product-card-new-arrival__badge">NEW</span>
+        )}
       </div>
-    </div>
+
+      {/* ── Info ──────────────────────────────────────────── */}
+      <div className="product-card-new-arrival__info">
+        <p className="product-card-new-arrival__name">{name}</p>
+        <p className="product-card-new-arrival__price">
+          Tk. {Number(price).toLocaleString('en-BD')}
+        </p>
+      </div>
+    </Link>
   );
 };
 

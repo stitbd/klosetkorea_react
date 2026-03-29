@@ -17,12 +17,13 @@
   }
 
   &__heading-text {
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--brand-black);
-    white-space: nowrap;
+    font-size: clamp(20px, 4.5vw, 30px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #000;
     margin: 0;
+    line-height: 1;
   }
 
   // ── Grid wrapper ──────────────────────────────────────────────
@@ -106,7 +107,7 @@
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #FF6503;
+    color: #FF6600;
     background: #f8f8f8;
     padding: 0.45rem 0.5rem;
     border-top: 1px solid #ebebeb;

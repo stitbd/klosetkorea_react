@@ -106,14 +106,8 @@ const HeroSlider = () => {
               <div className="hero-slider__overlay" />
 
               <div className="hero-slider__content">
-                <span
-                  className="hero-slider__tag"
-                  style={{ borderColor: slide.accent, color: slide.accent }}
-                >
-                  {slide.tag}
-                </span>
 
-                <h1 className="hero-slider__title">{slide.title}</h1>
+                <h2 className="hero-slider__title">{slide.title}</h2>
 
                 {slide.titleEn && (
                   <p className="hero-slider__title-en">{slide.titleEn}</p>

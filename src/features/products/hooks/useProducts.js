@@ -114,7 +114,6 @@ export const useCategoryProducts = (category = 'Products', count = 28) => {
 
 // ─── Named hooks — one per homepage section ───────────────────────
 export const useNewArrivals       = () => useProductSection(productService.getNewArrivals,       'Ravenna Leather', 20);
-export const useLatestProducts    = () => useProductSection(productService.getLatestProducts,    'Royal Signature', 20);
 export const usePanjabiCollection = () => useProductSection(productService.getPanjabiCollection, 'Panjabi',         20);
 export const useWallets           = () => useProductSection(productService.getWallets,           'Wallet',          20);
 export const useLongWallets       = () => useProductSection(productService.getLongWallets,       'Long Wallet',     20);

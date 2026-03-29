@@ -1,133 +1,161 @@
-.pcard-new {
+// ─── ProductCard — New Arrivals ───────────────────────────────────────────────
+//
+// Design reference: mobile screenshot (red-circled card)
+//   • Tall portrait (3 : 4) image, fills card width
+//   • "NEW" pill badge — top-left, black bg / white text
+//   • Hover: image crossfades to second shot + card shadow
+//   • Name: uppercase, tight tracking, truncated to 1 line
+//   • Price: bold black; struck-through original if on sale
+
+.product-card-new-arrival {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ebebeb;
-  border-radius: 10px;
-  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
   background: #fff;
-  height: 100%;
-  transition: box-shadow 0.22s, transform 0.22s;
+  border-radius: 5;          // flush tiles — no rounded corners
+  overflow: hidden;
+  transition: box-shadow 0.22s ease;
+  border-right: 1px solid #ebebeb; // subtle divider between cards
 
-  &:hover {
-    box-shadow: 0 6px 24px rgba(0,0,0,.1);
-    transform: translateY(-3px);
+  .swiper-slide:last-child & { border-right: none; }
+
+  &:hover,
+  &:focus-visible {
+    box-shadow: inset 0 0 0 1.5px #111; // inset outline on hover, no layout shift
+    text-decoration: none;
+    color: inherit;
   }
 
-  // ── Image ──────────────────────────────────────────────────
-  &__img-link {
+  // ── Image container ────────────────────────────────────────
+  &__image-wrap {
     position: relative;
-    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
-    background: #f5f5f5;
+    background: #f4f4f4;
     flex-shrink: 0;
   }
 
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+
+    &--main {
+      opacity: 1;
+      z-index: 1;
+
+      .product-card-new-arrival:hover & {
+        opacity: 0;
+        transform: scale(1.04);
+      }
+    }
+
+    &--hover {
+      opacity: 0;
+      z-index: 2;
+
+      .product-card-new-arrival:hover & {
+        opacity: 1;
+      }
+    }
+  }
+
+  // When there is only one image — still scale on hover
+  &__image-wrap:has(.product-card-new-arrival__image--main:only-child) {
+    .product-card-new-arrival__image--main {
+      .product-card-new-arrival:hover & {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+    }
+  }
+
+  // ── "NEW" badge ────────────────────────────────────────────
   &__badge {
     position: absolute;
     top: 8px;
     left: 8px;
-    z-index: 2;
-    background: #FF6503;
+    z-index: 3;
+    background: #111;
     color: #fff;
-    font-size: 0.68rem;
+    font-size: 10px;
     font-weight: 700;
-    padding: 0.2em 0.6em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
     border-radius: 3px;
-    letter-spacing: 0.04em;
+    line-height: 1.4;
+    user-select: none;
+
+    @media (max-width: 575px) {
+      font-size: 9px;
+      padding: 2px 7px;
+      top: 6px;
+      left: 6px;
+    }
   }
 
-  &__img {
-    width: 100%;
-    // Taller image — 4:5 portrait ratio
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.35s ease;
-
-    .pcard-new:hover & { transform: scale(1.05); }
-  }
-
-  // ── Body ───────────────────────────────────────────────────
-  &__body {
-    padding: 0.75rem;
+  // ── Info block ─────────────────────────────────────────────
+  &__info {
+    padding: 10px 8px 13px;
     display: flex;
     flex-direction: column;
+    gap: 3px;
     flex: 1;
-    gap: 0.4rem;
+
+    @media (max-width: 575px) {
+      padding: 8px 6px 11px;
+    }
   }
 
   &__name {
-    font-size: 0.82rem;
+    margin: 0;
+    font-size: 12px;
     font-weight: 600;
-    color: #1a1a1a;
-    text-decoration: none;
-    line-height: 1.4;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+    // Clamp to 2 lines on mobile (enough space), 1 line on desktop
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    transition: color 0.2s;
 
-    &:hover { color: #FF6503; }
+    @media (min-width: 576px) {
+      -webkit-line-clamp: 1;
+      white-space: nowrap;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (min-width: 768px) {
+      font-size: 12.5px;
+    }
   }
 
-  // ── Price ──────────────────────────────────────────────────
-  &__price-row {
+  &__price {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 0.01em;
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
-    gap: 0.35rem;
-    margin-top: auto;
-    padding-top: 0.35rem;
-  }
+    gap: 5px;
 
-  &__price-curr {
-    font-size: 1rem;
-    font-weight: 800;
-    color: #e45700;
-    line-height: 1;
-  }
-
-  &__price-orig {
-    font-size: 0.78rem;
-    color: #bbb;
-    text-decoration: line-through;
-    font-weight: 500;
-  }
-
-  // ── Action buttons ─────────────────────────────────────────
-  &__actions {
-    display: flex;
-    gap: 0.4rem;
-    margin-top: 0.35rem;
-  }
-
-  &__btn {
-    flex: 1;
-    padding: 0.48rem 0.4rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.18s;
-
-    &--cart {
-      background: #1a1a1a;
-      color: #fff;
-      &:hover:not(:disabled) { background: #333; }
-      &:disabled { opacity: 0.4; cursor: not-allowed; }
-    }
-
-    &--buy {
-      background: #FF6503;
-      color: #fff;
-      &:hover { background: #e05500; color: #fff; }
+    @media (max-width: 575px) {
+      font-size: 13px;
     }
   }
+
+
 }

@@ -1,11 +1,12 @@
+// ── Hero Slider Base Styles ─────────────────────────────────────────
 .hero-slider {
   width: 100%;
   overflow: hidden;
-  position: relative;  // needed for absolute nav buttons
+  position: relative;
 
   &__swiper {
     width: 100%;
-    height: 320px;
+    height: 150px;
 
     @media (min-width: 576px)  { height: 400px; }
     @media (min-width: 768px)  { height: 460px; }
@@ -17,10 +18,18 @@
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center; // ✅ Center content horizontally on mobile
     height: 100%;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+
+    &--light {
+      // Optional: lighter overlay for light-themed slides
+      .hero-slider__overlay {
+        background: rgba(0, 0, 0, 0.25);
+      }
+    }
   }
 
   &__overlay {
@@ -33,74 +42,157 @@
   &__content {
     position: relative;
     z-index: 2;
-    max-width: 560px;
-    padding: 2rem 1.5rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
     animation: fadeInUp 0.6s ease both;
-    animation-delay: 0.2s;
+    animation-delay: 0.1s;
 
-    @media (min-width: 768px) { padding: 3rem 4rem; }
-    @media (min-width: 992px) { padding: 4rem 5rem; }
+    @media (min-width: 576px) { 
+      padding: 1.5rem 2rem; 
+      text-align: center;
+    }
+    @media (min-width: 768px) { padding: 3rem 4rem; 
+      text-align: center;}
+    @media (min-width: 992px) { padding: 4rem 5rem; 
+      text-align: center;}
   }
 
+  // ── Tag: Hidden on mobile, visible on desktop ─────────────────────
   &__tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    border: 1.5px solid;
-    border-radius: 2px;
-    padding: 0.2em 0.7em;
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    background: rgba(255,255,255,0.1);
+    display: none;
+    
+    @media (min-width: 576px) {
+      display: inline-block;
+      font-size: clamp(0.7rem, 2vw, 0.75rem);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 2px;
+      padding: 0.2em 0.7em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      backdrop-filter: blur(2px);
+    }
   }
 
+  // ── Title: Single line on mobile, responsive font ─────────────────
   &__title {
     font-family: 'Hind Siliguri', sans-serif;
-    font-size: clamp(1.4rem, 3.5vw, 2.6rem);
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 700;
     line-height: 1.2;
     color: #fff;
-    margin-bottom: 0.35rem;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    margin-bottom: 0.75rem;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    
+    // ✅ Force single line on mobile
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+
+    @media (min-width: 576px) {
+      font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      // ✅ Allow normal wrap on desktop
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+    }
   }
 
+  // ── English Title: Desktop only ───────────────────────────────────
   &__title-en {
-    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-    font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 0.5rem;
+    display: none;
+    
+    @media (min-width: 576px) {
+      display: block;
+      font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
   }
 
+  // ── Subtitle: Desktop only ────────────────────────────────────────
   &__subtitle {
-    font-size: clamp(0.8rem, 1.4vw, 0.95rem);
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
+    display: none;
+    
+    @media (min-width: 576px) {
+      display: block;
+      font-size: clamp(0.85rem, 1.4vw, 1rem);
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      max-width: 500px;
+    }
   }
 
+  // ── CTA Button: Centered on mobile, left-aligned on desktop ───────
   &__cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 0.35rem;
     color: #fff;
-    font-size: 0.88rem;
+    font-size: clamp(0.75rem, 3.2vw, 0.9rem);
     font-weight: 700;
-    padding: 0.65rem 1.5rem;
+    padding: 0.25rem 1rem;
     border-radius: 4px;
     text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
-    letter-spacing: 0.03em;
+    transition: all 0.22s ease;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    margin: 0 auto; // ✅ Center button on mobile
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+      
+      @media (min-width: 576px) {
+        width: 14px;
+        height: 14px;
+      }
+    }
 
     &:hover {
-      opacity: 0.88;
-      transform: translateX(3px);
+      opacity: 0.92;
+      transform: translateX(2px);
       color: #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      
+      svg {
+        transform: translateX(2px);
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    @media (min-width: 576px) {
+      font-size: 0.9rem;
+      gap: 0.5rem;
+      padding: 0.7rem 1.75rem;
+      margin: 0; // ✅ Reset centering on desktop
+      justify-content: flex-start;
+      
+      &:hover {
+        transform: translateX(3px);
+      }
     }
   }
 }
 
-// ── Custom nav buttons ─────────────────────────────────────────────
+// ── Custom Navigation Buttons ──────────────────────────────────────
 .hero-btn {
   position: absolute;
   top: 50%;
@@ -110,87 +202,229 @@
   align-items: center;
   justify-content: center;
 
-  // Size
-  width: 46px;
-  height: 46px;
+  // Mobile: compact buttons
+  width: 28px;
+  height: 28px;
 
-  // Style — semi-transparent dark pill
   background: rgba(0, 0, 0, 0.35);
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   color: #fff;
   cursor: pointer;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  transition: background 0.22s ease, border-color 0.22s ease,
-              transform 0.22s ease, box-shadow 0.22s ease;
+  transition: all 0.22s ease;
 
-  // Hover — brand orange fill
+  svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    stroke-width: 2.2;
+  }
+
   &:hover {
-    background: #FF6503;
-    border-color: #FF6503;
+    background: #FF6600;
+    border-color: #FF6600;
     box-shadow: 0 4px 18px rgba(255, 101, 3, 0.45);
     transform: translateY(-50%) scale(1.08);
   }
 
-  // Active press
   &:active {
     transform: translateY(-50%) scale(0.95);
   }
 
-  // Position — left edge
   &--prev {
-    left: 16px;
-
-    @media (min-width: 992px) { left: 24px; }
+    left: 8px;
+    
+    @media (min-width: 576px) {
+      left: 16px;
+      width: 46px;
+      height: 46px;
+      
+      svg { 
+        width: 18px; 
+        height: 18px; 
+      }
+    }
+    
+    @media (min-width: 992px) { 
+      left: 24px; 
+    }
   }
 
-  // Position — right edge
   &--next {
-    right: 16px;
-
-    @media (min-width: 992px) { right: 24px; }
+    right: 8px;
+    
+    @media (min-width: 576px) {
+      right: 16px;
+      width: 46px;
+      height: 46px;
+      
+      svg { 
+        width: 18px; 
+        height: 18px; 
+      }
+    }
+    
+    @media (min-width: 992px) { 
+      right: 24px; 
+    }
   }
-
-  svg { flex-shrink: 0; }
 }
 
-// ── Custom pagination dots ─────────────────────────────────────────
+// ── Custom Pagination Dots ─────────────────────────────────────────
 .hero-dots {
   position: absolute;
-  bottom: 18px;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(2px);
+
+  @media (min-width: 576px) {
+    bottom: 18px;
+    gap: 6px;
+    padding: 0.4rem 0.75rem;
+  }
 
   &__dot {
     display: block;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.5);
     border: none;
     padding: 0;
     cursor: pointer;
-    transition: width 0.3s ease, background 0.3s ease;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+
+    @media (min-width: 576px) {
+      width: 8px;
+      height: 8px;
+    }
 
     &--active {
-      width: 26px;
+      width: 18px;
       border-radius: 4px;
-      background: #FF6503;
+      background: #FF6600;
+      box-shadow: 0 2px 6px rgba(255, 101, 3, 0.4);
+
+      @media (min-width: 576px) {
+        width: 26px;
+      }
     }
 
     &:hover:not(.hero-dots__dot--active) {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    &:focus {
+      outline: 2px solid #FF6600;
+      outline-offset: 2px;
     }
   }
 }
 
-// ── Fade-in animation ──────────────────────────────────────────────
+// ── Fade-in Up Animation ───────────────────────────────────────────
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(12px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+// ── Extra Small Screens (<360px) ───────────────────────────────────
+@media (max-width: 359px) {
+  .hero-slider {
+    &__swiper {
+      height: 140px;
+    }
+    
+    &__content { 
+      padding: 0.4rem 0.8rem; 
+    }
+    
+    &__title { 
+      font-size: clamp(0.85rem, 6.5vw, 2.6rem); 
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.02em; // Tighten for very small screens
+    }
+    
+    &__cta { 
+      font-size: 0.7rem; 
+      padding: 0.35rem 0.85rem; 
+      
+      svg { 
+        width: 10px; 
+        height: 10px; 
+      }
+    }
+  }
+  
+  .hero-btn {
+    width: 26px;
+    height: 26px;
+    
+    svg {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  
+  .hero-dots {
+    bottom: 6px;
+    gap: 3px;
+    
+    &__dot {
+      width: 5px;
+      height: 5px;
+      
+      &--active {
+        width: 14px;
+      }
+    }
+  }
+}
+
+// ── High DPI / Retina Display Optimization ─────────────────────────
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-slider {
+    &__slide {
+      background-size: cover;
+      background-position: center center;
+    }
+  }
+}
+
+// ── Reduced Motion Preference (Accessibility) ──────────────────────
+@media (prefers-reduced-motion: reduce) {
+  .hero-slider {
+    &__content {
+      animation: none !important;
+    }
+  }
+  
+  .hero-btn,
+  .hero-dots__dot,
+  .hero-slider__cta {
+    transition: none !important;
+  }
+}
+
+// ── Print Styles (Hide interactive elements) ───────────────────────
+@media print {
+  .hero-slider {
+    display: none;
+  }
 }
