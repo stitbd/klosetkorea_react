@@ -5,6 +5,7 @@ import Footer from '../components/layout/Footer/Footer';
 
 const HomePage            = lazy(() => import('../pages/Home/HomePage'));
 const ProductDetails      = lazy(() => import('../pages/ProductDetails/ProductDetailsPage'));
+const DemoProductDetails  = lazy(() => import('../pages/ProductDetails/DemoProductDetailsPage'));
 const CatagoryProductPage = lazy(() => import('../pages/CategoryPage/CatagoryProductPage'));
 const CartPage            = lazy(() => import('../pages/Cart/CartPage'));
 const CheckoutPage        = lazy(() => import('../pages/Checkout/CheckoutPage'));
@@ -28,6 +29,7 @@ const AppRoutes = () => (
 
         {/* Product detail */}
         <Route path="/product/:slug"         element={<ProductDetails />} />
+        <Route path="/demo-product/:slug"         element={<DemoProductDetails />} />
 
         {/* ── Category page — all nav/sub/child menus ── */}
         {/* Pattern: /categories/:slug  e.g. /categories/panjabi */}
