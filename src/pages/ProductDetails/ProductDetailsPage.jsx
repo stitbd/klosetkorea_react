@@ -29,6 +29,7 @@ const mockRelated = Array.from({ length: 6 }, (_, i) => ({
 
 const ProductDetailsPage = () => {
   const { slug }                          = useParams();
+  
   const [product, setProduct]             = useState(null);
   const [loading, setLoading]             = useState(true);
   const [qty, setQty]                     = useState(1);
@@ -76,6 +77,8 @@ const ProductDetailsPage = () => {
     const y = Math.min(100, Math.max(0, ((e.clientY - rect.top) / rect.height) * 100));
     setZoomPos({ x, y });
   }, []);
+
+
 
   const handleMouseEnter = useCallback((img) => {
     setActiveImg(img);

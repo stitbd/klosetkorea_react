@@ -6,11 +6,13 @@ import NewArrivalsSlider  from './sections/NewArrivalsSlider';
 import {
   useNewArrivals,
 } from '../../features/products/hooks/useProducts';
- 
-const HomePage = () => (
-  <main>
+ import { useHomeData } from './useHomeData';
+const HomePage = () => {
+   const { data } = useHomeData();
+    return (
+    <main>
     {/* 1. Hero Slider */}
-    <HeroSlider />
+    <HeroSlider   banners={data?.banners || []} />
 
  {/* 3. New Arrivals */}
     <NewArrivalsSlider
@@ -25,6 +27,8 @@ const HomePage = () => (
     {/* Trust / USP bar */}
     <TrustBar />
   </main>
-);
+  );
+ 
+};
 
 export default HomePage;
