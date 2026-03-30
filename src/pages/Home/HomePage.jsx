@@ -23,7 +23,7 @@ const HomePage = () => (
     <FeaturedCategories />
 
     {/* Trust / USP bar */}
-    <TrustBar />
+    {/* <TrustBar /> */}
   </main>
 );
 

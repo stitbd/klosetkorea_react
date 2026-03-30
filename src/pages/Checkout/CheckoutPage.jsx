@@ -19,7 +19,7 @@ const BD_LOCATIONS = {
     "Rangamati", "Bandarban"
   ],
   Rajshahi: [
-    "Rajshahi", "Bogra", "Pabna", "Natore",
+    "Rajshahi", "Bogra", "Sirajganj", "Pabna", "Natore",
     "Chapainawabganj", "Joypurhat", "Naogaon"
   ],
   Sylhet: [

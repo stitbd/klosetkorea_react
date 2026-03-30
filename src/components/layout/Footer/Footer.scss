@@ -3,13 +3,14 @@
   color: var(--brand-black);
   margin-top: 3rem;
 
+  // ── Main Container ──────────────────────────────────────
   &__main {
     border-bottom: 1px solid #ddd;
   }
 
   // ── Logo ─────────────────────────────────────────────────
   &__logo-img {
-    height: 35px;
+    height: 45px;
     width: auto;
     display: block;
     object-fit: contain;
@@ -37,6 +38,7 @@
 
     &:hover {
       border-color: #FF6600;
+      background: #fff;
     }
   }
 
@@ -44,7 +46,9 @@
     width: 16px;
     height: 16px;
     object-fit: contain;
-    filter: brightness(0) invert(1);
+    // Inverts icons to white if background is dark, 
+    // remove filter if your icons are already colored
+    filter: brightness(0) invert(1); 
   }
 
   // ── Contact ──────────────────────────────────────────────
@@ -54,27 +58,75 @@
     margin-bottom: 0;
   }
 
-  &__contact li {
-    font-size: 0.85rem;
-    margin-bottom: 0.4rem;
-    color: var(--brand-black);
+  &__contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      color: var(--brand-black);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 
   // ── Headings ─────────────────────────────────────────────
+  &__heading-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+
   &__heading {
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     color: #000000;
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #ddd;
+    margin: 0;
+    padding: 0;
+    border: none; // Border moved to wrapper
+  }
+
+  // ── SSLCOMMERZ Logo (Right of Heading) ───────────────────
+  &__sslcommerz-logo {
+    height: 22px;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
+    display: block;
+    background: none !important;
+    border: none !important;
+    padding: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+      transform: scale(1.03);
+      opacity: 0.9;
+    }
+
+    // Mobile adjustment
+    @media (max-width: 575px) {
+      height: 22px;
+      max-width: 70px;
+    }
   }
 
   // ── Links ────────────────────────────────────────────────
-  &__links li {
-    margin-bottom: 0.5rem;
+  &__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
   }
 
   &__link {
@@ -85,6 +137,7 @@
 
     &:hover {
       color: #FF6600;
+      text-decoration: underline;
     }
   }
 
@@ -92,17 +145,124 @@
   &__payments {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.2rem;
+    align-items: center;
   }
 
   &__payment-badge {
     background: #fff;
     border: 1px solid #ddd;
-    color: var(--brand-black);
-    font-size: 0.72rem;
-    font-weight: 600;
-    padding: 0.25rem 0.6rem;
-    border-radius: 3px;
+    border-radius: 4px;
+    padding: 0.25rem 0.50rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    height: 26px; // Fixed height for alignment
+
+    &:hover {
+      border-color: #FF6600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+  }
+
+  &__payment-img {
+    height: 18px;
+    width: auto;
+    max-width: 40px;
+    object-fit: contain;
+    display: block;
+  }
+
+  // ── Newsletter Signup ────────────────────────────────────
+  &__newsletter-text {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  &__newsletter-form {
+    margin-top: 0.5rem;
+  }
+
+  &__newsletter-input-group {
+    display: flex;
+    gap: 0;
+    border: 1px solid #ddd;
+    background: #fff;
+    
+    &:focus-within {
+      border-color: #FF6600;
+      box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+    }
+  }
+
+  &__newsletter-input {
+    flex: 1;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    color: #333;
+    background: transparent;
+    outline: none;
+    
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  &__newsletter-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    white-space: nowrap;
+
+    &:hover {
+      background: #FF6600;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__newsletter-message {
+    font-size: 0.8rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    padding: 0.5rem;
+    border-radius: 4px;
+    
+    &--success {
+      color: #28a745;
+      background: rgba(40, 167, 69, 0.1);
+    }
+    
+    &--error {
+      color: #dc3545;
+      background: rgba(220, 53, 69, 0.1);
+    }
+  }
+
+  // Mobile responsiveness for newsletter
+  @media (max-width: 575px) {
+    &__newsletter-input {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.85rem;
+    }
+    
+    &__newsletter-btn {
+      padding: 0.65rem 1rem;
+      font-size: 0.75rem;
+    }
   }
 
   // ── Bottom bar ───────────────────────────────────────────
@@ -111,10 +271,20 @@
     font-size: 0.8rem;
     color: #666;
     border-top: 1px solid #ddd;
+    background: #f5f5f5; // Ensure consistency
+
+    p {
+      line-height: 1.5;
+    }
   }
 
   &__brand {
     color: #FF6600;
     font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
