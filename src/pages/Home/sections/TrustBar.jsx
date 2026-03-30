@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './TrustBar.scss';
 
 const FEATURES = [
-  { icon: '🚚', title: 'Free Delivery', sub: 'On orders above ৳3,000' },
+  { icon: '🚚', title: 'Free Delivery', sub: 'On orders above ৳8,500' },
   { icon: '🔄', title: 'Easy Returns',  sub: '7-day hassle-free return' },
   { icon: '🔒', title: '100% Secure',   sub: 'SSL secured checkout' },
 ];

@@ -76,11 +76,11 @@ const NewArrivalsSlider = ({
           loop
           speed={650}
           spaceBetween={10}
-          slidesPerView={1.3}
+          slidesPerView={2.7}
           centeredSlides={true}
           breakpoints={{
             768: {
-              slidesPerView: 3.4,
+              slidesPerView: 3.5,
               centeredSlides: true,
               spaceBetween: 10,
             },
