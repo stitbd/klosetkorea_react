@@ -1,7 +1,8 @@
 .site-footer {
   background: #f5f5f5;
-  color: var(--brand-black);
+  color: var(--brand-black, #000);
   margin-top: 3rem;
+  font-family: inherit;
 
   // ── Main Container ──────────────────────────────────────
   &__main {
@@ -20,44 +21,7 @@
     }
   }
 
-  // ── Social Media ─────────────────────────────────────────
-  &__social {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  &__social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid #fff;
-    border-radius: 50%;
-    transition: border-color 0.2s, background 0.2s;
-
-    &:hover {
-      border-color: #FF6600;
-      background: #fff;
-    }
-  }
-
-  &__social-img {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
-    // Inverts icons to white if background is dark, 
-    // remove filter if your icons are already colored
-    filter: brightness(0) invert(1); 
-  }
-
   // ── Contact ──────────────────────────────────────────────
-  &__tagline {
-    font-size: 0.82rem;
-    color: #000000;
-    margin-bottom: 0;
-  }
-
   &__contact {
     list-style: none;
     padding: 0;
@@ -66,7 +30,7 @@
     li {
       font-size: 0.85rem;
       margin-bottom: 0.4rem;
-      color: var(--brand-black);
+      color: var(--brand-black, #000);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -87,34 +51,24 @@
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #000000;
+    color: #000;
     text-transform: uppercase;
     margin: 0;
     padding: 0;
-    border: none; // Border moved to wrapper
   }
 
-  // ── SSLCOMMERZ Logo (Right of Heading) ───────────────────
+  // ── SSLCOMMERZ Logo ──────────────────────────────────────
   &__sslcommerz-logo {
     height: 22px;
     width: auto;
-    max-width: 90px;
+    max-width: 55px;
     object-fit: contain;
     display: block;
-    background: none !important;
-    border: none !important;
-    padding: 0;
     transition: transform 0.2s ease, opacity 0.2s ease;
 
     &:hover {
       transform: scale(1.03);
       opacity: 0.9;
-    }
-
-    // Mobile adjustment
-    @media (max-width: 575px) {
-      height: 22px;
-      max-width: 70px;
     }
   }
 
@@ -130,7 +84,7 @@
   }
 
   &__link {
-    color: #000000;
+    color: #000;
     font-size: 0.85rem;
     text-decoration: none;
     transition: color 0.2s;
@@ -153,12 +107,12 @@
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0.25rem 0.50rem;
+    padding: 0.30rem 0.55rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    height: 26px;
     transition: border-color 0.2s, box-shadow 0.2s;
-    height: 26px; // Fixed height for alignment
 
     &:hover {
       border-color: #FF6600;
@@ -169,12 +123,12 @@
   &__payment-img {
     height: 18px;
     width: auto;
-    max-width: 40px;
+    max-width: 45px;
     object-fit: contain;
     display: block;
   }
 
-  // ── Newsletter Signup ────────────────────────────────────
+  // ── Newsletter Signup ───────────────────────────────────
   &__newsletter-text {
     font-size: 0.85rem;
     color: #666;
@@ -186,33 +140,33 @@
     margin-top: 0.5rem;
   }
 
-  &__newsletter-input-group {
-    display: flex;
-    gap: 0;
+  &__newsletter-input-wrapper {
+    margin-bottom: 0.75rem;
+  }
+
+  &__newsletter-input {
+    width: 100%;
     border: 1px solid #ddd;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    color: #333;
     background: #fff;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
     
-    &:focus-within {
+    &::placeholder {
+      color: #999;
+    }
+    
+    &:focus {
       border-color: #FF6600;
       box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
     }
   }
 
-  &__newsletter-input {
-    flex: 1;
-    border: none;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-    color: #333;
-    background: transparent;
-    outline: none;
-    
-    &::placeholder {
-      color: #999;
-    }
-  }
-
   &__newsletter-btn {
+    width: 100%;
     background: #000;
     color: #fff;
     border: none;
@@ -223,7 +177,7 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
-    white-space: nowrap;
+    border-radius: 4px;
 
     &:hover {
       background: #FF6600;
@@ -240,6 +194,7 @@
     margin-bottom: 0;
     padding: 0.5rem;
     border-radius: 4px;
+    text-align: center;
     
     &--success {
       color: #28a745;
@@ -249,6 +204,88 @@
     &--error {
       color: #dc3545;
       background: rgba(220, 53, 69, 0.1);
+    }
+  }
+
+  // ── ✅ BOTTOM BAR - SOCIAL LEFT, COPYRIGHT RIGHT ─────────
+  &__bottom {
+    padding: 1rem 0;
+    font-size: 0.8rem;
+    color: #666;
+    border-top: 1px solid #ddd;
+    background: #f5f5f5;
+
+    .site-footer__bottom-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      @media (max-width: 767px) {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+      }
+    }
+
+    // ✅ Social Icons Container - Bottom Bar
+    .site-footer__social-bottom {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      @media (max-width: 767px) {
+        justify-content: center;
+      }
+    }
+
+    // ✅ Social Link - Bottom Bar
+    .site-footer__social-link-bottom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #fff; // Dark background for contrast
+      border-radius: 50%;
+      transition: background 0.2s, transform 0.2s;
+      padding: 1px;
+
+      &:hover {
+        background: #FF6600;
+        transform: translateY(-2px);
+      }
+    }
+
+    // ✅ Social Icon Image - Bottom Bar (NO FILTER - shows original colors)
+    .site-footer__social-icon-bottom {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+      // ❌ REMOVED: filter: brightness(0) invert(1); - was hiding icons!
+    }
+
+    // ✅ Copyright Text
+    .site-footer__copyright {
+      margin: 0;
+      line-height: 1.5;
+      color: #666;
+
+      @media (max-width: 767px) {
+        order: 2;
+      }
+    }
+  }
+
+  &__brand {
+    color: #FF6600;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 
@@ -262,29 +299,6 @@
     &__newsletter-btn {
       padding: 0.65rem 1rem;
       font-size: 0.75rem;
-    }
-  }
-
-  // ── Bottom bar ───────────────────────────────────────────
-  &__bottom {
-    padding: 1rem 0;
-    font-size: 0.8rem;
-    color: #666;
-    border-top: 1px solid #ddd;
-    background: #f5f5f5; // Ensure consistency
-
-    p {
-      line-height: 1.5;
-    }
-  }
-
-  &__brand {
-    color: #FF6600;
-    font-weight: 700;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
     }
   }
 }

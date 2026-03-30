@@ -13,6 +13,8 @@ import { formatPrice, PLACEHOLDER_IMG } from '../../utils';
 import './ProductDetailsPage.scss';
 
 import productImgAsset from '../../assets/images/products/01.jpg';
+import measurementGuide from '../../assets/images/measurement-guide.jpg';
+
 const localProductImg = productImgAsset || PLACEHOLDER_IMG;
 
 // ─── Mock related products ────────────────────────────────────────
@@ -27,9 +29,84 @@ const mockRelated = Array.from({ length: 6 }, (_, i) => ({
   inStock:       true,
 }));
 
+// ─── Size Guide Modal ─────────────────────────────────────────────
+const SizeGuideModal = ({ onClose }) => {
+  // Close on Escape key
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  return (
+    <div className="sg-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="sg-modal" role="dialog" aria-modal="true" aria-label="Size Guide">
+
+        {/* ── Header ── */}
+        <div className="sg-modal__header">
+          <div className="sg-modal__header-left">
+            <span className="sg-modal__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 9l20-7-7 20-3-8-10-5z"/>
+              </svg>
+            </span>
+            <div>
+              <h2 className="sg-modal__title">Size Guide</h2>
+              <p className="sg-modal__subtitle">Measurement chart</p>
+            </div>
+          </div>
+          <button className="sg-modal__close" onClick={onClose} aria-label="Close size guide">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* ── Body (Image Only - No Scroll) ── */}
+        <div className="sg-modal__body">
+          <div className="sg-modal__img-wrap">
+            <img
+              src={measurementGuide}
+              alt="Size measurement chart"
+              className="sg-modal__img"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+              draggable={false}
+            />
+            {/* Fallback if image fails */}
+            <div className="sg-modal__img-fallback" style={{ display: 'none' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#ddd" strokeWidth="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="12" cy="12" r="2"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+              <p>Chart not found.<br/>
+                <small><code>assets/images/measurement-guide.jpg</code></small>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+
+// ─── Main Component ───────────────────────────────────────────────
 const ProductDetailsPage = () => {
-  const { slug }                          = useParams();
-  
+  const { slug } = useParams();
+
   const [product, setProduct]             = useState(null);
   const [loading, setLoading]             = useState(true);
   const [qty, setQty]                     = useState(1);
@@ -37,6 +114,7 @@ const ProductDetailsPage = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [thumbsSwiper, setThumbsSwiper]   = useState(null);
   const [relatedProducts]                 = useState(mockRelated);
+  const [showSizeGuide, setShowSizeGuide] = useState(false); // ← NEW
   const addToCart                         = useCartStore((s) => s.addToCart);
 
   // ── Hover Zoom state ─────────────────────────────────────────────
@@ -70,15 +148,12 @@ const ProductDetailsPage = () => {
       .finally(() => setLoading(false));
   }, [slug]);
 
-  // ── Zoom mouse handlers ───────────────────────────────────────────
   const handleMouseMove = useCallback((e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = Math.min(100, Math.max(0, ((e.clientX - rect.left) / rect.width) * 100));
     const y = Math.min(100, Math.max(0, ((e.clientY - rect.top) / rect.height) * 100));
     setZoomPos({ x, y });
   }, []);
-
-
 
   const handleMouseEnter = useCallback((img) => {
     setActiveImg(img);
@@ -96,9 +171,7 @@ const ProductDetailsPage = () => {
   const images = product ? getImages(product.image) : [localProductImg];
 
   if (loading) return (
-    <div className="pdp-loader">
-      <div className="pdp-spinner" />
-    </div>
+    <div className="pdp-loader"><div className="pdp-spinner" /></div>
   );
 
   if (!product) return (
@@ -110,6 +183,9 @@ const ProductDetailsPage = () => {
 
   return (
     <main className="pdp">
+      {/* ── Size Guide Modal ── */}
+      {showSizeGuide && <SizeGuideModal onClose={() => setShowSizeGuide(false)} />}
+
       <Container fluid="xl" className="py-3">
 
         {/* ── Breadcrumb + Back ── */}
@@ -133,18 +209,9 @@ const ProductDetailsPage = () => {
 
           {/* ── Left: Image Gallery ── */}
           <Col xs={12} md={6}>
-            {/*
-              pdp__gallery-wrap is a NEW wrapper that holds both:
-              1. The main gallery (image + thumbs)
-              2. The zoom result panel (appears to the RIGHT on desktop)
-              position: relative on this wrapper lets the zoom panel
-              be absolutely positioned beside the gallery.
-            */}
             <div className="pdp__gallery-wrap">
-
               <div className="pdp__gallery">
 
-                {/* Main image swiper */}
                 <div className="pdp__main-swiper-wrap">
                   <button className="pdp__nav-btn pdp__nav-btn--prev pdp__nav-btn--main-prev" aria-label="Previous image">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -162,7 +229,6 @@ const ProductDetailsPage = () => {
                   >
                     {images.map((img, i) => (
                       <SwiperSlide key={i}>
-                        {/* ── Hover zone: mouse events live here ── */}
                         <div
                           className={`pdp__main-img-wrap ${isZooming ? 'pdp__main-img-wrap--zooming' : ''}`}
                           onMouseMove={handleMouseMove}
@@ -170,16 +236,10 @@ const ProductDetailsPage = () => {
                           onMouseLeave={handleMouseLeave}
                         >
                           {product.badge && <span className="pdp__badge">{product.badge}</span>}
-
-                          {/* Lens square that follows the cursor */}
                           <div
                             className={`pdp__zoom-lens ${isZooming ? 'pdp__zoom-lens--visible' : ''}`}
-                            style={{
-                              left: `${zoomPos.x}%`,
-                              top:  `${zoomPos.y}%`,
-                            }}
+                            style={{ left: `${zoomPos.x}%`, top: `${zoomPos.y}%` }}
                           />
-
                           <img
                             src={img}
                             alt={`${product.name} view ${i + 1}`}
@@ -187,8 +247,6 @@ const ProductDetailsPage = () => {
                             onError={(e) => { e.target.src = PLACEHOLDER_IMG; }}
                             draggable={false}
                           />
-
-                          {/* "Hover to zoom" hint — only when not zooming */}
                           <span className={`pdp__zoom-hint ${isZooming ? 'pdp__zoom-hint--hidden' : ''}`}>
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                               <circle cx="11" cy="11" r="8"/>
@@ -204,7 +262,6 @@ const ProductDetailsPage = () => {
                   </Swiper>
                 </div>
 
-                {/* Thumbnails swiper */}
                 <div className="pdp__thumb-swiper-wrap">
                   <button className="pdp__nav-btn pdp__nav-btn--sm pdp__nav-btn--thumb-prev" aria-label="Previous">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -225,21 +282,15 @@ const ProductDetailsPage = () => {
                     {images.map((img, i) => (
                       <SwiperSlide key={i}>
                         <div className="pdp__thumb-wrap">
-                          <img
-                            src={img}
-                            alt={`thumb ${i + 1}`}
-                            className="pdp__thumb-img"
-                            onError={(e) => { e.target.src = PLACEHOLDER_IMG; }}
-                          />
+                          <img src={img} alt={`thumb ${i + 1}`} className="pdp__thumb-img"
+                            onError={(e) => { e.target.src = PLACEHOLDER_IMG; }} />
                         </div>
                       </SwiperSlide>
                     ))}
                   </Swiper>
                 </div>
+              </div>
 
-              </div>{/* end .pdp__gallery */}
-
-              {/* ── Zoom result panel — floats to the RIGHT of the gallery ── */}
               <div
                 className={`pdp__zoom-result ${isZooming ? 'pdp__zoom-result--visible' : ''}`}
                 style={{
@@ -250,19 +301,13 @@ const ProductDetailsPage = () => {
                 }}
                 aria-hidden="true"
               />
+            </div>
 
-            </div>{/* end .pdp__gallery-wrap */}
-
-            {/* Description card below gallery */}
             <div className="pdp__desc-card mt-3">
               <h5 className="pdp__desc-title">Product Description</h5>
               <p className="pdp__desc-name">{product.name}</p>
-              {product.description && (
-                <p className="pdp__desc-text">{product.description}</p>
-              )}
-              {product.sizes && (
-                <p className="pdp__desc-text">🔖 Size: {product.sizes.join(', ')}</p>
-              )}
+              {product.description && <p className="pdp__desc-text">{product.description}</p>}
+              {product.sizes && <p className="pdp__desc-text">🔖 Size: {product.sizes.join(', ')}</p>}
             </div>
           </Col>
 
@@ -311,7 +356,26 @@ const ProductDetailsPage = () => {
 
               {product.sizes?.length > 0 && (
                 <div className="pdp__size-row">
-                  <span className="pdp__size-label">Select Your Size: <strong>{selectedSize || ''}</strong></span>
+                  {/* ── Label row with Size Guide button ── */}
+                  <div className="pdp__size-label-row">
+                    <span className="pdp__size-label">
+                      Select Your Size: <strong>{selectedSize || ''}</strong>
+                    </span>
+                    {/* ══ SIZE GUIDE BUTTON ══ */}
+                    <button
+                      type="button"
+                      className="pdp__size-guide-trigger"
+                      onClick={() => setShowSizeGuide(true)}
+                      aria-label="Open size guide"
+                    >
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 10H7M21 6H3M21 14H3M21 18H7"/>
+                      </svg>
+                      Size Guide
+                    </button>
+                  </div>
+
                   <div className="pdp__sizes">
                     {product.sizes.map((s) => (
                       <button key={s}
@@ -359,6 +423,7 @@ const ProductDetailsPage = () => {
                 </div>
               )}
 
+              {/* ── QUANTITY ROW with Size Guide shortcut ── */}
               <div className="pdp__qty-row">
                 <span className="pdp__qty-label">QUANTITY</span>
                 <div className="pdp__qty-ctrl">
@@ -366,6 +431,23 @@ const ProductDetailsPage = () => {
                   <span>{qty}</span>
                   <button onClick={() => setQty((q) => q + 1)}>+</button>
                 </div>
+                {/* ── Size Guide pill beside qty ── */}
+                {/* <button
+                  type="button"
+                  className="pdp__qty-size-guide"
+                  onClick={() => setShowSizeGuide(true)}
+                  aria-label="View size guide"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10H7M21 6H3M21 14H3M21 18H7"/>
+                  </svg>
+                  Size Guide
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                </button> */}
               </div>
 
               <div className="pdp__actions">
@@ -375,7 +457,7 @@ const ProductDetailsPage = () => {
                 <Link to="/cart" className="pdp__btn pdp__btn--buy">Buy Now</Link>
               </div>
 
-              <div className="pdp__secondary-actions">
+              {/* <div className="pdp__secondary-actions">
                 <a href="tel:+8801886899103" className="pdp__action-btn pdp__action-btn--call">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 19.79 19.79 0 016.07 2.18 2 2 0 018 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L12.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.16v2.76z"/></svg>
                   Call Now
@@ -389,7 +471,7 @@ const ProductDetailsPage = () => {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.145 0 11.5c0 3.564 1.741 6.746 4.472 8.845V24l4.086-2.242c1.09.301 2.246.465 3.442.465C19.627 22.223 24 17.077 24 10.722 24 5.148 18.627 0 12 0zm1.19 14.963l-3.055-3.26-5.963 3.26L10.732 8.5l3.133 3.26L19.752 8.5l-6.562 6.463z"/></svg>
                   Messenger Order
                 </a>
-              </div>
+              </div> */}
 
             </div>
           </Col>
