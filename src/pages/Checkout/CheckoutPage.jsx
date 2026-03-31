@@ -20,7 +20,7 @@ const BD_LOCATIONS = {
   ],
   Rajshahi: [
     "Rajshahi", "Bogra", "Sirajganj", "Pabna", "Natore",
-    "Chapainawabganj", "Joypurhat", "Naogaon"
+    "Joypurhat", "Naogaon", "Chapainawabganj"
   ],
   Sylhet: [
     "Sylhet", "Moulvibazar", "Habiganj", "Sunamganj"
@@ -62,6 +62,7 @@ const CheckoutPage = () => {
     city: '',
     note: '',
     payment: 'cod',
+    agreed: false,
   });
 
   const [coupon, setCoupon] = useState('');
@@ -245,7 +246,48 @@ const CheckoutPage = () => {
                     </label>
                   ))}
                 </div>
-
+                {/* ✅ Terms Agreement Checkbox */}
+                <Form.Group className="checkout-page__agreement mt-3">
+                  <Form.Check
+                    type="checkbox"
+                    id="agreeTerms"
+                    label={
+                      <>
+                        I have read and agree to the website{' '}
+                        <Link 
+                          to="/terms-conditions" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="checkout-page__policy-link"
+                        >
+                          Terms and Conditions
+                        </Link>
+                        ,{' '}
+                        <Link 
+                          to="/returns" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="checkout-page__policy-link"
+                        >
+                          Refund Policy 
+                        </Link>
+                        {' '} and{' '}
+                        <Link 
+                          to="/privacy-policy" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="checkout-page__policy-link"
+                        >
+                          Privacy Policy
+                        </Link>
+                        .
+                      </>
+                    }
+                    checked={form.agreed}
+                    onChange={(e) => setForm((f) => ({ ...f, agreed: e.target.checked }))}
+                    required
+                  />
+                </Form.Group>
                 <button className="checkout-page__submit-btn mt-4">
                   Place Order →
                 </button>

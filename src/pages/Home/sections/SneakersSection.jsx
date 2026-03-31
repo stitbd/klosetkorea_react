@@ -4,16 +4,18 @@ import SectionHeader from '../../../components/ui/SectionHeader/SectionHeader';
 import ProductGrid from '../../../components/ui/ProductGrid/ProductGrid';
 import { useWallets } from '../../../features/products/hooks/useProducts';
 
-const WalletSection = () => {
+const SneakersSection = () => {
   const { products, loading } = useWallets();
+  const limitedProducts = products?.slice(0, 4); // 👈 ONLY 1 ROW
+  
   return (
     <section className="section-wrapper">
       <Container fluid="xl">
         <SectionHeader title="SNEAKERS" viewAllLink="/category/sneakers" />
-        <ProductGrid products={products} loading={loading} cols={4} />
+        <ProductGrid products={limitedProducts} loading={loading} cols={4} />
       </Container>
     </section>
   );
 };
 
-export default WalletSection;
+export default SneakersSection;

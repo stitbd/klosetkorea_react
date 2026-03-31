@@ -1,5 +1,5 @@
 .checkout-page {
-  background: #fafafa;
+  background: #fff;
   min-height: 60vh;
 
   &__title {
@@ -120,6 +120,42 @@
     }
 
     &:hover { border-color: var(--brand-red); }
+  }
+  &__agreement {
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.5;
+
+    a {
+      color: var(--brand-red, #c8102e);
+      text-decoration: none;
+      font-weight: 600; // ✅ Bold policy links
+      transition: color 0.2s ease;
+
+      &:hover {
+        text-decoration: underline;
+        color: var(--brand-red-dark, #a00d26);
+      }
+    }
+
+    .form-check-input {
+      margin-top: 0.2rem;
+      border-color: #ccc;
+      cursor: pointer;
+
+      &:checked {
+        background-color: var(--brand-red, #c8102e);
+        border-color: var(--brand-red, #c8102e);
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.15);
+      }
+    }
+  }
+  
+  &__policy-link {
+    font-weight: 600; // ✅ Extra specificity for bold links
   }
 
   &__submit-btn {

@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import { useNewArrivals } from '../../../features/products/hooks/useProducts';
+import SectionHeader from '../../../components/ui/SectionHeader/SectionHeader';
 import './NewArrivalsSlider.scss';
 
 const NewArrivalsSlider = ({
@@ -44,6 +45,7 @@ const NewArrivalsSlider = ({
         <h2 className="na__title">{title}</h2>
         <Link to={viewAllLink} className="na__view-all">View All</Link>
       </div>
+      {/* <SectionHeader title="NEW ARRIVAL" viewAllLink="/category/sneakers" /> */}
 
       {/* Slider wrapper — full bleed */}
       <div className="na__slider-wrap">

@@ -1,4 +1,3 @@
-// CartPage.jsx
 import React, { useState, useMemo } from 'react';
 import { Container, Row, Col, Table, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -16,7 +15,7 @@ const COUPONS = {
 
 const CartPage = () => {
   const { items, removeFromCart, updateQty, clearCart } = useCartStore();
-  
+
   // ✅ Coupon State Management
   const [showCoupon, setShowCoupon] = useState(false);
   const [couponCode, setCouponCode] = useState('');
@@ -31,18 +30,12 @@ const CartPage = () => {
 
   const discount = useMemo(() => {
     if (!appliedCoupon || !COUPONS[appliedCoupon]) return 0;
-    
     const coupon = COUPONS[appliedCoupon];
-    if (coupon.type === 'fixed') {
-      return Math.min(coupon.value, subtotal);
-    }
-    if (coupon.type === 'percent') {
-      return (subtotal * coupon.value) / 100;
-    }
+    if (coupon.type === 'fixed') return Math.min(coupon.value, subtotal);
+    if (coupon.type === 'percent') return (subtotal * coupon.value) / 100;
     return 0;
   }, [appliedCoupon, subtotal]);
 
-  // ✅ Total = Subtotal - Discount (No Shipping)
   const total = useMemo(() => {
     return Math.max(0, subtotal - discount);
   }, [subtotal, discount]);
@@ -50,16 +43,12 @@ const CartPage = () => {
   // ✅ Apply Coupon Handler
   const applyCoupon = () => {
     const code = couponCode.trim().toUpperCase();
-    
     if (!code) {
       setCouponError('Please enter a coupon code');
       return;
     }
-
     setIsApplying(true);
     setCouponError('');
-
-    // Simulate API delay (remove in production)
     setTimeout(() => {
       if (COUPONS[code]) {
         setAppliedCoupon(code);
@@ -115,16 +104,16 @@ const CartPage = () => {
     <main className="cart-page" role="main">
       <Container fluid="xl" className="py-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="cart-page__title">Shopping Cart</h2>
+          <h2 className="cart-page__title">Your Cart</h2>
           <span className="text-muted small">
             {items.reduce((acc, item) => acc + item.quantity, 0)} item(s)
           </span>
         </div>
-        
+
         <Row className="g-4">
           {/* ========================================
               Cart Items Column (Left)
-              ======================================== */}
+          ======================================== */}
           <Col xs={12} lg={8}>
             <div className="cart-page__table-wrap">
               <Table responsive className="cart-page__table" role="table">
@@ -140,42 +129,47 @@ const CartPage = () => {
                 <tbody>
                   {items.map((item) => {
                     const itemTotal = item.price * item.quantity;
-                    
+
                     return (
                       <tr key={item.id}>
-                        <td>
+
+                        {/* ── Desktop: Product cell ── */}
+                        <td className="desktop-view">
                           <div className="d-flex align-items-center gap-3">
                             <img
                               src={item.image || PLACEHOLDER_IMG}
                               alt={item.name}
                               className="cart-page__item-img"
                               loading="lazy"
-                              onError={(e) => {
-                                e.target.src = PLACEHOLDER_IMG;
-                              }}
+                              onError={(e) => { e.target.src = PLACEHOLDER_IMG; }}
                             />
                             <div className="min-w-0">
                               <p className="cart-page__item-name mb-0 text-truncate" title={item.name}>
                                 {item.name}
                               </p>
+                              {item.variant && (
+                                <p className="cart-page__item-variant mb-0">{item.variant}</p>
+                              )}
                               {item.sku && (
-                                <p className="cart-page__item-sku mb-0">
-                                  SKU: {item.sku}
-                                </p>
+                                <p className="cart-page__item-sku mb-0">SKU: {item.sku}</p>
                               )}
                             </div>
                           </div>
                         </td>
-                        
-                        <td className="align-middle text-end">
-                          <span className="cart-page__price">
-                            {formatPrice(item.price)}
-                          </span>
+
+                        {/* ── Desktop: Price cell ── */}
+                        <td className="align-middle text-end desktop-view">
+                          <span className="cart-page__price">{formatPrice(item.price)}</span>
                         </td>
-                        
-                        <td className="align-middle text-center">
-                          <div className="cart-page__qty-ctrl" role="group" aria-label={`Quantity for ${item.name}`}>
-                            <button 
+
+                        {/* ── Desktop: Qty cell ── */}
+                        <td className="align-middle text-center desktop-view">
+                          <div
+                            className="cart-page__qty-ctrl"
+                            role="group"
+                            aria-label={`Quantity for ${item.name}`}
+                          >
+                            <button
                               onClick={() => handleQtyChange(item, item.quantity - 1)}
                               aria-label={`Decrease quantity of ${item.name}`}
                               disabled={item.quantity <= 1}
@@ -183,7 +177,7 @@ const CartPage = () => {
                               −
                             </button>
                             <span aria-live="polite">{item.quantity}</span>
-                            <button 
+                            <button
                               onClick={() => handleQtyChange(item, item.quantity + 1)}
                               aria-label={`Increase quantity of ${item.name}`}
                               disabled={item.quantity >= 99}
@@ -192,14 +186,14 @@ const CartPage = () => {
                             </button>
                           </div>
                         </td>
-                        
-                        <td className="align-middle text-end">
-                          <strong className="cart-page__price">
-                            {formatPrice(itemTotal)}
-                          </strong>
+
+                        {/* ── Desktop: Total cell ── */}
+                        <td className="align-middle text-end desktop-view">
+                          <strong className="cart-page__price">{formatPrice(itemTotal)}</strong>
                         </td>
-                        
-                        <td className="align-middle text-center">
+
+                        {/* ── Desktop: Remove cell ── */}
+                        <td className="align-middle text-center desktop-view">
                           <button
                             className="cart-page__remove-btn"
                             onClick={() => removeFromCart(item.id)}
@@ -209,6 +203,78 @@ const CartPage = () => {
                             ✕
                           </button>
                         </td>
+
+                        {/* ── Mobile: Full card cell ── */}
+                        <td className="mobile-view" style={{ position: 'relative' }}>
+                          <div className="mobile-product-card">
+
+                            {/* Remove button — top right corner */}
+                            <button
+                              className="mobile-remove-btn"
+                              onClick={() => removeFromCart(item.id)}
+                              aria-label={`Remove ${item.name} from cart`}
+                              title="Remove item"
+                            >
+                              ✕
+                            </button>
+
+                            {/* Image + name / SKU / price */}
+                            <div className="mobile-product-header">
+                              <img
+                                src={item.image || PLACEHOLDER_IMG}
+                                alt={item.name}
+                                className="mobile-product-img"
+                                loading="lazy"
+                                onError={(e) => { e.target.src = PLACEHOLDER_IMG; }}
+                              />
+                              <div className="mobile-product-details">
+                                <p className="mobile-product-name">{item.name}</p>
+                                {item.variant && (
+                                  <p className="mobile-product-variant">{item.variant}</p>
+                                )}
+                                {item.sku && (
+                                  <p className="mobile-product-sku">SKU: {item.sku}</p>
+                                )}
+                                <div className="mobile-product-unit-price">
+                                  <span className="price-label">Price:</span>
+                                  <strong>{formatPrice(item.price)}</strong>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Qty control + row total — indented under text */}
+                            <div className="mobile-product-footer">
+                              <div
+                                className="mobile-qty-ctrl"
+                                role="group"
+                                aria-label={`Quantity for ${item.name}`}
+                              >
+                                <button
+                                  onClick={() => handleQtyChange(item, item.quantity - 1)}
+                                  aria-label={`Decrease quantity of ${item.name}`}
+                                  disabled={item.quantity <= 1}
+                                >
+                                  −
+                                </button>
+                                <span aria-live="polite">{item.quantity}</span>
+                                <button
+                                  onClick={() => handleQtyChange(item, item.quantity + 1)}
+                                  aria-label={`Increase quantity of ${item.name}`}
+                                  disabled={item.quantity >= 99}
+                                >
+                                  +
+                                </button>
+                              </div>
+
+                              <div className="mobile-item-total">
+                                <span>Total: </span><strong>{formatPrice(itemTotal)}</strong>
+                              </div>
+                            </div>
+
+                          </div>
+                        </td>
+                        {/* ── End Mobile ── */}
+
                       </tr>
                     );
                   })}
@@ -221,22 +287,92 @@ const CartPage = () => {
               <Link to="/" className="cart-page__continue-btn">
                 ← Continue Shopping
               </Link>
-              <button 
-                className="cart-page__clear-btn" 
+              <button
+                className="cart-page__clear-btn"
                 onClick={clearCart}
                 type="button"
               >
                 Clear Cart
               </button>
             </div>
+
+            {/* ========================================
+                Delivery & Exchange Policy Section
+            ======================================== */}
+            <div className="cart-page__policies mt-4">
+
+              {/* Delivery Policy */}
+              <div className="policy-section">
+                <h6 className="policy-section__title">
+                  <span className="policy-icon">🚚</span> DELIVERY POLICY
+                </h6>
+                <p className="policy-section__text">
+                  Expect your delivery within 5–8 business days anywhere in Bangladesh. When your order
+                  arrives, you can check the products before receiving. If there's any issue, reach out
+                  to Customer Services Department for an immediate return.
+                </p>
+                <div className="policy-section__note">
+                  <strong>Please note:</strong>
+                  <ul className="policy-section__list">
+                    <li>Partial delivery/exchange are not allowed.</li>
+                    <li>
+                      Accessories items such as Boxer briefs, Tank Tops, Leggings, &amp; Pajama are not
+                      returnable and to be paid in advance.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Exchange Policy */}
+              <div className="policy-section">
+                <h6 className="policy-section__title">
+                  <span className="policy-icon">🔄</span> EXCHANGE POLICY
+                </h6>
+                <p className="policy-section__text">
+                  ELONIS's exchange policy allows you to exchange any ELONIS product purchased online
+                  within 15 days of receipt, free of charge. Simply ensure the product is unused and
+                  maintain its original condition, tags, and packaging. Exchanges are subject to stock
+                  availability.
+                </p>
+                <div className="policy-section__note">
+                  <strong>Please note:</strong>
+                  <ul className="policy-section__list">
+                    <li>Exchange can be availed only once against an invoice.</li>
+                    <li>Products purchased on discounts/special offers cannot be exchanged.</li>
+                    <li>
+                      No exchanges for Pajama, Luxury Saree, Leggings, Dupatta or Scarves, Innerwear,
+                      Home products, and Accessories.
+                    </li>
+                    <li>Monetary refunds are not available.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Additional Comments */}
+              <div className="policy-section">
+                <h6 className="policy-section__title">Additional Comments</h6>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  className="cart-page__additional-comments"
+                  placeholder="Special instruction for seller..."
+                  aria-label="Additional comments or special instructions"
+                />
+              </div>
+
+              {/* Secure Shopping Guarantee */}
+              <div className="secure-guarantee">
+                <span className="secure-icon">🔒</span> Secure Shopping Guarantee
+              </div>
+            </div>
           </Col>
 
           {/* ========================================
-              Order Summary Column (Right - Sticky)
-              ======================================== */}
+              Order Summary Column (Right — Sticky)
+          ======================================== */}
           <Col xs={12} lg={4}>
             <div className="cart-page__summary">
-              
+
               {/* ✅ Coupon Section */}
               <div className="coupon-box" aria-labelledby="coupon-heading">
                 <div className="coupon-box__header" id="coupon-heading">
@@ -252,7 +388,6 @@ const CartPage = () => {
                   </button>
                 </div>
 
-                {/* Coupon Input Form */}
                 {(showCoupon || appliedCoupon) && (
                   <div id="coupon-form" className="coupon-box__body">
                     {appliedCoupon ? (
@@ -307,13 +442,12 @@ const CartPage = () => {
                   </div>
                 )}
 
-                {/* Feedback Messages */}
                 {couponError && (
                   <p className="coupon-error mb-0" role="alert" aria-live="assertive">
                     ⚠️ {couponError}
                   </p>
                 )}
-                
+
                 {appliedCoupon && COUPONS[appliedCoupon] && (
                   <p className="coupon-success mb-0" role="status" aria-live="polite">
                     ✅ {appliedCoupon} applied! Saved {formatPrice(discount)}
@@ -322,10 +456,10 @@ const CartPage = () => {
               </div>
 
               <hr className="my-3" />
-              
-              {/* ✅ Order Summary Breakdown (No Shipping) */}
+
+              {/* ✅ Order Summary Breakdown */}
               <h5 className="cart-page__summary-title">Order Summary</h5>
-              
+
               <div className="cart-page__summary-row">
                 <span>Subtotal ({items.reduce((acc, i) => acc + i.quantity, 0)} items)</span>
                 <span className="text-end">{formatPrice(subtotal)}</span>
@@ -338,28 +472,20 @@ const CartPage = () => {
                 </div>
               )}
 
-              {/* Total Row */}
               <div className="cart-page__summary-row cart-page__summary-row--total">
                 <span>Total (BDT)</span>
                 <span className="text-end fs-5">{formatPrice(total)}</span>
               </div>
-              
-              {/* Checkout Button */}
-              <Link 
-                to="/checkout" 
+
+              <Link
+                to="/checkout"
                 className="cart-page__checkout-btn"
                 onClick={() => {
-                  // Optional: Track checkout initiation
                   console.log('Checkout initiated:', { subtotal, discount, total });
                 }}
               >
                 Proceed to Checkout →
               </Link>
-              
-              {/* Trust Badges / Security Note */}
-              <p className="text-center text-muted small mt-3 mb-0">
-                🔒 Secure checkout • Free returns
-              </p>
             </div>
           </Col>
         </Row>
