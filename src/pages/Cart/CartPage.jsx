@@ -330,7 +330,7 @@ const CartPage = () => {
                 </h6>
                 <p className="policy-section__text">
                   ELONIS's exchange policy allows you to exchange any ELONIS product purchased online
-                  within 15 days of receipt, free of charge. Simply ensure the product is unused and
+                  within 7 days of receipt, free of charge. Simply ensure the product is unused and
                   maintain its original condition, tags, and packaging. Exchanges are subject to stock
                   availability.
                 </p>
