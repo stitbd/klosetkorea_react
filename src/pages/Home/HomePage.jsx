@@ -61,7 +61,7 @@ const HomePage = () => {
       <AccessoriesSection />
 
       {/* 8. Trust / USP bar (optional) */}
-      {/* <TrustBar /> */}
+      <TrustBar />
     </main>
   );
 };

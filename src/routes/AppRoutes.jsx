@@ -9,6 +9,7 @@ const CatagoryProductPage = lazy(() => import('../pages/CategoryPage/CatagoryPro
 const CartPage            = lazy(() => import('../pages/Cart/CartPage'));
 const CheckoutPage        = lazy(() => import('../pages/Checkout/CheckoutPage'));
 const NotFoundPage        = lazy(() => import('../pages/NotFound/NotFoundPage'));
+const RegisterPage          = lazy(() => import('../pages/Register/RegisterPage'));
 
 const PageLoader = () => (
   <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -42,6 +43,9 @@ const AppRoutes = () => (
         {/* Cart & Checkout */}
         <Route path="/cart"                  element={<CartPage />} />
         <Route path="/checkout"              element={<CheckoutPage />} />
+
+        {/* Sign UP */}
+        <Route path="/register"              element={<RegisterPage />} />
 
         {/* 404 */}
         <Route path="*"                      element={<NotFoundPage />} />

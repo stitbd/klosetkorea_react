@@ -1,0 +1,76 @@
+
+// ── Topbar ────────────────────────────────────────────────────────
+.pdp__topbar {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 1rem;
+}
+
+.pdp__breadcrumb {
+  font-size: 0.8rem;
+  .breadcrumb-item {
+    a { color: #555; text-decoration: none; transition: color 0.2s;
+      &:hover { color: #FF6503; } }
+    &.active { color: #aaa; }
+    & + .breadcrumb-item::before { color: #ccc; content: '>'; }
+  }
+}
+
+.pdp__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #555;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.3rem 0.75rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  &:hover { border-color: #FF6503; color: #FF6503; }
+}
+
+.register-page__header {
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  .register-page__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem !important; // override mb-2 if needed
+  }
+  
+  .register-page__subtitle {
+    color: #6c757d; // Bootstrap's text-muted color
+    margin-bottom: 0 !important;
+  }
+}
+
+.register-page__form-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.register-page__submit-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
