@@ -303,10 +303,10 @@ const LoginForm = ({ onClose, position = 'desktop' }) => {
         <span>New customer?</span>
         <Link to="/register" onClick={onClose}>Create your account</Link>
       </div>
-      <div className="login-dropdown__meta">
+      {/* <div className="login-dropdown__meta">
         <span>Lost password?</span>
         <Link to="/forgot-password" onClick={onClose}>Reset account</Link>
-      </div>
+      </div> */}
 
       {/* <form onSubmit={handleTrack} className="login-dropdown__track">
         <label className="login-dropdown__label">Track Your Order</label>
