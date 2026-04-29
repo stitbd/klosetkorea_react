@@ -1,27 +1,44 @@
-// src/components/common/ProductCard/ProductCard.scss
+// ProductCard.scss — Luxury Redesign
 
-// ─── Card Wrapper ─────────────────────────────────────────────────────────────
-// This is the key: position:relative so popup & toast are scoped inside
+// ─── Card Wrapper ─────────────────────────────────────────────────
 .product-card-wrapper {
   position: relative;
   height: 100%;
-  border-radius: 8px;
-  // Clip children so popup doesn't bleed outside rounded corners
-  overflow: visible; // keep visible so popup can overflow card bounds if needed
+  overflow: visible;
 }
 
-// ─── Product Card ─────────────────────────────────────────────────────────────
+// ─── Product Card ─────────────────────────────────────────────────
 .product-card {
-  border: 1px solid #eee;
-  border-radius: 8px;
+  border: 1px solid #e8e5de;
+  border-radius: 0;
   overflow: hidden;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-  background: #fff;
+  transition:
+    box-shadow 0.45s var(--ease-out-expo),
+    transform 0.45s var(--ease-out-expo),
+    border-color 0.35s ease;
+  background: var(--brand-white);
   height: 100%;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--brand-gold);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
 
   &:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.3);
+
+    &::after { transform: scaleX(1); }
   }
 
   &__img-wrapper {
@@ -29,59 +46,65 @@
     position: relative;
     overflow: hidden;
     aspect-ratio: 1 / 1;
-    background: #f8f8f8;
+    background: var(--brand-light);
   }
 
   &__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.55s var(--ease-out-expo);
 
-    &:hover {
-      transform: scale(1.04);
-    }
+    &:hover { transform: scale(1.05); }
   }
 
   &__badge {
     position: absolute;
     top: 8px;
     left: 8px;
-    background: #FF6600;
-    color: #fff;
-    font-size: 10px;
+    background: var(--brand-black);
+    color: var(--brand-gold);
+    font-family: var(--font-body);
+    font-size: 8px;
     font-weight: 700;
-    padding: 3px 7px;
-    border-radius: 4px;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 0;
     z-index: 1;
-  }
-  
-  &__badge--stockout {
-    left: auto;
-    right: 8px;
-    background: #ff0000;
-  }
-  
-  &__badge--preorder {
-    background: #7c3aed;
+
+    &--stockout {
+      left: auto;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #bbb;
+    }
+
+    &--preorder {
+      background: var(--brand-gold);
+      color: var(--brand-black);
+    }
   }
 
   &__body {
     padding: 10px 10px 12px;
+    border-top: 1px solid #f0ede6;
   }
 
   &__name {
-    font-size: 13px;
+    font-family: var(--font-body);
+    font-size: 12px;
     font-weight: 500;
-    color: #222;
+    color: var(--brand-charcoal);
     margin: 0 0 6px;
-    line-height: 1.35;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-decoration: none;
+    text-transform: uppercase;
   }
 
   &__price {
@@ -94,77 +117,97 @@
   &__actions {
     display: flex;
     gap: 6px;
+    margin-top: 2px;
   }
 
   &__btn {
     flex: 1;
     padding: 7px 4px;
-    font-size: 11.5px;
-    font-weight: 600;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     border: none;
-    border-radius: 5px;
+    border-radius: 0;
     cursor: pointer;
-    transition: background 0.18s ease, opacity 0.18s ease;
+    transition:
+      background var(--transition),
+      color var(--transition),
+      opacity var(--transition);
     white-space: nowrap;
 
     &--add {
-      background: #222;
-      color: #fff;
+      background: var(--brand-black);
+      color: var(--brand-white);
+      border: 1px solid var(--brand-black);
 
-      &:hover { background: #333; }
+      &:hover {
+        background: var(--brand-charcoal);
+        color: var(--brand-gold);
+      }
     }
 
     &--buy {
-      background: #ff0000;
-      color: #fff;
+      background: transparent;
+      color: var(--brand-gold-dark);
+      border: 1px solid var(--brand-gold);
 
-      &:hover { background: #dd1e10; }
+      &:hover {
+        background: var(--brand-gold);
+        color: var(--brand-black);
+      }
     }
 
     &--preorder {
-      background: #7c3aed;
-      color: #fff;
-    
-      &:hover { background: #6d28d9; }
+      background: var(--brand-gold);
+      color: var(--brand-black);
+      border: 1px solid var(--brand-gold);
+
+      &:hover {
+        background: var(--brand-gold-dark);
+        color: var(--brand-black);
+      }
     }
 
     &:disabled {
-      opacity: 0.5;
+      opacity: 0.4;
       cursor: not-allowed;
     }
   }
 }
 
-// Shared price styles used inside card
+// Shared price styles
 .price-current {
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: 13px;
   font-weight: 700;
-  color: #FF6600;
+  color: var(--brand-gold-dark);
+  letter-spacing: 0.02em;
 }
 
 .price-original {
-  font-size: 12px;
-  color: #aaa;
+  font-size: 11px;
+  color: var(--text-muted);
   text-decoration: line-through;
 }
 
-// ─── Variant Popup — CARD SCOPED ─────────────────────────────────────────────
-// No overlay. Popup covers the card absolutely from inside .product-card-wrapper
+// ─── Variant Popup ────────────────────────────────────────────────
 .pc-popup {
   position: absolute;
   inset: 0;
   z-index: 20;
-  background: #fffffff0;
-  border: 1px solid #FF6600;
-  border-radius: 8px;
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--brand-gold);
+  border-radius: 0;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: pc-popup-in 0.18s ease;
+  animation: pc-popup-in 0.2s var(--ease-out-expo);
 
   @keyframes pc-popup-in {
-    from { opacity: 0; transform: scale(0.97); }
+    from { opacity: 0; transform: scale(0.96); }
     to   { opacity: 1; transform: scale(1); }
   }
 
@@ -173,8 +216,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px 10px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0ede6;
     gap: 6px;
+    background: var(--brand-off-white);
   }
 
   &__header-info {
@@ -188,35 +232,40 @@
     width: 32px;
     height: 32px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 0;
     border: 1px solid #ddd;
     flex-shrink: 0;
   }
 
   &__header-name {
-    font-size: 11.5px;
+    font-family: var(--font-body);
+    font-size: 10px;
     font-weight: 600;
-    color: #000;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brand-black);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    //max-width: 120px;
   }
 
   &__close {
-    width: 24px;
-    height: 24px;
-    border: none;
-    background: #f5f5f5;
-    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #ddd;
+    background: var(--brand-white);
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-    transition: background 0.15s;
+    transition: border-color var(--transition), background var(--transition);
 
-    &:hover { background: #eee; }
+    &:hover {
+      border-color: var(--brand-gold);
+      background: var(--brand-gold-muted);
+    }
   }
 
   &__body {
@@ -234,21 +283,21 @@
     justify-content: center;
     gap: 8px;
     padding: 16px 0;
-    font-size: 12px;
-    color: #888;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    letter-spacing: 0.06em;
   }
 
   &__spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #eee;
-    border-top-color: #FF6600;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid #eee;
+    border-top-color: var(--brand-gold);
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   }
 
   &__out-of-stock,
@@ -256,8 +305,9 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 11.5px;
-    color: #FF6600;
+    font-size: 10.5px;
+    font-family: var(--font-body);
+    color: var(--brand-gold-dark);
     margin: 0;
     padding: 8px 0;
   }
@@ -269,130 +319,155 @@
   }
 
   &__section-label {
-    font-size: 11px;
-    color: #555;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
     margin: 0;
 
-    strong { color: #000; }
+    strong { color: var(--brand-black); }
   }
 
   &__hint {
     font-weight: 400;
-    color: #000;
-    font-size: 10.5px;
+    color: var(--text-muted);
+    font-size: 9px;
   }
 
   &__options {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 4px;
   }
 
   &__opt-btn {
     padding: 4px 10px;
-    font-size: 11px;
-    font-weight: 500;
-    border: 1.5px solid #ddd;
-    border-radius: 4px;
-    background: #fff;
-    color: #333;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    background: var(--brand-white);
+    color: var(--brand-charcoal);
     cursor: pointer;
-    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    transition:
+      border-color var(--transition),
+      background var(--transition),
+      color var(--transition);
     display: flex;
     align-items: center;
     gap: 4px;
 
     &--active {
-      border-color: #FF6600;
-      background: #FF6600;
-      color: #fff;
+      border-color: var(--brand-gold);
+      background: var(--brand-gold);
+      color: var(--brand-black);
     }
 
     &--disabled {
-      opacity: 0.45;
+      opacity: 0.35;
       cursor: not-allowed;
       text-decoration: line-through;
     }
 
     &:not(&--disabled):not(&--active):hover {
-      border-color: #aaa;
-      background: #f7f7f7;
+      border-color: var(--brand-gold);
+      background: var(--brand-gold-muted);
     }
   }
 
   &__out-tag {
-    font-size: 9px;
-    background: #fdecea;
-    color: #FF6600;
+    font-size: 8px;
+    background: #f5ede0;
+    color: var(--brand-gold-dark);
     padding: 1px 4px;
-    border-radius: 3px;
+    border-radius: 0;
   }
 
   &__stock-info {
-    font-size: 10.5px;
-    color: #27a92c;
+    font-family: var(--font-body);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: #3a8a44;
     margin: 0;
   }
 
   &__footer {
     padding: 8px 10px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #f0ede6;
     display: flex;
     align-items: center;
     gap: 8px;
+    background: var(--brand-off-white);
   }
 
   &__confirm-btn {
     flex: 1;
-    padding: 8px;
-    font-size: 12px;
+    padding: 9px;
+    font-family: var(--font-body);
+    font-size: 9px;
     font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     border: none;
-    border-radius: 5px;
+    border-radius: 0;
     cursor: pointer;
-    background: #222;
-    color: #fff;
-    transition: background 0.15s;
-  
-    &:hover:not(:disabled) { background: #333; }
-  
+    background: var(--brand-black);
+    color: var(--brand-white);
+    transition: background var(--transition), color var(--transition);
+
+    &:hover:not(:disabled) {
+      background: var(--brand-charcoal);
+      color: var(--brand-gold);
+    }
+
     &--buy {
-      background: #FF6600;
-      &:hover:not(:disabled) { background: #c94309; }
+      background: var(--brand-gold);
+      color: var(--brand-black);
+      &:hover:not(:disabled) { background: var(--brand-gold-dark); }
     }
-  
+
     &--preorder {
-      background: #7c3aed;
-      &:hover:not(:disabled) { background: #6d28d9; }
+      background: var(--brand-gold);
+      color: var(--brand-black);
+      &:hover:not(:disabled) { background: var(--brand-gold-dark); }
     }
-  
+
     &:disabled {
-      opacity: 0.45;
+      opacity: 0.35;
       cursor: not-allowed;
     }
   }
 
   &__detail-link {
-    font-size: 11px;
-    font-weight: 500;
-    color: #555;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-gold-dark);
     text-decoration: none;
     white-space: nowrap;
-    padding: 8px 6px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    padding: 9px 8px;
+    border-radius: 0;
+    border: 1px solid var(--brand-gold);
     text-align: center;
-    transition: border-color 0.15s, color 0.15s;
+    transition:
+      background var(--transition),
+      color var(--transition);
 
     &:hover {
-      border-color: #999;
-      color: #222;
+      background: var(--brand-gold);
+      color: var(--brand-black);
     }
   }
 }
 
-// ─── Toast — CARD SCOPED ──────────────────────────────────────────────────────
-// Toast renders inside .product-card-wrapper, positioned at bottom of card
+// ─── Toast ────────────────────────────────────────────────────────
 .pdp-toast {
   position: absolute;
   bottom: 8px;
@@ -403,27 +478,32 @@
   align-items: center;
   gap: 7px;
   padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 500;
+  border-radius: 0;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   line-height: 1.3;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
-  animation: toast-in 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: toast-in 0.22s var(--ease-out-expo);
   pointer-events: none;
 
   @keyframes toast-in {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   &--success {
-    background: #1a7a3c;
-    color: #fff;
+    background: var(--brand-black);
+    color: var(--brand-gold);
+    border-top: 2px solid var(--brand-gold);
   }
 
   &--error {
-    background: #ff0000;
-    color: #fff;
+    background: var(--brand-black);
+    color: #e88;
+    border-top: 2px solid #e55;
   }
 
   &__icon {

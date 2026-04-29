@@ -1,12 +1,10 @@
-// SubCategories.scss
+// SubCategories.scss — Luxury Redesign
 
 .subcats {
-  background: #fff;
+  background: var(--brand-white);
   padding: 2rem 0;
 
-  @media (min-width: 768px) {
-    padding: 3rem 0;
-  }
+  @media (min-width: 768px) { padding: 3rem 0; }
 
   &__container {
     max-width: 1400px;
@@ -14,63 +12,125 @@
     padding: 0 1rem;
   }
 
-  // ── Page Title (Category name at top, like a page header) ────────
-  &__page-title {
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #f0f0f0;
-    
-    h1 {
-      font-size: clamp(24px, 5vw, 36px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
+  &__breadcrumb-wrap {
+    margin-bottom: 1.25rem;
+
+    .breadcrumb {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #000;
+      background: none;
+      padding: 0;
       margin: 0;
-      font-family: inherit;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+
+      a {
+        color: var(--brand-gold-dark);
+        text-decoration: none;
+        transition: color var(--transition);
+
+        &:hover { color: var(--brand-gold); }
+      }
+
+      &.active { color: var(--brand-black); }
+
+      & + .breadcrumb-item::before {
+        content: '—';
+        color: var(--brand-gold);
+        opacity: 0.5;
+      }
     }
   }
 
-  // ── Loading / Error / Empty States ─────────────────────────────
+  &__page-title {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 48px;
+      height: 2px;
+      background: var(--brand-gold);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 5vw, 40px);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--brand-black);
+      margin: 0;
+    }
+  }
+
   &__loading,
   &__error,
   &__empty {
     text-align: center;
     padding: 3rem 1rem;
-    font-size: 1rem;
-    color: #666;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
   }
 
-  &__error {
-    color: #ff0000;
-    font-weight: 500;
-  }
+  &__error { color: #c44; font-weight: 500; }
 }
 
-// ─── SubCategory Card (Category name OVER the image like HERMÈS) ───
+// ─── SubCategory Card — Luxury ────────────────────────────────────
 .subcat-card {
   display: block;
-  border: 1px solid #eee;
-  border-radius: 10px;
+  border: 1px solid #e8e5de;
+  border-radius: 0;
   overflow: hidden;
   transition:
-    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s var(--ease-out-expo),
+    transform 0.45s var(--ease-out-expo),
     border-color 0.35s ease;
-  background: #fff;
+  background: var(--brand-white);
   height: 100%;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--brand-gold);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s var(--ease-out-expo);
+    z-index: 5;
+  }
 
   &:hover {
-    border-color: rgba(255, 101, 3, 0.25);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.11);
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 20px 52px rgba(0, 0, 0, 0.12);
     transform: translateY(-6px);
 
+    &::before { transform: scaleX(1); }
+
     .subcat-card__image {
-      transform: scale(1.06);
+      transform: scale(1.07);
+      filter: brightness(0.75);
     }
 
     .subcat-card__title {
-      background: rgba(0, 0, 0, 0.62);
+      background: rgba(0, 0, 0, 0.68);
+      letter-spacing: 0.15em;
+      color: var(--brand-gold);
     }
   }
 
@@ -79,20 +139,22 @@
     position: relative;
     overflow: hidden;
     aspect-ratio: 1 / 1;
-    background: #f8f8f8;
+    background: var(--brand-light);
   }
 
   &__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+      transform 0.6s var(--ease-out-expo),
+      filter 0.5s ease;
+    filter: brightness(0.88);
   }
 
-  // Overlay container for positioning
   &__overlay {
     position: absolute;
-    bottom: 10px; // 10px up from bottom
+    bottom: 10px;
     left: 0;
     right: 0;
     display: flex;
@@ -100,51 +162,40 @@
     pointer-events: none;
   }
 
-  // Category name styled - background matches text width
   &__title {
     display: inline-block;
     margin: 0;
     padding: 8px 16px;
-    font-size: clamp(14px, 3vw, 18px);
+    font-family: var(--font-body);
+    font-size: clamp(10px, 2.5vw, 13px);
     font-weight: 700;
-    letter-spacing: 0.02em;
-    color: #fff;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.95);
     text-transform: uppercase;
     line-height: 1.2;
     text-align: center;
-    font-family: inherit;
-    background: rgb(0 0 0 / 49%);
-    backdrop-filter: blur(2px);
-    border-radius: 4px;
-    width: 100%; // Width matches text content
-    max-width: 90%; // Prevents overflowing on very long text
-    transition: background 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    background: rgba(0, 0, 0, 0.52);
+    backdrop-filter: blur(3px);
+    border-radius: 0;
+    width: 100%;
+    max-width: 92%;
+    transition:
+      background 0.4s ease,
+      letter-spacing 0.4s ease,
+      color 0.4s ease;
   }
 }
 
-// ─── Responsive Adjustments ───────────────────────────────────────
+// ─── Responsive ───────────────────────────────────────────────────
 @media (max-width: 767px) {
   .subcat-card__title {
     padding: 6px 12px;
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 
-// ─── Shared Utility ───────────────────────────────────────────────
+// ─── Shared ───────────────────────────────────────────────────────
 .section-wrapper {
   padding: 2rem 0;
-
-  @media (min-width: 768px) {
-    padding: 3rem 0;
-  }
-}
-
-.subcat-card__image--all-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #FF6503 0%, #ff8c3a 100%);
-}
-
-.subcat-card__overlay--all {
-  background: rgba(0, 0, 0, 0.25); // slightly lighter overlay for the colored bg
+  @media (min-width: 768px) { padding: 3rem 0; }
 }
