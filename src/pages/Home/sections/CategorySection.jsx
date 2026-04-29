@@ -4,11 +4,6 @@ import { Container } from 'react-bootstrap';
 import SectionHeader from '../../../components/ui/SectionHeader/SectionHeader';
 import ProductGrid from '../../../components/ui/ProductGrid/ProductGrid';
 
-/**
- * Generic category section for homepage.
- * Replaces SneakersSection, SandalSection, ApparelSection, AccessoriesSection.
- * Title and products come from the home API featuredCategories array.
- */
 const CategorySection = ({ title, catSlug, products = [] }) => {
   const limitedProducts = products.slice(0, 4);
 

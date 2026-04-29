@@ -9,7 +9,6 @@ const CategoryCard = ({ cat }) => {
   const label = cat.label || cat.name || 'Category';
 
   return (
-    // ✅ FIXED: /categories/ so it matches the SubCategories route in AppRoutes
     <Link to={`/categories/${cat.slug}`} className="cat-card">
       <div className="cat-card__img-wrap">
         <img
@@ -28,10 +27,10 @@ const CategoryCard = ({ cat }) => {
 
 const FeaturedCategories = ({ categories = [] }) => (
   <section className="featured-cats section-wrapper">
-    <Container fluid className="featured-cats__container">
+    <Container fluid="xl">
       <div className="featured-cats__heading">
         <span className="featured-cats__heading-line" />
-        <h2 className="featured-cats__heading-text">FEATURED CATEGORIES</h2>
+        <h2 className="featured-cats__heading-text">Shop by CATEGORIES</h2>
         <span className="featured-cats__heading-line" />
       </div>
 

@@ -40,7 +40,7 @@ NextButton.displayName = 'NextButton';
 const getImageUrl = (image, fallback = '/images/hero-fallback.jpg') => {
   if (!image) return fallback;
   if (image.startsWith('http')) return image;
-  return `https://admin.elonis.com.bd/${image}`;
+  return `https://admin-klosetkorea.stitbd.app/${image}`;
 };
 
 // ── Helper: Should render CTA ─────────────────────────────────────
