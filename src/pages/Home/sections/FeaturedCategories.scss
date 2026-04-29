@@ -37,18 +37,18 @@
   &__row {
     display: grid;
     gap: 0.5rem;
+    // 3 equal columns for all cards
+    grid-template-columns: repeat(3, 1fr);
 
-    // 4 equal columns for both rows on md+
-    grid-template-columns: repeat(2, 1fr);
-
-    @media (min-width: 576px) {
-      grid-template-columns: repeat(4, 1fr);
+    // Responsive: 1 column on very small screens, 3 from 576px+
+    @media (max-width: 575px) {
+      grid-template-columns: 1fr;
     }
 
     // All cards — same fixed height across both rows
     &--tall .cat-card__img,
     &--normal .cat-card__img {
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 4 / 4;
     }
   }
 }
