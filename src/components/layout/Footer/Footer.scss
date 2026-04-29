@@ -207,6 +207,20 @@
     }
   }
 
+  // ── Social Icon Fallback (when API icon not available) ───
+  &__social-icon-fallback {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
   // ── BOTTOM BAR - SOCIAL LEFT, COPYRIGHT RIGHT ─────────
   &__bottom {
     padding: 1rem 0;
@@ -251,6 +265,7 @@
       border-radius: 50%;
       transition: background 0.2s, transform 0.2s;
       padding: 1px;
+      text-decoration: none;
 
       &:hover {
         background: #FF6600;
@@ -279,7 +294,7 @@
   }
 
   &__brand {
-    color: #FF6600;
+    color: #000;
     font-weight: 700;
     text-decoration: none;
 
@@ -288,29 +303,23 @@
     }
   }
 
-  // ── ✅ MOBILE-FIRST ENHANCEMENTS (max-width: 767px) ─────
+  // ── MOBILE-FIRST ENHANCEMENTS (max-width: 767px) ─────
   @media (max-width: 767px) {
-    // Base Footer Spacing
     padding-bottom: 1rem;
 
-    // Logo
     &__logo-img {
       height: 40px;
       margin-bottom: 0.5rem;
     }
 
-    // Contact List
-    &__contact {
-      li {
-        font-size: 0.9rem;
-        margin-bottom: 0.6rem;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-        line-height: 1.4;
-      }
+    &__contact li {
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      line-height: 1.4;
     }
 
-    // Headings
     &__heading {
       font-size: 0.9rem;
       letter-spacing: 0.06em;
@@ -322,7 +331,6 @@
       padding-bottom: 0.75rem;
     }
 
-    // Links - Touch Friendly
     &__link {
       font-size: 0.95rem;
       padding: 0.20rem 0;
@@ -331,13 +339,6 @@
       line-height: 1.3;
     }
 
-    &__links {
-      li {
-        margin-bottom: 0.20rem;
-      }
-    }
-
-    // Newsletter Form - Mobile Optimized
     &__newsletter-text {
       font-size: 0.9rem;
       margin-bottom: 1.25rem;
@@ -353,11 +354,6 @@
         font-size: 0.9rem;
         opacity: 0.7;
       }
-      
-      &:focus {
-        border-width: 2px;
-        box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.15);
-      }
     }
 
     &__newsletter-btn {
@@ -365,26 +361,8 @@
       font-size: 0.9rem;
       padding: 0.25rem 1rem;
       border-radius: 8px;
-      letter-spacing: 0.03em;
-      
-      &:active {
-        transform: scale(0.99);
-      }
     }
 
-    &__newsletter-message {
-      font-size: 0.85rem;
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-      
-      &--success,
-      &--error {
-        border-left: 3px solid currentColor;
-      }
-    }
-
-    // Payment Badges
     &__payments {
       gap: 0.4rem;
       justify-content: flex-start;
@@ -400,46 +378,17 @@
       height: 22px;
     }
 
-    &__sslcommerz-logo {
-      height: 26px;
-      max-width: 65px;
-    }
-
-    // Bottom Bar - Mobile
     &__bottom {
       padding: 1.25rem 0;
-      font-size: 0.85rem;
-
-      .site-footer__bottom-content {
-        gap: 1.25rem;
-        padding: 0 0.5rem;
-      }
 
       .site-footer__social-bottom {
         gap: 0.75rem;
-        justify-content: center;
         order: 1;
       }
 
       .site-footer__social-link-bottom {
         width: 40px;
         height: 40px;
-        border-radius: 50%;
-        background: #fff;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-        
-        &:hover,
-        &:focus {
-          background: #FF6600;
-          transform: translateY(-1px);
-          outline: 2px solid #FF6600;
-          outline-offset: 2px;
-        }
-        
-        &:active {
-          transform: scale(0.95);
-          transition: transform 0.1s ease;
-        }
       }
 
       .site-footer__social-icon-bottom {
@@ -449,20 +398,11 @@
 
       .site-footer__copyright {
         font-size: 0.8rem;
-        line-height: 1.6;
-        text-align: center;
         order: 2;
         width: 100%;
-        
-        .site-footer__brand {
-          display: inline-block;
-          padding: 0.25rem 0;
-          min-height: 44px;
-        }
       }
     }
 
-    // Column Layout - Mobile Dividers
     .row > [class*='col-'] {
       padding-bottom: 0.5rem;
       
@@ -480,17 +420,9 @@
     }
   }
 
-  // ── ✅ EXTRA SMALL MOBILE (max-width: 375px) ───────────
   @media (max-width: 375px) {
     &__contact li {
       font-size: 0.85rem;
-      gap: 0.5rem;
-    }
-    
-    &__newsletter-input,
-    &__newsletter-btn {
-      font-size: 0.95rem;
-      padding: 0.8rem 1rem;
     }
     
     &__bottom .site-footer__copyright {
@@ -498,31 +430,19 @@
     }
   }
 
-  // ── ✅ TOUCH DEVICE ENHANCEMENTS ───────────────────────
   @media (hover: none) and (pointer: coarse) {
     &__link:hover,
     &__payment-badge:hover,
     &__sslcommerz-logo:hover {
       transform: none;
-      opacity: 1;
     }
     
-    &__link:active,
-    &__payment-badge:active {
+    &__link:active {
       opacity: 0.85;
-      transition: opacity 0.1s ease;
-    }
-    
-    &__link:focus,
-    &__newsletter-input:focus,
-    &__newsletter-btn:focus {
-      outline: 2px solid #FF6600;
-      outline-offset: 2px;
     }
   }
 }
 
-// ── ✅ Utility: Visually Hidden (for accessibility) ─────
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -533,4 +453,56 @@
   clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+.site-footer__social-icon-bottom {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+
+
+// ── Inline Newsletter Toast ─────────────────────────────────────
+.site-footer__newsletter-toast {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  animation: newsletterToastIn 0.3s ease;
+
+  &--success {
+    background: rgba(40, 167, 69, 0.12);
+    border: 1px solid #28a745;
+    color: #1e7e34;
+  }
+
+  &--warning {
+    background: rgba(255, 193, 7, 0.12);
+    border: 1px solid #ffc107;
+    color: #7a5800;
+  }
+
+  &--error {
+    background: rgba(220, 53, 69, 0.12);
+    border: 1px solid #dc3545;
+    color: #8b1a1a;
+  }
+
+  &-icon {
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  &-text {
+    flex: 1;
+    line-height: 1.4;
+  }
+}
+
+@keyframes newsletterToastIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

@@ -1,16 +1,28 @@
+// src/routes/AppRoutes.jsx
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Header from '../components/layout/Header/Header';
 import Footer from '../components/layout/Footer/Footer';
 
-const HomePage            = lazy(() => import('../pages/Home/HomePage'));
-const ProductDetails      = lazy(() => import('../pages/ProductDetails/ProductDetailsPage'));
-const CatagoryProductPage = lazy(() => import('../pages/CategoryPage/CatagoryProductPage'));
-const CartPage            = lazy(() => import('../pages/Cart/CartPage'));
-const CheckoutPage        = lazy(() => import('../pages/Checkout/CheckoutPage'));
-const NotFoundPage        = lazy(() => import('../pages/NotFound/NotFoundPage'));
+const HomePage              = lazy(() => import('../pages/Home/HomePage'));
+const CategoriesMobilePage  = lazy(() => import('../pages/CategoryPage/CategoriesPage'));
+const NewArrivalsPage       = lazy(() => import('../pages/CategoryPage/NewArrivalsPage'));
+const ProductDetails        = lazy(() => import('../pages/ProductDetails/ProductDetailsPage'));
+const CatagoryProductPage   = lazy(() => import('../pages/CategoryPage/CatagoryProductPage'));
+const SubCategories         = lazy(() => import('../components/ui/SubCategory/SubCategories'));
+const CartPage              = lazy(() => import('../pages/Cart/CartPage'));
+const CheckoutPage          = lazy(() => import('../pages/Checkout/CheckoutPage'));
 const RegisterPage          = lazy(() => import('../pages/Account/RegisterPage'));
-const ForgotPasswordPage          = lazy(() => import('../pages/Account/ForgotPasswordPage'));
+const ForgotPasswordPage    = lazy(() => import('../pages/Account/ForgotPasswordPage'));
+const CustomerDashboardPage = lazy(() => import('../pages/Account/CustomerDashboardPage'));
+const PageDetailPage        = lazy(() => import('../pages/CompanyPage/PageDetailPage'));
+            
+const ContactPage        = lazy(() => import('../pages/Contact/ContactPage'));
+
+const SearchResultsPage        = lazy(() => import('../pages/SearchResults/SearchResultsPage'));
+
+const NotFoundPage          = lazy(() => import('../pages/NotFound/NotFoundPage'));
 
 const PageLoader = () => (
   <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -20,41 +32,91 @@ const PageLoader = () => (
   </div>
 );
 
-const AppRoutes = () => (
-  <>
-    <Header />
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
-        {/* Home */}
-        <Route path="/"                      element={<HomePage />} />
+const AppRoutes = () => {
+  const location = useLocation();
+  const reduceMotion = useReducedMotion();
 
-        {/* Product detail */}
-        <Route path="/product/:slug"         element={<ProductDetails />} />
+  const pageTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.5, ease: [0.22, 1, 0.36, 1] };
 
-        {/* ── Category page — all nav/sub/child menus ── */}
-        {/* Pattern: /categories/:slug  e.g. /categories/panjabi */}
-        <Route path="/categories/:slug"      element={<CatagoryProductPage />} />
+  return (
+    <>
+      <Header />
+      <Suspense fallback={<PageLoader />}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
+            transition={pageTransition}
+            style={{ width: '100%' }}
+          >
+            <Routes location={location}>
+              {/* ── Home ── */}
+              <Route path="/" element={<HomePage />} />
 
-        {/* Legacy / alternative patterns still supported */}
-        <Route path="/category/:slug"        element={<CatagoryProductPage />} />
-        <Route path="/product-list/:id"      element={<CatagoryProductPage />} />
-        <Route path="/products/:id"          element={<CatagoryProductPage />} />
-        <Route path="/products"              element={<CatagoryProductPage />} />
+              {/* ── Mobile: all top-level categories list ── */}
+              <Route path="/category" element={<CategoriesMobilePage />} />
 
-        {/* Cart & Checkout */}
-        <Route path="/cart"                  element={<CartPage />} />
-        <Route path="/checkout"              element={<CheckoutPage />} />
+              {/* ── New Arrivals ── */}
+              <Route path="/new-arrivals" element={<NewArrivalsPage />} />
 
-        {/* Sign UP */}
-        <Route path="/register"              element={<RegisterPage />} />
-        <Route path="/forgot-password"       element={<ForgotPasswordPage />} />
+              {/* ── Product detail ── */}
+              <Route path="/product/:slug" element={<ProductDetails />} />
 
-        {/* 404 */}
-        <Route path="*"                      element={<NotFoundPage />} />
-      </Routes>
-    </Suspense>
-    <Footer />
-  </>
-);
+              {/*
+                ── Category / Subcategory routing ──────────────────────────────────
+                Routes ordered most-specific → least-specific.
+
+                1. /products/:catSlug
+                   → CatagoryProductPage  (category-only mode, subSlug is undefined)
+                   → "See All" button destination from homepage sections.
+                   → Fetches: GET /api/category/:catSlug
+                   → Shows:   all products of that category.
+
+                2. /categories/:catSlug/:subSlug
+                   → CatagoryProductPage  (subcategory mode)
+                   → Subcategory card click destination.
+                   → Fetches: GET /api/subcategory/:catSlug/:subSlug
+                   → Shows:   products of that subcategory.
+
+                3. /categories/:catSlug
+                   → SubCategories
+                   → Top-level category click (header nav / featured categories).
+                   → Fetches: GET /api/categories (module-level cached)
+                   → Shows:   subcategory grid for that category.
+              */}
+              <Route path="/products/:catSlug"              element={<CatagoryProductPage />} />
+              <Route path="/categories/:catSlug/:subSlug"   element={<CatagoryProductPage />} />
+              <Route path="/categories/:catSlug"            element={<SubCategories />} />
+
+              {/* ── Cart & Checkout ── */}
+              <Route path="/cart"      element={<CartPage />} />
+              <Route path="/checkout"  element={<CheckoutPage />} />
+
+              {/* ── Auth ── */}
+              <Route path="/register"        element={<RegisterPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/my-account"      element={<CustomerDashboardPage />} />
+
+              {/* ── Dynamic CMS pages ── */}
+              <Route path="/page/:slug" element={<PageDetailPage />} />
+              
+              <Route path="/contact"  element={<ContactPage />} />
+
+              <Route path="/search" element={<SearchResultsPage />} />
+
+              {/* ── 404 ── */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
+      </Suspense>
+      <Footer />
+    </>
+  );
+};
 
 export default AppRoutes;

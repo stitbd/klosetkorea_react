@@ -249,6 +249,16 @@
     border-radius: 3px;
     line-height: 1.4;
     user-select: none;
+    
+    &__badge--stockout {
+      left: auto;
+      right: 8px;
+      background: #ff0000;
+    }
+    
+    &__badge--preorder {
+      background: #7c3aed;
+    }
 
     @media (max-width: 767px) {
       font-size: 9px;
@@ -257,6 +267,17 @@
       left: 8px;
     }
   }
+  
+  &__badge--stockout {
+    left: auto;
+    right: 8px;
+    background: #ff0000;
+  }
+    
+  &__badge--preorder {
+    background: #7c3aed;
+  }
+
 
   // ── Info strip ───────────────────────────────────────────
   &__info {

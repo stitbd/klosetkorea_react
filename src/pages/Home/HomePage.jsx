@@ -1,67 +1,63 @@
-import React, { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+// src/pages/Home/HomePage.jsx
+import React from 'react';
 import HeroSlider         from './sections/HeroSlider';
 import TrustBar           from './sections/TrustBar';
 import FeaturedCategories from './sections/FeaturedCategories';
 import NewArrivalsSlider  from './sections/NewArrivalsSlider';
-import SneakersSection      from './sections/SneakersSection';
-import ApparelSection from './sections/ApparelSection';
-import AccessoriesSection       from './sections/AccessoriesSection';
-import SandalSection         from './sections/SandalSection';
-import { useNewArrivals } from '../../features/products/hooks/useProducts';
-import { useHomeData } from './useHomeData';
+import CategorySection    from './sections/CategorySection';
+import RevealSection      from '../../components/ui/RevealSection/RevealSection';
+import { useHomeData }    from './useHomeData';
 import './HomePage.scss';
 
 const HomePage = () => {
-  const { data } = useHomeData();
-  const location = useLocation();
-  
-  // 🔹 Check if URL has ?section=featured
-  const showOnlyFeatured = useMemo(() => {
-    const params = new URLSearchParams(location.search);
-    return params.get('section') === 'featured';
-  }, [location.search]);
+  const { data, loading } = useHomeData();
 
-  // 🔹 Render ONLY FeaturedCategories when section=featured
-  if (showOnlyFeatured) {
+  if (loading) {
     return (
-      <main className="home-page home-page--featured-only">
-        <FeaturedCategories />
+      <main className="home-page">
+        <div className="text-center py-5">Loading...</div>
       </main>
     );
   }
 
-  // 🔹 Normal homepage render (all sections)
   return (
     <main className="home-page">
-
       {/* 1. Hero Slider */}
-      <HeroSlider banners={data?.banners || []} />
+      <RevealSection y={18} amount={0.12}>
+        <HeroSlider banners={data?.banners || []} />
+      </RevealSection>
 
       {/* 2. New Arrivals */}
-      <NewArrivalsSlider
-        title="NEW ARRIVALS"
-        viewAllLink="/category/new-arrivals"
-        useHook={useNewArrivals}
-      />
+      <RevealSection delay={0.06}>
+        <NewArrivalsSlider
+          title="NEW ARRIVALS"
+          viewAllLink="/new-arrivals"
+          products={data?.new_arrivals || []}
+        />
+      </RevealSection>
 
-      {/* 3. Featured Categories */}
-      <FeaturedCategories />
+      {/* 3. Featured Categories — always shows all, uses featuredCategories[] */}
+      <RevealSection delay={0.05}>
+        <FeaturedCategories categories={data?.featuredCategories || []} />
+      </RevealSection>
 
-      {/* 4. SNEAKERS — grid */}
-      <SneakersSection />
+      {/* 4-N. Category sections — controlled by backend via categories[] */}
+      {(data?.categories || []).map((cat) => (
+        <RevealSection key={cat.id}>
+          <CategorySection
+            title={cat.name.toUpperCase()}
+            catSlug={cat.slug}
+            products={cat.homeproducts || []}
+          />
+        </RevealSection>
+      ))}
 
-      {/* 5. SANDAL — grid */}
-      <SandalSection />
-
-      {/* 6. APPAREL — grid */}
-      <ApparelSection />
-  
-      {/* 7. ACCESSORIES — grid */}
-      <AccessoriesSection />
-
-      {/* 8. Trust / USP bar (optional) */}
-      <TrustBar />
+      {/* Trust Bar */}
+      {data?.key_features?.length > 0 && (
+        <RevealSection>
+          <TrustBar features={data.key_features} />
+        </RevealSection>
+      )}
     </main>
   );
 };

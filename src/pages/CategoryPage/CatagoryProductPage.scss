@@ -146,7 +146,7 @@
 
   &__badge {
     position: absolute; top: 8px; left: 8px; z-index: 2;
-    background: #1a1a1a; color: #fff;
+    background: #dd1e10; color: #fff;
     font-size: 0.65rem; font-weight: 700;
     padding: 0.2em 0.55em; border-radius: 3px; letter-spacing: 0.04em;
   }
@@ -181,7 +181,16 @@
 
   &__price-curr { font-size: 0.95rem; font-weight: 800; color: #1a1a1a; }
 
-  &__actions { display: flex; gap: 0.35rem; }
+  &__actions {
+  display: flex;
+  gap: 0.35rem;
+
+  // Mobile: stack vertically
+  @media (max-width: 991.98px) {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}
 
   &__btn {
     flex: 1; padding: 0.42rem 0.3rem; font-size: 0.72rem; font-weight: 700;
@@ -191,14 +200,14 @@
     transition: all 0.18s;
 
     &--cart {
-      background: #1a1a1a; color: #fff;
+      background: #000000; color: #fff;
       &:hover:not(:disabled) { background: #333; }
       &:disabled { opacity: 0.4; cursor: not-allowed; }
     }
 
     &--buy {
-      background: #FF6503; color: #fff;
-      &:hover { background: #e05500; color: #fff; }
+      background: #dd1e10; color: #fff;
+      &:hover { background: #b1180d; color: #fff; }
     }
   }
 }

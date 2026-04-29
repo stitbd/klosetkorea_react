@@ -1,267 +1,205 @@
-// import React, { useRef, useState } from 'react';
-// import { Link } from 'react-router-dom';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-// import 'swiper/css/effect-fade';
-// import './HeroSlider.scss';
-
-// import banner1 from '../../../assets/images/banner.jpg';
-// import banner2 from '../../../assets/images/banner02.jpg';
-// import banner3 from '../../../assets/images/banner03.jpg';
-// import banner4 from '../../../assets/images/banner04.jpg';
-
-// const SLIDES = [
-//   {
-//     id: 1,
-//     tag: 'EID SPECIAL OFFER',
-//     title: 'এই ঈদে পাঞ্জাবি কিনলে ওয়ালেট ফ্রি',
-//     titleEn: 'Buy Panjabi, Get Wallet FREE',
-//     subtitle: 'Premium Eid al-Fitr 2026 Collection — Limited Stock',
-//     ctaLabel: 'Shop Now',
-//     ctaLink: '/category/eid-collection-26',
-//     accent: '#FF6503',
-//     image: banner1,
-//   },
-//   {
-//     id: 2,
-//     tag: 'NEW ARRIVALS',
-//     title: 'Ravenna Leather Collection',
-//     subtitle: 'Handcrafted genuine leather bags & wallets for the modern gentleman.',
-//     ctaLabel: 'Explore Now',
-//     ctaLink: '/category/leather',
-//     accent: '#FF6503',
-//     image: banner2,
-//     light: true,
-//   },
-//   {
-//     id: 3,
-//     tag: 'LUXURY SHIRTS',
-//     title: 'Royal Signature Series',
-//     subtitle: 'Premium fabric shirts — crafted for comfort and style.',
-//     ctaLabel: 'View Collection',
-//     ctaLink: '/category/luxury-shirt',
-//     accent: '#FF6503',
-//     image: banner3,
-//   },
-//   {
-//     id: 4,
-//     tag: 'NEW ARRIVALS',
-//     title: 'Ravenna Leather Collection',
-//     subtitle: 'Handcrafted genuine leather bags & wallets for the modern gentleman.',
-//     ctaLabel: 'Explore Now',
-//     ctaLink: '/category/leather',
-//     accent: '#FF6503',
-//     image: banner2,
-//     light: true,
-//   },
-// ];
-
-// // ── Custom Prev Button ─────────────────────────────────────────────
-// const PrevButton = ({ onClick }) => (
-//   <button className="hero-btn hero-btn--prev" onClick={onClick} aria-label="Previous slide">
-//     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-//       <polyline points="15 18 9 12 15 6"/>
-//     </svg>
-//   </button>
-// );
-
-// // ── Custom Next Button ─────────────────────────────────────────────
-// const NextButton = ({ onClick }) => (
-//   <button className="hero-btn hero-btn--next" onClick={onClick} aria-label="Next slide">
-//     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-//       <polyline points="9 18 15 12 9 6"/>
-//     </svg>
-//   </button>
-// );
-
-// const HeroSlider = ({ banners = [] }) => {
-//   console.log("HeroSlider banners:", banners);
-//   const swiperRef                     = useRef(null);
-//   const [activeIndex, setActiveIndex] = useState(0);
-
-//   const handlePrev = () => swiperRef.current?.swiper?.slidePrev();
-//   const handleNext = () => swiperRef.current?.swiper?.slideNext();
-
-//   return (
-//     <section className="hero-slider">
-//       <Swiper
-//         ref={swiperRef}
-//         modules={[Autoplay, Navigation, Pagination, EffectFade]}
-//         effect="fade"
-//         autoplay={{ delay: 5000, disableOnInteraction: false }}
-//         loop
-//         pagination={false}
-//         navigation={false}
-//         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-//         className="hero-slider__swiper"
-//       >
-//         {banners.map((slide) => (
-//           <SwiperSlide key={slide.id}>
-//             <div
-//               className={`hero-slider__slide ${slide.light ? 'hero-slider__slide--light' : ''}`}
-//               style={{ backgroundImage: `url(http://127.0.0.1:8000/${slide.image})` }}
-//             >
-//               <div className="hero-slider__overlay" />
-
-//               <div className="hero-slider__content">
-
-//                 <h2 className="hero-slider__title">{slide.title}</h2>
-
-//                 {/* {slide.titleEn && (
-//                   <p className="hero-slider__title-en">{slide.titleEn}</p>
-//                 )} */}
-
-//                 <p className="hero-slider__subtitle">{slide.description}</p>
-
-//                 <Link
-//                   to={slide.link}
-//                   className="hero-slider__cta"
-//                   style={{ background: '#FF6503' }}
-//                 >
-//                   {slide.btn_text}
-//                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-//                     <line x1="5" y1="12" x2="19" y2="12"/>
-//                     <polyline points="12 5 19 12 12 19"/>
-//                   </svg>
-//                 </Link>
-//               </div>
-//             </div>
-//           </SwiperSlide>
-//         ))}
-//       </Swiper>
-
-//       {/* ── Custom nav buttons ── */}
-//       <PrevButton onClick={handlePrev} />
-//       <NextButton onClick={handleNext} />
-
-//       {/* ── Custom pagination dots ── */}
-//       <div className="hero-dots">
-//         {banners.map((_, i) => (
-//           <button
-//             key={i}
-//             className={`hero-dots__dot ${activeIndex === i ? 'hero-dots__dot--active' : ''}`}
-//             onClick={() => swiperRef.current?.swiper?.slideToLoop(i)}
-//             aria-label={`Go to slide ${i + 1}`}
-//           />
-//         ))}
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default HeroSlider;
-
-
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
+import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import './HeroSlider.scss';
 
-// ── Custom Prev Button ─────────────────────────────
-const PrevButton = ({ onClick }) => (
-  <button className="hero-btn hero-btn--prev" onClick={onClick} aria-label="Previous slide">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="15 18 9 12 15 6"/>
+// ── Custom Prev Button ────────────────────────────────────────────
+const PrevButton = memo(({ onClick }) => (
+  <button
+    className="hero-btn hero-btn--prev"
+    onClick={onClick}
+    aria-label="Previous slide"
+    type="button"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6" />
     </svg>
   </button>
-);
+));
+PrevButton.displayName = 'PrevButton';
 
-// ── Custom Next Button ─────────────────────────────
-const NextButton = ({ onClick }) => (
-  <button className="hero-btn hero-btn--next" onClick={onClick} aria-label="Next slide">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="9 18 15 12 9 6"/>
+// ── Custom Next Button ────────────────────────────────────────────
+const NextButton = memo(({ onClick }) => (
+  <button
+    className="hero-btn hero-btn--next"
+    onClick={onClick}
+    aria-label="Next slide"
+    type="button"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6" />
     </svg>
   </button>
-);
+));
+NextButton.displayName = 'NextButton';
 
-const HeroSlider = ({ banners = [] }) => {
+// ── Helper: Resolve image URL ─────────────────────────────────────
+const getImageUrl = (image, fallback = '/images/hero-fallback.jpg') => {
+  if (!image) return fallback;
+  if (image.startsWith('http')) return image;
+  return `https://admin.elonis.com.bd/${image}`;
+};
+
+// ── Helper: Should render CTA ─────────────────────────────────────
+const shouldRenderCTA = (slide) =>
+  !!(slide?.btn_text?.trim() && slide?.link?.trim());
+
+// ── Helper: Should render description ────────────────────────────
+const shouldRenderDescription = (slide) =>
+  !!(slide?.description?.trim());
+
+// ── Main Component ────────────────────────────────────────────────
+const HeroSlider = ({ banners = [], autoPlayDelay = 5000 }) => {
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // ── Handlers for custom nav buttons
-  const handlePrev = () => swiperRef.current?.swiper?.slidePrev();
-  const handleNext = () => swiperRef.current?.swiper?.slideNext();
+  const handlePrev = useCallback(() => {
+    swiperRef.current?.swiper?.slidePrev();
+  }, []);
 
-  // ── Helper for full image URL (works with live API)
-  const getImageUrl = (image) => {
-    if (!image) return '';
-    return image.startsWith('http') ? image : `https://admin.elonis.com.bd/${image}`;
-  };
+  const handleNext = useCallback(() => {
+    swiperRef.current?.swiper?.slideNext();
+  }, []);
 
-  // ── Conditional render: don't initialize Swiper if no banners
+  const handleDotClick = useCallback((index) => {
+    swiperRef.current?.swiper?.slideToLoop(index);
+  }, []);
+
+  useEffect(() => {
+    if (banners?.length > 0) setIsLoaded(true);
+  }, [banners]);
+
+  useEffect(() => {
+    return () => {
+      swiperRef.current?.swiper?.destroy?.(true, true);
+    };
+  }, []);
+
   if (!banners || banners.length === 0) return null;
 
   return (
-    <section className="hero-slider">
+    <section
+      className="hero-slider"
+      aria-label="Featured promotions"
+      role="region"
+    >
       <Swiper
         ref={swiperRef}
-        modules={[Autoplay, Navigation, Pagination, EffectFade]}
+        modules={[Autoplay, EffectFade]}
         effect="fade"
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        fadeEffect={{ crossFade: true }}
+        autoplay={{
+          delay: autoPlayDelay,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
         loop
+        speed={800}
         pagination={false}
         navigation={false}
-        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        onSlideChange={(swiper) => {
+          setPrevIndex(activeIndex);
+          setActiveIndex(swiper.realIndex);
+        }}
         className="hero-slider__swiper"
+        aria-live="polite"
       >
-        {banners.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div
-              className={`hero-slider__slide ${slide.light ? 'hero-slider__slide--light' : ''}`}
-              style={{ backgroundImage: `url(${getImageUrl(slide.image)})` }}
-            >
-              <div className="hero-slider__overlay" />
+        {banners.map((slide, index) => {
+          const imageUrl = getImageUrl(slide.image);
+          const isActive = index === activeIndex;
 
-              <div className="hero-slider__content">
-                <h2 className="hero-slider__title">{slide.title}</h2>
-                {slide.titleEn && (
-                  <p className="hero-slider__title-en">{slide.titleEn}</p>
-                )}
-                <p className="hero-slider__subtitle">{slide.description}</p>
+          return (
+            <SwiperSlide key={slide.id || index}>
+              <article
+                className={`hero-slider__slide${slide.light ? ' hero-slider__slide--light' : ''}${isActive ? ' is-active' : ''}`}
+                aria-hidden={!isActive}
+              >
+                {/* Zoom layer */}
+                <div
+                  className={`hero-slider__zoom${isActive ? ' is-zooming' : ''}`}
+                  style={{ backgroundImage: `url(${imageUrl})` }}
+                  aria-hidden="true"
+                />
 
-                <Link
-                  to={slide.link}
-                  className="hero-slider__cta"
-                  style={{ background: slide.accent || '#FF6503' }}
-                >
-                  {slide.btn_text}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <line x1="5" y1="12" x2="19" y2="12"/>
-                    <polyline points="12 5 19 12 12 19"/>
-                  </svg>
-                </Link>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+                {/* Overlay */}
+                <div className="hero-slider__overlay" aria-hidden="true" />
+
+                {/* Content */}
+                <div className={`hero-slider__content${isActive ? ' is-visible' : ''}`}>
+                  {slide.title && (
+                    <h2 className="hero-slider__title">{slide.title}</h2>
+                  )}
+
+                  {slide.titleEn && (
+                    <p className="hero-slider__title-en">{slide.titleEn}</p>
+                  )}
+
+                  {/* Description — only if exists in API */}
+                  {shouldRenderDescription(slide) && (
+                    <p className="hero-slider__subtitle">{slide.description}</p>
+                  )}
+
+                  {/* CTA Button — only if btn_text AND link exist in API */}
+                  {shouldRenderCTA(slide) && (
+                    <Link
+                      to={slide.link}
+                      className="hero-slider__cta"
+                      style={{ '--cta-bg': slide.accent || '#FF6503' }}
+                      onClick={() => {
+                        if (typeof window.gtag === 'function') {
+                          window.gtag('event', 'hero_cta_click', {
+                            event_category: 'engagement',
+                            event_label: slide.title || 'Unknown',
+                          });
+                        }
+                      }}
+                    >
+                      <span>{slide.btn_text}</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </Link>
+                  )}
+                </div>
+              </article>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
 
-      {/* ── Custom nav buttons ── */}
+      {/* Nav Buttons */}
       <PrevButton onClick={handlePrev} />
       <NextButton onClick={handleNext} />
 
-      {/* ── Custom pagination dots ── */}
-      <div className="hero-dots">
+      {/* Pagination Dots */}
+      <div className="hero-dots" role="tablist" aria-label="Slide navigation">
         {banners.map((_, i) => (
           <button
             key={i}
-            className={`hero-dots__dot ${activeIndex === i ? 'hero-dots__dot--active' : ''}`}
-            onClick={() => swiperRef.current?.swiper?.slideToLoop(i)}
+            className={`hero-dots__dot${activeIndex === i ? ' hero-dots__dot--active' : ''}`}
+            onClick={() => handleDotClick(i)}
             aria-label={`Go to slide ${i + 1}`}
+            aria-selected={activeIndex === i}
+            role="tab"
+            type="button"
           />
         ))}
       </div>
+
+      {/* Initial loader */}
+      {!isLoaded && (
+        <div className="hero-slider__loader" aria-live="polite">
+          <span className="sr-only">Loading slider...</span>
+        </div>
+      )}
     </section>
   );
 };
 
-export default HeroSlider;
+export default memo(HeroSlider);

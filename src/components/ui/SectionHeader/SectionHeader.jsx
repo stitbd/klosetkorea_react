@@ -1,20 +1,28 @@
+// src/components/common/SectionHeader/SectionHeader.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './SectionHeader.scss';
 
-/**
- * Reusable section header used across all product sections.
- * Matches the Elonis design: bold left title + red "See All" badge on right.
- */
-const SectionHeader = ({ title, viewAllLink = '#', viewAllText = 'See All' }) => (
-  <div className="section-header d-flex align-items-center justify-content-between mb-3">
-    <h2 className="section-header__title">{title}</h2>
-    {viewAllLink && (
-      <Link to={viewAllLink} className="section-header__badge">
-        {viewAllText}
-      </Link>
-    )}
-  </div>
-);
+const SectionHeader = ({
+  title,
+  catSlug,
+  viewAllLink,
+  viewAllText = 'See All',
+}) => {
+  const resolvedLink = catSlug
+    ? `/products/${catSlug}`
+    : (viewAllLink || null);
+
+  return (
+    <div className="section-header d-flex align-items-center justify-content-between mb-3">
+      <h2 className="section-header__title">{title}</h2>
+      {resolvedLink && (
+        <Link to={resolvedLink} className="section-header__badge">
+          {viewAllText}
+        </Link>
+      )}
+    </div>
+  );
+};
 
 export default SectionHeader;

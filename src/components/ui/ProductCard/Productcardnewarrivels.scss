@@ -1,161 +1,154 @@
-// ─── ProductCard — New Arrivals ───────────────────────────────────────────────
-//
-// Design reference: mobile screenshot (red-circled card)
-//   • Tall portrait (3 : 4) image, fills card width
-//   • "NEW" pill badge — top-left, black bg / white text
-//   • Hover: image crossfades to second shot + card shadow
-//   • Name: uppercase, tight tracking, truncated to 1 line
-//   • Price: bold black; struck-through original if on sale
+// // ─── ProductCard — New Arrivals ───────────────────────────────────────────────
 
-.product-card-new-arrival {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  background: #fff;
-  border-radius: 5;          // flush tiles — no rounded corners
-  overflow: hidden;
-  transition: box-shadow 0.22s ease;
-  border-right: 1px solid #ebebeb; // subtle divider between cards
+// .product-card-new-arrival {
+//   display: flex;
+//   flex-direction: column;
+//   text-decoration: none;
+//   color: inherit;
+//   background: #fff;
+//   border-radius: 5;
+//   overflow: hidden;
+//   transition: box-shadow 0.22s ease;
+//   border-right: 1px solid #ebebeb;
 
-  .swiper-slide:last-child & { border-right: none; }
+//   .swiper-slide:last-child & { border-right: none; }
 
-  &:hover,
-  &:focus-visible {
-    box-shadow: inset 0 0 0 1.5px #111; // inset outline on hover, no layout shift
-    text-decoration: none;
-    color: inherit;
-  }
+//   &:hover,
+//   &:focus-visible {
+//     box-shadow: inset 0 0 0 1.5px #111; 
+//     text-decoration: none;
+//     color: inherit;
+//   }
 
-  // ── Image container ────────────────────────────────────────
-  &__image-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background: #f4f4f4;
-    flex-shrink: 0;
-  }
+//   // ── Image container ────────────────────────────────────────
+//   &__image-wrap {
+//     position: relative;
+//     width: 100%;
+//     aspect-ratio: 3 / 4;
+//     overflow: hidden;
+//     background: #f4f4f4;
+//     flex-shrink: 0;
+//   }
 
-  &__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    transition: opacity 0.35s ease, transform 0.35s ease;
+//   &__image {
+//     position: absolute;
+//     inset: 0;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     object-position: top center;
+//     transition: opacity 0.35s ease, transform 0.35s ease;
 
-    &--main {
-      opacity: 1;
-      z-index: 1;
+//     &--main {
+//       opacity: 1;
+//       z-index: 1;
 
-      .product-card-new-arrival:hover & {
-        opacity: 0;
-        transform: scale(1.04);
-      }
-    }
+//       .product-card-new-arrival:hover & {
+//         opacity: 0;
+//         transform: scale(1.04);
+//       }
+//     }
 
-    &--hover {
-      opacity: 0;
-      z-index: 2;
+//     &--hover {
+//       opacity: 0;
+//       z-index: 2;
 
-      .product-card-new-arrival:hover & {
-        opacity: 1;
-      }
-    }
-  }
+//       .product-card-new-arrival:hover & {
+//         opacity: 1;
+//       }
+//     }
+//   }
 
-  // When there is only one image — still scale on hover
-  &__image-wrap:has(.product-card-new-arrival__image--main:only-child) {
-    .product-card-new-arrival__image--main {
-      .product-card-new-arrival:hover & {
-        opacity: 1;
-        transform: scale(1.04);
-      }
-    }
-  }
+//   // When there is only one image — still scale on hover
+//   &__image-wrap:has(.product-card-new-arrival__image--main:only-child) {
+//     .product-card-new-arrival__image--main {
+//       .product-card-new-arrival:hover & {
+//         opacity: 1;
+//         transform: scale(1.04);
+//       }
+//     }
+//   }
 
-  // ── "NEW" badge ────────────────────────────────────────────
-  &__badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    z-index: 3;
-    background: #111;
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 3px;
-    line-height: 1.4;
-    user-select: none;
+//   // ── "NEW" badge ────────────────────────────────────────────
+//   &__badge {
+//     position: absolute;
+//     top: 8px;
+//     left: 8px;
+//     background: #FF6600;
+//     color: #fff;
+//     font-size: 10px;
+//     font-weight: 700;
+//     padding: 3px 7px;
+//     border-radius: 4px;
+//     letter-spacing: 0.3px;
+//     z-index: 1;
+//   }
+  
+//   &__badge--stockout {
+//     left: auto;
+//     right: 8px;
+//     background: #ff0000;
+//   }
+  
+//   &__badge--preorder {
+//     background: #7c3aed;
+//   }
 
-    @media (max-width: 575px) {
-      font-size: 9px;
-      padding: 2px 7px;
-      top: 6px;
-      left: 6px;
-    }
-  }
+//   // ── Info block ─────────────────────────────────────────────
+//   &__info {
+//     padding: 10px 8px 13px;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 3px;
+//     flex: 1;
 
-  // ── Info block ─────────────────────────────────────────────
-  &__info {
-    padding: 10px 8px 13px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    flex: 1;
+//     @media (max-width: 575px) {
+//       padding: 8px 6px 11px;
+//     }
+//   }
 
-    @media (max-width: 575px) {
-      padding: 8px 6px 11px;
-    }
-  }
+//   &__name {
+//     margin: 0;
+//     font-size: 12px;
+//     font-weight: 600;
+//     color: #000;
+//     text-transform: uppercase;
+//     letter-spacing: 0.04em;
+//     line-height: 1.35;
+//     // Clamp to 2 lines on mobile (enough space), 1 line on desktop
+//     display: -webkit-box;
+//     -webkit-line-clamp: 2;
+//     -webkit-box-orient: vertical;
+//     overflow: hidden;
 
-  &__name {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 600;
-    color: #000;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    line-height: 1.35;
-    // Clamp to 2 lines on mobile (enough space), 1 line on desktop
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+//     @media (min-width: 576px) {
+//       -webkit-line-clamp: 1;
+//       white-space: nowrap;
+//       display: block;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//     }
 
-    @media (min-width: 576px) {
-      -webkit-line-clamp: 1;
-      white-space: nowrap;
-      display: block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+//     @media (min-width: 768px) {
+//       font-size: 12.5px;
+//     }
+//   }
 
-    @media (min-width: 768px) {
-      font-size: 12.5px;
-    }
-  }
+//   &__price {
+//     margin: 0;
+//     font-size: 14px;
+//     font-weight: 700;
+//     color: #000;
+//     letter-spacing: 0.01em;
+//     display: flex;
+//     align-items: baseline;
+//     flex-wrap: wrap;
+//     gap: 5px;
 
-  &__price {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 700;
-    color: #000;
-    letter-spacing: 0.01em;
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 5px;
-
-    @media (max-width: 575px) {
-      font-size: 13px;
-    }
-  }
+//     @media (max-width: 575px) {
+//       font-size: 13px;
+//     }
+//   }
 
 
-}
+// }

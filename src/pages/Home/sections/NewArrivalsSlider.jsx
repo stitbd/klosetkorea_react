@@ -1,18 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
+import { PLACEHOLDER_IMG, BASE_IMAGE_URL } from '../../../utils';
+import apiClient from '../../../services/apiClient';
+import { getPrefetchedProduct } from '../../../utils/productPrefetchCache';
 import 'swiper/css';
-import { useNewArrivals } from '../../../features/products/hooks/useProducts';
-import SectionHeader from '../../../components/ui/SectionHeader/SectionHeader';
 import './NewArrivalsSlider.scss';
 
 const NewArrivalsSlider = ({
   title       = 'NEW ARRIVAL',
-  viewAllLink = '/categories/new-arrivals',
-  useHook     = useNewArrivals,
+  viewAllLink = '/new-arrivals',
+  products    = [],
+  loading     = false,
 }) => {
-  const { products, loading } = useHook();
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -40,16 +41,12 @@ const NewArrivalsSlider = ({
 
   return (
     <section className="na">
-      {/* Title — respects page gutter */}
       <div className="na__head">
         <h2 className="na__title">{title}</h2>
         <Link to={viewAllLink} className="na__view-all">View All</Link>
       </div>
-      {/* <SectionHeader title="NEW ARRIVAL" viewAllLink="/category/sneakers" /> */}
 
-      {/* Slider wrapper — full bleed */}
       <div className="na__slider-wrap">
-        {/* Prev arrow */}
         <button ref={prevRef} className="na__nav na__nav--prev" aria-label="Previous">
           <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
             stroke="currentColor" strokeWidth="2"
@@ -58,7 +55,6 @@ const NewArrivalsSlider = ({
           </svg>
         </button>
 
-        {/* Next arrow */}
         <button ref={nextRef} className="na__nav na__nav--next" aria-label="Next">
           <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
             stroke="currentColor" strokeWidth="2"
@@ -75,14 +71,14 @@ const NewArrivalsSlider = ({
           }}
           navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
           autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-          loop
+          loop={products.length > 2}
           speed={650}
           spaceBetween={10}
-          slidesPerView={2.7}
+          slidesPerView={2.5}
           centeredSlides={true}
           breakpoints={{
             768: {
-              slidesPerView: 3.5,
+              slidesPerView: 3.4,
               centeredSlides: true,
               spaceBetween: 10,
             },
@@ -107,12 +103,54 @@ const NewArrivalsSlider = ({
 
 /* ── Card component ──────────────────────────────────────────────────────── */
 const NaCard = ({ product }) => {
-  const { id, slug, name, price, image, images, isNew = true } = product;
-  const img1 = image || images?.[0] || '';
-  const img2 = images?.[1] || null;
+  const {
+    id,
+    name,
+    new_price,
+    image,
+    images,
+  } = product;
+
+  const isPreOrder = !!product.pre_order_status;
+
+  // ── Resolve slug from any possible field the API might return ──
+  const slug =
+    product.slug ||
+    product.product_slug ||
+    product.product_code ||
+    null;
+
+  // ── Resolve images ──
+  const img1 = image ? BASE_IMAGE_URL + image : (images?.[0] || PLACEHOLDER_IMG);
+  const img2 = images?.[1] ? BASE_IMAGE_URL + images[1] : null;
+
+  const [isStockOut, setIsStockOut] = useState(false);
+
+  useEffect(() => {
+    if (!slug || isPreOrder) return;
   
-  // ✅ FIXED: Use singular '/product/' path and prioritize slug over id
-  const href = `/product/${slug || id}`;
+    const checkStock = (body) => {
+      if (!body?.success) return;
+      const isProductPreOrder = !!body.product_details?.pre_order_status;
+      if (isProductPreOrder) { setIsStockOut(false); return; }
+      const variants = body.variants || [];
+      if (variants.length === 0) { setIsStockOut(true); return; }
+      const totalStock = variants.reduce((sum, v) => sum + Number(v.stock || 0), 0);
+      setIsStockOut(totalStock <= 0);
+    };
+  
+    const cached = getPrefetchedProduct(slug);
+    if (cached) { checkStock(cached); return; }
+  
+    apiClient.get(`/product/${slug}`)
+      .then(checkStock)
+      .catch(() => {});
+  }, [slug, isPreOrder]);
+
+  // ── If no slug found, don't render a broken link ──
+  if (!slug) return null;
+
+  const href = `/product/${slug}`;
 
   return (
     <Link to={href} className="na-card" aria-label={name}>
@@ -122,6 +160,7 @@ const NaCard = ({ product }) => {
           alt={name}
           className={`na-card__img na-card__img--main${img2 ? ' has-hover' : ''}`}
           loading="lazy"
+          onError={(e) => { e.target.src = PLACEHOLDER_IMG; }}
         />
         {img2 && (
           <img
@@ -129,13 +168,23 @@ const NaCard = ({ product }) => {
             alt={name}
             className="na-card__img na-card__img--alt"
             loading="lazy"
+            onError={(e) => { e.target.src = PLACEHOLDER_IMG; }}
           />
         )}
-        {isNew && <span className="na-card__badge">NEW</span>}
+        {isPreOrder ? (
+          <span className="na-card__badge na-card__badge--preorder">PRE ORDER</span>
+        ) : (
+          <>
+            <span className="na-card__badge">NEW</span>
+            {isStockOut && (
+              <span className="na-card__badge na-card__badge--stockout">Stock Out</span>
+            )}
+          </>
+        )}
       </div>
       <div className="na-card__info">
         <p className="na-card__name">{name}</p>
-        <p className="na-card__price">Tk. {Number(price).toLocaleString('en-BD')}</p>
+        <p className="na-card__price">Tk. {Number(new_price).toLocaleString('en-BD')}</p>
       </div>
     </Link>
   );

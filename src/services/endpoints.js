@@ -1,9 +1,12 @@
+// src/services/endpoints.js
 export const ENDPOINTS = {
   // Products
   PRODUCTS:          '/products',
-  PRODUCT_DETAIL:    (slug) => `/products/${slug}`,
+
+  // product/{slug}-{id}
+  PRODUCT_DETAIL:    (slug) => `/product/${slug}`,
+
   NEW_ARRIVALS:      '/products?tag=new_arrivals&limit=8',
-  LATEST_PRODUCTS:   '/products?tag=latest&limit=8',
   FEATURED:          '/products?featured=true&limit=8',
 
   // Categories
@@ -11,12 +14,10 @@ export const ENDPOINTS = {
   CATEGORY_PRODUCTS: (slug) => `/categories/${slug}/products`,
 
   // Collections
-  PANJABI_COLLECTION: '/products?category=panjabi&tag=eid26&limit=8',
-  WALLETS:            '/products?category=wallet&limit=8',
-  LONG_WALLETS:       '/products?category=long-wallet&limit=8',
-  LUXURY_SHIRTS:      '/products?category=luxury-shirt&limit=8',
-  BELTS:              '/products?category=belt&limit=8',
-  CAPS:               '/products?category=cap&limit=8',
+  SNEAKERS:          '/products?category=sneakers&limit=8',
+  SANDAL:            '/products?category=loafers-and-sandal&limit=8',
+  APPAREL:           '/products?category=apparel&limit=8',
+  ACCESSORIES:       '/products?category=accessories&limit=8',
 
   // Cart & Auth
   CART:              '/cart',
