@@ -84,15 +84,6 @@ const useCartStore = create(
 
       clearCart: () => set({ items: [], couponData: null }),
 
-      // ── Your existing auth fields (keep as-is, example shown) ──────────────
-      // token: null,
-      // user: null,
-      // setToken: (token) => set({ token }),
-      // setUser: (user) => set({ user }),
-      // logout: () => set({ token: null, user: null }),
-
-      // ✅ NEW: Coupon data shared between CartPage → CheckoutPage ─────────────
-      // Shape: { coupon: string, subtotal: number, discount: number, grandTotal: number } | null
       couponData: null,
 
       setCouponData: (data) => set({ couponData: data }),
