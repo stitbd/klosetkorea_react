@@ -1,0 +1,305 @@
+// src/pages/Home/sections/TestimonialsSection.scss
+
+.testimonials-section {
+  background: var(--brand-white);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+
+  @media (min-width: 992px) {
+    padding-top: var(--section-gap);
+    padding-bottom: var(--section-gap);
+  }
+}
+
+// ── Header ─────────────────────────────────────────────────────
+.testimonials-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 2;
+
+  @media (min-width: 768px) { padding: 0 2rem; }
+  @media (min-width: 1200px) { padding: 0 3rem; }
+
+  &__line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand-gold), transparent);
+    min-width: 40px;
+  }
+
+  &__text {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  &__subtitle {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4.5vw, 36px);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--brand-black);
+    margin: 0;
+    line-height: 1.1;
+  }
+}
+
+// ── Slider Wrapper with Nav ────────────────────────────────────
+.testimonials-slider-wrap {
+  position: relative;
+  padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) { padding: 0 3rem; }
+  @media (min-width: 1200px) { padding: 0 5rem; }
+}
+
+.testimonials-swiper {
+  width: 100%;
+  padding: 10px 0 30px; // space for pagination if added later
+  overflow: visible;
+
+  .swiper-slide {
+    height: auto;
+    display: flex;
+    align-items: stretch;
+  }
+
+  // Hide default Swiper nav buttons (we use custom)
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
+}
+
+// ── Custom Navigation Arrows ───────────────────────────────────
+.testimonials-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-white);
+  border: 1px solid var(--brand-gold);
+  border-radius: 0;
+  cursor: pointer;
+  color: var(--brand-gold);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s var(--ease-out-expo);
+  padding: 0;
+
+  &:hover {
+    background: var(--brand-gold);
+    color: var(--brand-black);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  &--prev { left: 0; }
+  &--next { right: 0; }
+
+  &.swiper-button-disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    &:hover {
+      background: var(--brand-white);
+      color: var(--brand-gold);
+      transform: translateY(-50%);
+    }
+  }
+
+  @media (max-width: 767px) {
+    width: 32px;
+    height: 32px;
+    &--prev { left: -8px; }
+    &--next { right: -8px; }
+  }
+}
+
+// ── Testimonial Card ───────────────────────────────────────────
+.testimonial-card {
+  background: var(--brand-off-white);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+
+  @media (min-width: 768px) {
+    padding: 2.5rem 2rem;
+  }
+
+  &:hover {
+    border-color: var(--brand-gold);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  &__content {
+    width: 100%;
+  }
+
+  // Rating
+  &__rating {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin-bottom: 1.25rem;
+    color: var(--brand-gold);
+
+    svg {
+      transition: transform 0.2s ease;
+    }
+    svg.filled {
+      transform: scale(1.15);
+    }
+  }
+
+  // Quote Text
+  &__text {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--brand-charcoal);
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+    flex-grow: 1;
+  }
+
+  // Author
+  &__author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--brand-gold);
+    flex-shrink: 0;
+  }
+
+  &__meta {
+    text-align: left;
+  }
+
+  &__name {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--brand-black);
+    letter-spacing: 0.03em;
+    font-style: normal;
+  }
+
+  &__role {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+}
+
+// ── Decorative Quote Marks ─────────────────────────────────────
+.testimonials-quote {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(80px, 18vw, 180px);
+  color: var(--brand-gold-muted);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.3;
+
+  &--start {
+    top: 15%;
+    left: 1%;
+    transform: rotate(-8deg);
+  }
+
+  &--end {
+    bottom: 12%;
+    right: 1%;
+    transform: rotate(8deg);
+  }
+
+  @media (max-width: 991px) {
+    display: none;
+  }
+}
+
+// ── Mobile Optimization ────────────────────────────────────────
+@media (max-width: 767px) {
+  .testimonial-card {
+    padding: 1.75rem 1.25rem;
+
+    &__text {
+      font-size: 1.05rem;
+      margin-bottom: 1.25rem;
+    }
+
+    &__avatar {
+      width: 42px;
+      height: 42px;
+    }
+
+    &__name {
+      font-size: 0.9rem;
+    }
+
+    &__role {
+      font-size: 0.7rem;
+    }
+  }
+
+  .testimonials-slider-wrap {
+    padding: 0 0.5rem;
+  }
+}
+
+// ── Reduced Motion ─────────────────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-swiper,
+  .testimonial-card,
+  .testimonials-nav {
+    transition: none !important;
+    animation: none !important;
+  }
+}

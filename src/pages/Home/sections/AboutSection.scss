@@ -1,0 +1,267 @@
+// src/pages/Home/sections/AboutSection.scss
+
+.about-section {
+    background: var(--brand-white);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    overflow: hidden;
+  
+    @media (min-width: 992px) {
+      padding-top: var(--section-gap);
+      padding-bottom: var(--section-gap);
+    }
+  }
+  
+  // ── Content Column ─────────────────────────────────────────────
+  .about-content {
+    padding: 2rem 1rem;
+  
+    @media (min-width: 992px) {
+      padding: 3rem 4rem 3rem 2rem;
+    }
+  
+    &__inner {
+      max-width: 580px;
+    }
+  }
+  
+  .about-header {
+    margin-bottom: 1.5rem;
+  
+    &__subtitle {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+      margin-bottom: 0.75rem;
+    }
+  
+    &__title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--brand-black);
+      margin: 0;
+      line-height: 1.2;
+    }
+  }
+  
+  .about-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--brand-gold);
+    margin: 1.5rem 0;
+    position: relative;
+  
+    &::after {
+      content: '';
+      position: absolute;
+      right: -70px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--brand-gold), transparent);
+    }
+  
+    @media (max-width: 991px) {
+      &::after { display: none; }
+    }
+  }
+  
+  .about-content__text {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin: 0 0 2.5rem;
+  
+    @media (max-width: 767px) {
+      font-size: 1rem;
+    }
+  }
+  
+  // ── Stats Grid ─────────────────────────────────────────────────
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+  
+  .about-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  
+    &__value {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 600;
+      color: var(--brand-gold-dark);
+      line-height: 1;
+    }
+  
+    &__label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  }
+  
+  // ── CTA Button ─────────────────────────────────────────────────
+  .about-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--brand-black);
+    color: var(--brand-gold);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    border: 1px solid var(--brand-black);
+    text-decoration: none;
+    transition: all 0.35s var(--ease-out-expo);
+  
+    svg {
+      transition: transform 0.3s ease;
+    }
+  
+    &:hover {
+      background: var(--brand-gold);
+      color: var(--brand-black);
+      border-color: var(--brand-gold);
+  
+      svg {
+        transform: translateX(4px);
+      }
+    }
+  
+    &:focus-visible {
+      outline: 2px solid var(--brand-gold);
+      outline-offset: 4px;
+    }
+  }
+  
+  // ── Image Column ───────────────────────────────────────────────
+  .about-image {
+    position: relative;
+    min-height: 400px;
+  
+    @media (min-width: 992px) {
+      min-height: 580px;
+    }
+  }
+  
+  .about-image__wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    overflow: hidden;
+  }
+  
+  .about-image__main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.8s var(--ease-out-expo);
+  
+    .about-image__wrap:hover & {
+      transform: scale(1.04);
+    }
+  }
+  
+  // Gold decorative frame overlay
+  .about-image__frame {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    pointer-events: none;
+    z-index: 2;
+  
+    @media (max-width: 767px) {
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+    }
+  }
+  
+  // Floating "Est. 2010" badge
+  .about-image__badge {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 3;
+    background: var(--brand-black);
+    padding: 0.6rem 1.25rem;
+    border-left: 3px solid var(--brand-gold);
+  
+    @media (max-width: 767px) {
+      bottom: 16px;
+      left: 16px;
+      padding: 0.5rem 1rem;
+    }
+  }
+  
+  .about-image__badge-text {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-gold);
+    white-space: nowrap;
+  }
+  
+  // ── Hover Reveal Effect (Desktop) ──────────────────────────────
+  @media (min-width: 992px) {
+    .about-image__wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(10, 10, 10, 0.25));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+  
+    .about-image__wrap:hover::after {
+      opacity: 1;
+    }
+  }
+  
+  // ── Reduced Motion ─────────────────────────────────────────────
+  @media (prefers-reduced-motion: reduce) {
+    .about-image__main,
+    .about-cta,
+    .about-cta svg {
+      transition: none !important;
+      transform: none !important;
+    }
+  }

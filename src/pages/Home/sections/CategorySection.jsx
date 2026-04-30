@@ -43,7 +43,7 @@ const CategorySection = ({ title, catSlug, products = [] }) => {
           <Link
             to={`/categories/${catSlug}`}
             style={{
-              background: '#FF6503',
+              background: '#D4AF37',
               color: '#fff',
               fontSize: '0.75rem',
               fontWeight: 600,
