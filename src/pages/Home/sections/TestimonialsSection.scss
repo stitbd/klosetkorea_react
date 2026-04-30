@@ -1,5 +1,6 @@
 // src/pages/Home/sections/TestimonialsSection.scss
 
+// ── Section ────────────────────────────────────────────────────
 .testimonials-section {
   background: var(--brand-white);
   padding-top: 3rem;
@@ -23,7 +24,7 @@
   position: relative;
   z-index: 2;
 
-  @media (min-width: 768px) { padding: 0 2rem; }
+  @media (min-width: 768px)  { padding: 0 2rem; }
   @media (min-width: 1200px) { padding: 0 3rem; }
 
   &__line {
@@ -60,29 +61,35 @@
   }
 }
 
-// ── Slider Wrapper with Nav ────────────────────────────────────
+// ── Slider Wrapper ─────────────────────────────────────────────
 .testimonials-slider-wrap {
   position: relative;
   padding: 0 1rem;
   max-width: 1200px;
   margin: 0 auto;
 
-  @media (min-width: 768px) { padding: 0 3rem; }
-  @media (min-width: 1200px) { padding: 0 5rem; }
+  @media (min-width: 768px)  { padding: 0 3.5rem; }
+  @media (min-width: 1200px) { padding: 0 5rem;   }
 }
 
+// ── Swiper overrides ───────────────────────────────────────────
 .testimonials-swiper {
   width: 100%;
-  padding: 10px 0 30px; // space for pagination if added later
-  overflow: visible;
+  // Extra vertical padding so card hover-shadow isn't clipped
+  padding: 8px 2px 28px !important;
+  // Slides outside the viewport are still painted (no flash on loop wrap)
+  overflow: visible !important;
 
   .swiper-slide {
     height: auto;
     display: flex;
     align-items: stretch;
+    // Prevent the brief "white flash" when a cloned slide comes into view
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
-  // Hide default Swiper nav buttons (we use custom)
+  // Hide Swiper's own nav — we use custom buttons
   .swiper-button-prev,
   .swiper-button-next {
     display: none !important;
@@ -93,50 +100,66 @@
 .testimonials-nav {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%);  // ← Simplified: was translateY(-60%)
   z-index: 10;
-  width: 40px;
-  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--brand-white);
-  border: 1px solid var(--brand-gold);
-  border-radius: 0;
+  width: 44px;   // ← Match HeroSlider $btn-size-md
+  height: 44px;
+  background: rgba(0, 0, 0, 0.32);  // ← Match HeroSlider style
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;  // ← NEW: Circular like HeroSlider
+  color: #fff;  // ← White icon like HeroSlider
   cursor: pointer;
-  color: var(--brand-gold);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.25s var(--ease-out-expo);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.22s ease, border-color 0.22s ease,
+              box-shadow 0.22s ease, transform 0.22s ease;
   padding: 0;
 
+  svg {
+    width: 18px;  // ← Match HeroSlider
+    height: 18px;
+    flex-shrink: 0;
+  }
+
   &:hover {
-    background: var(--brand-gold);
-    color: var(--brand-black);
-    transform: translateY(-50%) scale(1.05);
+    background: #D4AF37;  // ← Use $accent variable if available
+    border-color: #D4AF37;
+    box-shadow: 0 4px 20px rgba(184, 150, 46, 0.6);  // ← $accent-glow
+    transform: translateY(-50%) scale(1.1);
   }
 
   &:active {
-    transform: translateY(-50%) scale(0.95);
+    transform: translateY(-50%) scale(0.94);
   }
 
-  &--prev { left: 0; }
-  &--next { right: 0; }
+  &:focus-visible {
+    outline: 2px solid #D4AF37;
+    outline-offset: 2px;
+  }
 
   &.swiper-button-disabled {
-    opacity: 0.3;
+    opacity: 0.5;
     cursor: not-allowed;
-    &:hover {
-      background: var(--brand-white);
-      color: var(--brand-gold);
-      transform: translateY(-50%);
-    }
+    pointer-events: none;
+  }
+
+  &--prev { left: 16px; }   // ← Match HeroSlider positioning
+  &--next { right: 16px; }
+
+  @media (min-width: 992px) {
+    &--prev { left: 26px; }
+    &--next { right: 26px; }
   }
 
   @media (max-width: 767px) {
-    width: 32px;
-    height: 32px;
-    &--prev { left: -8px; }
-    &--next { right: -8px; }
+    width: 28px;
+    height: 28px;
+    svg { width: 12px; height: 12px; }
+    &--prev { left: 10px; }
+    &--next { right: 10px; }
   }
 }
 
@@ -150,57 +173,59 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  // GPU-composite the hover — prevents repaint on scroll
+  will-change: box-shadow;
 
-  @media (min-width: 768px) {
-    padding: 2.5rem 2rem;
-  }
+  @media (min-width: 768px) { padding: 2.5rem 2rem; }
 
   &:hover {
-    border-color: var(--brand-gold);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.07);
   }
 
   &__content {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
-  // Rating
+  // ── Rating ──
   &__rating {
     display: flex;
     justify-content: center;
-    gap: 3px;
+    gap: 4px;
     margin-bottom: 1.25rem;
     color: var(--brand-gold);
 
-    svg {
-      transition: transform 0.2s ease;
-    }
-    svg.filled {
-      transform: scale(1.15);
-    }
+    svg { display: block; }
   }
 
-  // Quote Text
+  // ── Quote ──
   &__text {
     font-family: var(--font-display);
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
     font-weight: 400;
     font-style: italic;
     color: var(--brand-charcoal);
-    line-height: 1.7;
+    line-height: 1.75;
     margin: 0 0 1.5rem;
     flex-grow: 1;
+    // Prevent very long words from breaking card layout
+    word-break: break-word;
+    hyphens: auto;
   }
 
-  // Author
+  // ── Author ──
   &__author {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.85rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.12);
+    margin-top: auto; // always pinned to bottom regardless of text height
   }
 
   &__avatar {
@@ -212,28 +237,26 @@
     flex-shrink: 0;
   }
 
-  &__meta {
-    text-align: left;
-  }
+  &__meta { text-align: left; }
 
   &__name {
     display: block;
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--brand-black);
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
     font-style: normal;
   }
 
   &__role {
     display: block;
     font-family: var(--font-body);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: 3px;
   }
 }
 
@@ -242,56 +265,39 @@
   position: absolute;
   font-family: var(--font-display);
   font-size: clamp(80px, 18vw, 180px);
-  color: var(--brand-gold-muted);
+  color: var(--brand-gold-muted, rgba(212, 175, 55, 0.12));
   line-height: 1;
   pointer-events: none;
+  user-select: none;
   z-index: 1;
-  opacity: 0.3;
 
   &--start {
-    top: 15%;
+    top: 12%;
     left: 1%;
     transform: rotate(-8deg);
   }
 
   &--end {
-    bottom: 12%;
+    bottom: 10%;
     right: 1%;
     transform: rotate(8deg);
   }
 
-  @media (max-width: 991px) {
-    display: none;
-  }
+  @media (max-width: 991px) { display: none; }
 }
 
-// ── Mobile Optimization ────────────────────────────────────────
+// ── Mobile ─────────────────────────────────────────────────────
 @media (max-width: 767px) {
   .testimonial-card {
     padding: 1.75rem 1.25rem;
 
-    &__text {
-      font-size: 1.05rem;
-      margin-bottom: 1.25rem;
-    }
-
-    &__avatar {
-      width: 42px;
-      height: 42px;
-    }
-
-    &__name {
-      font-size: 0.9rem;
-    }
-
-    &__role {
-      font-size: 0.7rem;
-    }
+    &__text   { font-size: 1rem; margin-bottom: 1.1rem; }
+    &__avatar { width: 42px; height: 42px; }
+    &__name   { font-size: 0.875rem; }
+    &__role   { font-size: 0.68rem; }
   }
 
-  .testimonials-slider-wrap {
-    padding: 0 0.5rem;
-  }
+  .testimonials-slider-wrap { padding: 0 0.5rem; }
 }
 
 // ── Reduced Motion ─────────────────────────────────────────────

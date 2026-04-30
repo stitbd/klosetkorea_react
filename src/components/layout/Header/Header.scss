@@ -59,7 +59,7 @@
 
   // ── Mobile Top Bar ────────────────────────────────────────
   &__mobile-top {
-    background: var(--brand-white);
+    background: var(--brand-black);
     border-bottom: 1px solid #ebebeb;
     padding: 0.65rem 0;
   }
@@ -87,7 +87,7 @@
       display: block;
       width: 22px;
       height: 1.5px;
-      background: var(--brand-black);
+      background: var(--brand-gold);
       border-radius: 0;
       transition: all 0.25s;
     }
@@ -116,7 +116,7 @@
     border: none;
     padding: 6px;
     cursor: pointer;
-    color: var(--brand-black);
+    color: var(--brand-gold);
     display: flex;
     align-items: center;
     justify-content: flex-end;
