@@ -57,7 +57,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &__guest-hint  { font-size: 0.88rem; color: #888; }
 
   &__login-btn {
-    background: #FF6600;
+    background: var(--brand-gold);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -67,7 +67,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     cursor: pointer;
     transition: background 0.2s, transform 0.1s;
     letter-spacing: 0.3px;
-    &:hover   { background: #e60000; transform: translateY(-1px); }
+    &:hover   { background: var(--brand-gold-dark); transform: translateY(-1px); }
     &:active  { transform: translateY(0); }
   }
 
@@ -101,7 +101,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #ff0000;
+    background: var(--brand-gold);
     color: #fff;
     font-size: 1.2rem;
     font-weight: 800;
@@ -116,7 +116,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     margin: 0 0 2px;
     font-size: 0.92rem;
     color: #1a1a1a;
-    strong { color: #ff0000; }
+    strong { color: var(--brand-gold); }
   }
 
   &__user-subtext { margin: 0; font-size: 0.76rem; color: #888; }
@@ -135,7 +135,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &__info-label {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #ff0000;
+    color: var(--brand-gold);
     text-transform: uppercase;
     letter-spacing: 0.6px;
     min-width: 68px;
@@ -159,12 +159,12 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     transition: border-color 0.2s, box-shadow 0.2s !important;
 
     &:focus {
-      border-color: #ff0000 !important;
+      border-color: var(--brand-gold-dark) !important;
       background: #fff !important;
       box-shadow: 0 0 0 3px rgba(200,16,46,0.08) !important;
     }
 
-    &.is-invalid { border-color: #dc3545 !important; }
+    &.is-invalid { border-color: var(--brand-gold) !important; }
 
     &--disabled {
       background: #f3f3f3 !important;
@@ -302,7 +302,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &__address-option-title {
     font-size: 0.78rem;
     font-weight: 700;
-    color: #ff0000;
+    color: var(--brand-gold-dark);
     text-transform: uppercase;
     letter-spacing: 0.4px;
   }
@@ -331,7 +331,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     width: 100%;
     justify-content: flex-start;
 
-    &:hover:not(:disabled) { border-color: #FF6600; color: #FF6600; background: #fff9f4; }
+    &:hover:not(:disabled) { border-color: var(--brand-gold); color: var(--brand-gold); background: #fff9f4; }
     &:disabled             { opacity: 0.5; cursor: not-allowed; }
   }
 
@@ -339,7 +339,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #FF6600;
+    background: var(--brand-gold);
     color: #fff;
     font-size: 1rem;
     font-weight: 700;
@@ -378,23 +378,23 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &__agreement {
     font-size: 0.86rem;
     color: #555;
-    a { color: #FF6600; }
+    a { color: var(--brand-gold); }
   }
 
   &__policy-link {
-    color: #FF6600 !important;
+    color: var(--brand-gold) !important;
     text-decoration: underline;
   }
   
   &__form-check-input:checked{
-    background-color: #ff0000;
-    border-color: #ff0000;
+    background-color: var(--brand-gold);
+    border-color: var(--brand-gold);
   }
   
   // ── Submit button ────────────────────────────────────────────────────────
   &__submit-btn {
     width: 100%;
-    background: #ff0000;
+    background: var(--brand-gold);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -408,31 +408,31 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     justify-content: center;
     gap: 8px;
 
-    &:hover:not(:disabled) { background: #cc0000; transform: translateY(-1px); }
+    &:hover:not(:disabled) { background: var(--brand-gold); transform: translateY(-1px); }
     &:disabled             { opacity: 0.65; cursor: not-allowed; }
   }
 
   &__back-btn {
     display: inline-block;
-    background: #ff0000;
+    background: var(--brand-gold);
     color: #fff;
     padding: 10px 24px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: 600;
-    &:hover { background: #a50d26; color: #fff; }
+    &:hover { background: var(--brand-gold-dark); color: #fff; }
   }
 
   // ── Order Summary panel ──────────────────────────────────────────────────
   &__summary {
-    background: #fff;
+    background: #1a1a1a;
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     position: sticky;
     top: 80px;
 
-    h5 { font-weight: 700; color: #1a1a1a; margin-bottom: 16px; }
+    h5 { font-weight: 700; color: var(--brand-gold); margin-bottom: 16px; }
   }
 
   &__items-list {
@@ -466,21 +466,21 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &__item-name {
     font-size: 0.88rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #fff;
     max-width: 160px;
   }
 
   &__item-variant,
   &__item-qty {
     font-size: 0.78rem;
-    color: #888;
+    color: #fff;
     margin: 0;
   }
 
   &__item-price {
     font-size: 0.92rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #fff;
     white-space: nowrap;
     margin-left: auto;
     flex-shrink: 0;
@@ -492,13 +492,13 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     align-items: center;
     padding: 6px 0;
     font-size: 0.92rem;
-    color: #444;
+    color: #fff;
 
     &--grand {
       font-size: 1.05rem;
       font-weight: 700;
-      color: #1a1a1a;
-      border-top: 2px solid #eee;
+      color: #fff;
+      border-top: 2px solid var(--brand-gold-dark);
       padding-top: 10px;
       margin-top: 4px;
     }
@@ -509,7 +509,9 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     h4 { font-weight: 700; }
   }
 }
-
+.text-muted{
+  color: #ccc !important;
+}
 // ── Payment cards ──────────────────────────────────────────────────────────
 .payment-methods {
   display: flex;

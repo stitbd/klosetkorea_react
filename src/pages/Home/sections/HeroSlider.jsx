@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
+import { PLACEHOLDER_IMG, BASE_IMAGE_URL } from '../../../utils';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import './HeroSlider.scss';
@@ -37,10 +38,12 @@ const NextButton = memo(({ onClick }) => (
 NextButton.displayName = 'NextButton';
 
 // ── Helper: Resolve image URL ─────────────────────────────────────
-const getImageUrl = (image, fallback = '/images/hero-fallback.jpg') => {
-  if (!image) return fallback;
-  if (image.startsWith('http')) return image;
-  return `https://admin-klosetkorea.stitbd.app/${image}`;
+const getImageUrl = (rawImage) => {
+  if (!rawImage) return PLACEHOLDER_IMG;
+  if (/^https?:\/\//i.test(rawImage)) return rawImage;
+  const base = (BASE_IMAGE_URL || '').replace(/\/+$/, '');
+  const path = rawImage.replace(/^\/+/, '');
+  return `${base}/${path}`;
 };
 
 // ── Helper: Should render CTA ─────────────────────────────────────
