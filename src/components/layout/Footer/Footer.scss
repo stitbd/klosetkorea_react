@@ -3,7 +3,6 @@
 .site-footer {
   background: var(--brand-black);
   color: rgba(255, 255, 255, 0.75);
-  margin-top: 3rem;
   font-family: var(--font-body);
   border-top: 1px solid rgba(212, 175, 55, 0.25);
 
@@ -18,8 +17,6 @@
     width: auto;
     display: block;
     object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
 
     @media (min-width: 992px) { height: 52px; }
   }
@@ -155,8 +152,6 @@
     max-width: 42px;
     object-fit: contain;
     display: block;
-    filter: brightness(0) invert(1);
-    opacity: 0.55;
   }
 
   // ── Newsletter ───────────────────────────────────────────
@@ -302,8 +297,6 @@
       height: 16px;
       object-fit: contain;
       display: block;
-      filter: brightness(0) invert(1);
-      opacity: 0.6;
     }
 
     .site-footer__copyright {
