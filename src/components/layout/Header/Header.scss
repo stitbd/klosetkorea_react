@@ -130,7 +130,7 @@
 
   &__main {
     border-bottom: 1px solid #ebebeb;
-    background: var(--brand-white);
+    background: var(--brand-black);
   }
 
   &__search { max-width: 520px; }
@@ -151,24 +151,24 @@
   }
 
   &__search-btn {
-    background: var(--brand-black) !important;
-    border: 1px solid var(--brand-black) !important;
+    background: var(--brand-gold) !important;
+    border: 1px solid var(--brand-gold) !important;
     border-radius: 0 !important;
     padding: 0 1rem;
-    color: var(--brand-gold) !important;
+    color: var(--brand-black) !important;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background var(--transition) !important;
 
     &:hover {
-      background: var(--brand-charcoal) !important;
-      border-color: var(--brand-charcoal) !important;
+      background: var(--brand-gold-dark) !important;
+      border-color: var(--brand-gold-dark) !important;
     }
   }
 
   &__phone-link {
-    color: var(--brand-black);
+    color: var(--brand-white);
     text-decoration: none;
     font-family: var(--font-body);
     font-size: 0.82rem;
@@ -223,7 +223,7 @@
     border-radius: 0;
     padding: 0.4rem 0.85rem;
     cursor: pointer;
-    color: var(--brand-black);
+    color: var(--brand-white);
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 600;

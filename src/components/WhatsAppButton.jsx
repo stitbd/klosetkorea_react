@@ -4,7 +4,7 @@ import './WhatsAppButton.css';
 
 const WhatsAppButton = () => {
   // 📞 Format: Country code + number, NO +, (), or -
-  const phoneNumber = "+8801410200230"; 
+  const phoneNumber = "+8801757769498"; 
   const message = "Hi! I have a question about your services.";
   
   // Build official WhatsApp link
