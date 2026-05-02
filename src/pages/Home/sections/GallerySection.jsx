@@ -20,19 +20,19 @@ import gallery12 from '../../../assets/images/gallery/12.jpg';
 import gallery13 from '../../../assets/images/gallery/13.jpg';
 
 const GALLERY_IMAGES = [
-  { id: 1, src: gallery01, caption: 'Handcrafted Detail' },
-  { id: 2, src: gallery02, caption: 'Premium Materials' },
-  { id: 3, src: gallery03, caption: 'Artisan Process' },
-  { id: 4, src: gallery04, caption: 'Luxury Finish' },
-  { id: 5, src: gallery05, caption: 'Signature Design' },
-  { id: 6, src: gallery06, caption: 'Collection 2026' },
-  { id: 7, src: gallery07, caption: 'Handcrafted Detail' },
-  { id: 8, src: gallery08, caption: 'Premium Materials' },
-  { id: 9, src: gallery09, caption: 'Artisan Process' },
-  { id: 10, src: gallery10, caption: 'Luxury Finish' },
-  { id: 11, src: gallery11, caption: 'Signature Design' },
-  { id: 12, src: gallery12, caption: 'Collection 2026' },
-  { id: 13, src: gallery13, caption: 'Exclusive Preview' },
+  { id: 1, src: gallery01, caption: '' },
+  { id: 2, src: gallery02, caption: '' },
+  { id: 3, src: gallery03, caption: '' },
+  { id: 4, src: gallery04, caption: '' },
+  { id: 5, src: gallery05, caption: '' },
+  { id: 6, src: gallery06, caption: '' },
+  { id: 7, src: gallery07, caption: '' },
+  { id: 8, src: gallery08, caption: '' },
+  { id: 9, src: gallery09, caption: '' },
+  { id: 10, src: gallery10, caption: '' },
+  { id: 11, src: gallery11, caption: '' },
+  { id: 12, src: gallery12, caption: '' },
+  { id: 13, src: gallery13, caption: '' },
 ];
 
 // ── SVG Icons ──
