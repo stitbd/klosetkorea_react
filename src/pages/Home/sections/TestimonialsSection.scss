@@ -1,231 +1,362 @@
 // src/pages/Home/sections/TestimonialsSection.scss
 
-// ── Section ────────────────────────────────────────────────────
+// ── Section ─────────────────────────────────────────────────────────────────
 .testimonials-section {
-  background: var(--brand-white);
-  padding-top: 3rem;
-  padding-bottom: 3rem;
   position: relative;
+  background: #ffffff;
+  padding: 5rem 0 4rem;
   overflow: hidden;
 
   @media (min-width: 992px) {
-    padding-top: var(--section-gap);
-    padding-bottom: var(--section-gap);
+    padding: 7rem 0 5.5rem;
   }
 }
 
-// ── Header ─────────────────────────────────────────────────────
-.testimonials-header {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-  padding: 0 1rem;
-  position: relative;
-  z-index: 2;
+// ── Atmospheric Background ───────────────────────────────────────────────────
+.testimonials-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 
-  @media (min-width: 768px)  { padding: 0 2rem; }
-  @media (min-width: 1200px) { padding: 0 3rem; }
+  &__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.25;
 
-  &__line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--brand-gold), transparent);
-    min-width: 40px;
+    &--1 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.18) 0%, transparent 70%);
+      top: -120px;
+      left: -160px;
+    }
+
+    &--2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139, 105, 20, 0.12) 0%, transparent 70%);
+      bottom: -80px;
+      right: -100px;
+    }
   }
 
-  &__text {
-    text-align: center;
-    white-space: nowrap;
+  // Subtle noise texture overlay
+  &__grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+}
+
+.testimonials-container {
+  position: relative;
+  z-index: 1;
+}
+
+// ── Header ───────────────────────────────────────────────────────────────────
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  padding: 0 1rem;
+
+  @media (min-width: 992px) { margin-bottom: 4.5rem; }
+
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  &__rule {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a84c);
+
+    &:last-child {
+      background: linear-gradient(90deg, #c9a84c, transparent);
+    }
   }
 
   &__subtitle {
-    display: block;
-    font-family: var(--font-body);
+    font-family: 'Cormorant Garamond', 'Didot', Georgia, serif;
     font-size: 0.7rem;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.4rem;
+    color: #c9a84c;
   }
 
   &__title {
-    font-family: var(--font-display);
-    font-size: clamp(24px, 4.5vw, 36px);
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    color: var(--brand-black);
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: #1a1a1a;
+    margin: 0 0 1rem;
+    line-height: 1.15;
+
+    em {
+      font-style: italic;
+      font-weight: 600;
+      color: #c9a84c;
+    }
+  }
+
+  &__desc {
+    font-family: 'Jost', 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(30, 30, 30, 0.45);
+    letter-spacing: 0.06em;
     margin: 0;
-    line-height: 1.1;
   }
 }
 
-// ── Slider Wrapper ─────────────────────────────────────────────
-.testimonials-slider-wrap {
+// ── Slider Track ─────────────────────────────────────────────────────────────
+.testimonials-track {
   position: relative;
-  padding: 0 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  @media (min-width: 768px)  { padding: 0 3.5rem; }
-  @media (min-width: 1200px) { padding: 0 5rem;   }
+  padding: 0 0 3rem; // space for pagination dots
 }
 
-// ── Swiper overrides ───────────────────────────────────────────
+// ── Swiper ───────────────────────────────────────────────────────────────────
 .testimonials-swiper {
   width: 100%;
-  // Extra vertical padding so card hover-shadow isn't clipped
-  padding: 8px 2px 28px !important;
-  // Slides outside the viewport are still painted (no flash on loop wrap)
+  padding: 12px 4px 4px !important;
   overflow: visible !important;
 
   .swiper-slide {
     height: auto;
     display: flex;
     align-items: stretch;
-    // Prevent the brief "white flash" when a cloned slide comes into view
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0.45;
+    transform: scale(0.94);
+
+    &.swiper-slide-active {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
-  // Hide Swiper's own nav — we use custom buttons
   .swiper-button-prev,
-  .swiper-button-next {
-    display: none !important;
+  .swiper-button-next { display: none !important; }
+
+  // Swiper pagination override
+  .swiper-pagination {
+    display: none; // we use our own
   }
 }
 
-// ── Custom Navigation Arrows ───────────────────────────────────
+// ── Navigation ───────────────────────────────────────────────────────────────
 .testimonials-nav {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);  // ← Simplified: was translateY(-60%)
-  z-index: 10;
+  top: 38%;
+  transform: translateY(-50%);
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;   // ← Match HeroSlider $btn-size-md
-  height: 44px;
-  background: rgba(0, 0, 0, 0.32);  // ← Match HeroSlider style
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 50%;  // ← NEW: Circular like HeroSlider
-  color: #fff;  // ← White icon like HeroSlider
+  width: 46px;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 50%;
+  color: var(--brand-gold);
   cursor: pointer;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition: background 0.22s ease, border-color 0.22s ease,
-              box-shadow 0.22s ease, transform 0.22s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.25s ease, border-color 0.25s ease,
+              box-shadow 0.25s ease, transform 0.25s ease, color 0.25s ease;
   padding: 0;
 
   svg {
-    width: 18px;  // ← Match HeroSlider
+    width: 18px;
     height: 18px;
     flex-shrink: 0;
   }
 
   &:hover {
-    background: #D4AF37;  // ← Use $accent variable if available
-    border-color: #D4AF37;
-    box-shadow: 0 4px 20px rgba(184, 150, 46, 0.6);  // ← $accent-glow
-    transform: translateY(-50%) scale(1.1);
+    background: var(--brand-gold-dark);
+    border-color: var(--brand-gold-dark);
+    color: #0d0d0d;
+    box-shadow: 0 0 28px rgba(201, 168, 76, 0.45);
+    transform: translateY(-50%) scale(1.08);
   }
 
   &:active {
-    transform: translateY(-50%) scale(0.94);
+    transform: translateY(-50%) scale(0.95);
   }
 
   &:focus-visible {
-    outline: 2px solid #D4AF37;
-    outline-offset: 2px;
+    outline: 2px solid #c9a84c;
+    outline-offset: 3px;
   }
 
-  &.swiper-button-disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
+  &--prev {
+    left: 0;
+    @media (min-width: 576px) { left: 8px; }
   }
 
-  &--prev { left: 16px; }   // ← Match HeroSlider positioning
-  &--next { right: 16px; }
-
-  @media (min-width: 992px) {
-    &--prev { left: 26px; }
-    &--next { right: 26px; }
+  &--next {
+    right: 0;
+    @media (min-width: 576px) { right: 8px; }
   }
 
-  @media (max-width: 767px) {
-    width: 28px;
-    height: 28px;
-    svg { width: 12px; height: 12px; }
-    &--prev { left: 10px; }
-    &--next { right: 10px; }
+  @media (max-width: 575px) {
+    width: 36px;
+    height: 36px;
+    svg { width: 14px; height: 14px; }
+    top: 32%;
   }
 }
 
-// ── Testimonial Card ───────────────────────────────────────────
-.testimonial-card {
-  background: var(--brand-off-white);
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  padding: 2rem 1.5rem;
-  text-align: center;
-  height: 100%;
+// ── Pagination Dots ───────────────────────────────────────────────────────────
+.testimonials-pagination {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  // GPU-composite the hover — prevents repaint on scroll
-  will-change: box-shadow;
+  gap: 8px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 
-  @media (min-width: 768px) { padding: 2.5rem 2rem; }
-
-  &:hover {
-    border-color: rgba(212, 175, 55, 0.6);
-    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.07);
+  :global(.swiper-pagination-bullet) {
+    width: 6px;
+    height: 6px;
+    background: rgba(201, 168, 76, 0.3);
+    border-radius: 50%;
+    opacity: 1;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    margin: 0;
   }
 
-  &__content {
+  :global(.swiper-pagination-bullet-active) {
+    width: 24px;
+    border-radius: 3px;
+    background: #c9a84c;
+  }
+}
+
+// ── Testimonial Card ─────────────────────────────────────────────────────────
+.testimonial-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  &__inner {
+    position: relative;
+    background: #fafaf8;
+    border: 1px solid var(--brand-gold);
+    border-radius: 4px;
+    padding: 2.25rem 2rem;
     width: 100%;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    gap: 0;
+    overflow: hidden;
+    transition: border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+
+    // Shimmer top edge
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
   }
 
-  // ── Rating ──
-  &__rating {
+  &--active &__inner {
+    border-color:  var(--brand-gold);
+    background: #fff4f4;
+    box-shadow:
+      0 0 0 1px rgba(201, 168, 76, 0.1),
+      0 24px 60px rgba(201, 168, 76, 0.1),
+      0 8px 20px rgba(0, 0, 0, 0.06);
+
+    &::before { opacity: 1; }
+  }
+
+  &:hover &__inner {
+    border-color: rgba(201, 168, 76, 0.4);
+    background: #fffdf5;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+
+    &::before { opacity: 1; }
+  }
+
+  // ── Quote Watermark ──
+  &__quote-icon {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    width: 28px;
+    height: auto;
+    color: rgba(201, 168, 76, 0.1);
+    pointer-events: none;
+  }
+
+  // ── Star Rating ──
+  &__stars {
     display: flex;
-    justify-content: center;
-    gap: 4px;
-    margin-bottom: 1.25rem;
-    color: var(--brand-gold);
+    gap: 3px;
+    margin-bottom: 1.1rem;
 
-    svg { display: block; }
+    .star-icon {
+      width: 13px;
+      height: 13px;
+      color: var(--brand-gold);
+      flex-shrink: 0;
+
+      &--filled { filter: drop-shadow(0 0 3px rgba(201, 168, 76, 0.5)); }
+    }
   }
 
-  // ── Quote ──
+  // ── Quote Text ──
   &__text {
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: clamp(1rem, 1.7vw, 1.15rem);
     font-weight: 400;
     font-style: italic;
-    color: var(--brand-charcoal);
-    line-height: 1.75;
+    line-height: 1.85;
+    color: #3a3a3a;
     margin: 0 0 1.5rem;
     flex-grow: 1;
-    // Prevent very long words from breaking card layout
     word-break: break-word;
-    hyphens: auto;
+  }
+
+  // ── Divider ──
+  &__divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(201, 168, 76, 0.1);
+    margin-bottom: 1.25rem;
   }
 
   // ── Author ──
   &__author {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.85rem;
-    padding-top: 1.1rem;
-    border-top: 1px solid rgba(212, 175, 55, 0.12);
-    margin-top: auto; // always pinned to bottom regardless of text height
+    gap: 0.9rem;
+  }
+
+  &__avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
   }
 
   &__avatar {
@@ -233,77 +364,149 @@
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--brand-gold);
-    flex-shrink: 0;
+    display: block;
+    position: relative;
+    z-index: 1;
   }
 
-  &__meta { text-align: left; }
+  &__avatar-fallback {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9a84c, #8b6914);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0d0d0d;
+    position: relative;
+    z-index: 1;
+  }
+
+  // Glowing ring around avatar on active card
+  &__avatar-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(201, 168, 76, 0);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    z-index: 0;
+  }
+
+  &--active &__avatar-ring {
+    border-color: rgba(201, 168, 76, 0.55);
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.2);
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
 
   &__name {
     display: block;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-family: 'Jost', 'DM Sans', sans-serif;
+    font-size: 0.875rem;
     font-weight: 600;
-    color: var(--brand-black);
-    letter-spacing: 0.04em;
+    color:  var(--brand-gold);
+    letter-spacing: 0.05em;
     font-style: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__role {
     display: block;
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    letter-spacing: 0.09em;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    color:  var(--brand-black);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Responsive padding
+  @media (min-width: 768px) {
+    &__inner { padding: 2.5rem 2.25rem; }
+    &__avatar { width: 52px; height: 52px; }
+    &__avatar-fallback { width: 52px; height: 52px; }
+  }
+
+  @media (max-width: 575px) {
+    &__inner { padding: 1.75rem 1.5rem; }
+    &__text  { font-size: 1rem; }
+    &__avatar,
+    &__avatar-fallback { width: 42px; height: 42px; }
   }
 }
 
-// ── Decorative Quote Marks ─────────────────────────────────────
-.testimonials-quote {
-  position: absolute;
-  font-family: var(--font-display);
-  font-size: clamp(80px, 18vw, 180px);
-  color: var(--brand-gold-muted, rgba(212, 175, 55, 0.12));
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-  z-index: 1;
+// ── Trust Bar ────────────────────────────────────────────────────────────────
+.testimonials-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 4rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 4px;
+  background: #fafaf8;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 
-  &--start {
-    top: 12%;
-    left: 1%;
-    transform: rotate(-8deg);
+  @media (min-width: 768px) { margin-top: 4.5rem; }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 100px;
+    padding: 0.5rem 1.5rem;
   }
 
-  &--end {
-    bottom: 10%;
-    right: 1%;
-    transform: rotate(8deg);
+  &__number {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    font-weight: 600;
+    color: #c9a84c;
+    line-height: 1;
+    letter-spacing: 0.02em;
   }
 
-  @media (max-width: 991px) { display: none; }
+  &__label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(30, 30, 30, 0.45);
+  }
+
+  &__divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(201, 168, 76, 0.2);
+    flex-shrink: 0;
+
+    @media (max-width: 479px) { display: none; }
+  }
 }
 
-// ── Mobile ─────────────────────────────────────────────────────
-@media (max-width: 767px) {
-  .testimonial-card {
-    padding: 1.75rem 1.25rem;
-
-    &__text   { font-size: 1rem; margin-bottom: 1.1rem; }
-    &__avatar { width: 42px; height: 42px; }
-    &__name   { font-size: 0.875rem; }
-    &__role   { font-size: 0.68rem; }
-  }
-
-  .testimonials-slider-wrap { padding: 0 0.5rem; }
-}
-
-// ── Reduced Motion ─────────────────────────────────────────────
+// ── Reduced Motion ───────────────────────────────────────────────────────────
 @media (prefers-reduced-motion: reduce) {
-  .testimonials-swiper,
-  .testimonial-card,
+  .testimonials-swiper .swiper-slide,
+  .testimonial-card__inner,
   .testimonials-nav {
     transition: none !important;
     animation: none !important;

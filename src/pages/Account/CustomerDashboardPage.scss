@@ -70,7 +70,8 @@
 // ── Top Bar ───────────────────────────────────────────────────────────
 .cdp__topbar {
   background: var(--dash-brand);
-  color: white;
+  color:  var(--brand-white);
+  border-top: 1px solid var(--brand-white);
   position: sticky;
   top: 0;
   z-index: 100;
