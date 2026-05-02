@@ -309,6 +309,7 @@ const highlightMatch = (text, query) => {
   );
 };
 
+
 // ─── Desktop Search Box with live suggestions ─────────────────────
 const DesktopSearchBox = ({ searchQuery, setSearchQuery, onSubmit }) => {
   const [open, setOpen]           = useState(false);
@@ -353,11 +354,14 @@ const DesktopSearchBox = ({ searchQuery, setSearchQuery, onSubmit }) => {
   };
 
   return (
-    <div ref={wrapRef} className="site-header__search-wrap flex-grow-1" style={{ position: 'relative' }}>
+    <div ref={wrapRef} className="site-header__search-wrap" style={{ position: 'relative', flex: '1', maxWidth: '600px' }}>
       <Form onSubmit={(e) => { e.preventDefault(); setOpen(false); onSubmit(e); }} className="site-header__search">
-        <InputGroup>
+        <InputGroup className="search-input-group">
+          <InputGroup.Text className="search-icon-wrapper">
+            <SearchIcon />
+          </InputGroup.Text>
           <Form.Control
-            placeholder="Search products..."
+            placeholder="Search gadget"
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setOpen(true); }}
             onFocus={() => setOpen(true)}
@@ -365,7 +369,14 @@ const DesktopSearchBox = ({ searchQuery, setSearchQuery, onSubmit }) => {
             className="site-header__search-input"
             autoComplete="off"
           />
-          <Button type="submit" className="site-header__search-btn" aria-label="Search"><SearchIcon /></Button>
+          <InputGroup.Text className="voice-icon-wrapper">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+          </InputGroup.Text>
         </InputGroup>
       </Form>
       {showDropdown && (
@@ -1158,7 +1169,7 @@ const Header = () => {
         <div className="site-header__desktop d-none d-lg-block">
           <div className="site-header__main">
             <Container>
-              <div className="d-flex align-items-center justify-content-between gap-3 py-2">
+              <div className="d-flex align-items-center justify-content-between gap-3 py-3">
 
                 <Link to="/" className="site-header__logo">
                   <LogoImg />
@@ -1171,51 +1182,44 @@ const Header = () => {
                   onSubmit={handleSearch}
                 />
 
-                <div className="d-flex align-items-center gap-2">
-                  {/* <Link to={phoneHref} className="site-header__phone-link d-flex align-items-center gap-1">
-                    📞<span className="fw-bold">{phoneDisplay}</span>
-                  </Link> */}
+                <div className="d-flex align-items-center gap-4">
+                  {/* Navigation Menu */}
+                  <nav className="site-header__nav">
+                    <Link to="/" className="site-header__nav-link">Home</Link>
+                    <Link to="/category" className="site-header__nav-link">Shop Appliances</Link>
+                    <Link to="/about" className="site-header__nav-link">About</Link>
+                    <Link to="/contact" className="site-header__nav-link">Contact</Link>
+                  </nav>
 
-                  <div className="site-header__login-wrap" ref={desktopLoginRef}>
-                    {authState.isAuthenticated ? (
-                      <>
-                        <button className="site-header__login-btn" onClick={handleDesktopLoginToggle} aria-label="Account">
-                          <LoginIcon />
-                          <span className="site-header__login-label">
-                            {authState.user?.name?.split(' ')[0] || 'Account'}
-                          </span>
-                          <svg
-                            className={`site-header__login-chevron ${showDesktopLogin ? 'site-header__login-chevron--open' : ''}`}
-                            width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <polyline points="6 9 12 15 18 9"/>
-                          </svg>
-                        </button>
-                        {showDesktopLogin && (
-                          <UserMenu onClose={handleDesktopLoginClose} position="desktop" />
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <button className="site-header__login-btn" onClick={handleDesktopLoginToggle} aria-label="Login">
-                          <LoginIcon />
-                          <span className="site-header__login-label">Login | Sign Up</span>
-                          <svg
-                            className={`site-header__login-chevron ${showDesktopLogin ? 'site-header__login-chevron--open' : ''}`}
-                            width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <polyline points="6 9 12 15 18 9"/>
-                          </svg>
-                        </button>
-                        {showDesktopLogin && (
-                          <LoginForm onClose={handleDesktopLoginClose} position="desktop" />
-                        )}
-                      </>
-                    )}
+                  {/* Login & Cart */}
+                  <div className="d-flex align-items-center gap-3">
+                    <div className="site-header__login-wrap" ref={desktopLoginRef}>
+                      {authState.isAuthenticated ? (
+                        <>
+                          <button className="site-header__login-btn" onClick={handleDesktopLoginToggle} aria-label="Account">
+                            <LoginIcon />
+                          </button>
+                          {showDesktopLogin && (
+                            <UserMenu onClose={handleDesktopLoginClose} position="desktop" />
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <button className="site-header__login-btn" onClick={handleDesktopLoginToggle} aria-label="Login">
+                            <LoginIcon />
+                          </button>
+                          {showDesktopLogin && (
+                            <LoginForm onClose={handleDesktopLoginClose} position="desktop" />
+                          )}
+                        </>
+                      )}
+                    </div>
+
+                    <Link to="/cart" className="site-header__action site-header__cart">
+                      <CartIcon />
+                      {totalItems > 0 && <span className="site-header__cart-badge">{totalItems}</span>}
+                    </Link>
                   </div>
-
-                  <Link to="/cart" className="site-header__action site-header__cart">
-                    <CartIcon />
-                    {totalItems > 0 && <span className="site-header__cart-badge">{totalItems}</span>}
-                  </Link>
                 </div>
               </div>
             </Container>

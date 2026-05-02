@@ -172,7 +172,7 @@
     background: var(--brand-black);
   }
 
-  &__search { max-width: 520px; }
+  // &__search { max-width: 520px; }
 
   &__search-input {
     border-right: none;
@@ -368,6 +368,128 @@
     flex-shrink: 0;
     transition: border-color var(--transition), color var(--transition);
     &:hover { border-color: var(--brand-gold); color: var(--brand-gold-dark); }
+  }
+}
+
+// ─── Navigation Menu ─────────────────────────────────────────────
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  
+  @media (max-width: 1200px) {
+    gap: 1.25rem;
+  }
+}
+
+.site-header__nav-link {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--brand-gold);
+  text-decoration: none;
+  transition: color var(--transition);
+  white-space: nowrap;
+  
+  &:hover {
+    color: var(--brand-gold-dark);
+  }
+}
+
+// ─── Updated Search Box Styles ──────────────────────────────────
+.site-header__search-wrap {
+  .site-header__search {
+    .search-input-group {
+      background: white;
+      border-radius: 50px;
+      overflow: hidden;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: box-shadow var(--transition);
+      
+      &:focus-within {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+  
+  .search-icon-wrapper {
+    background: white;
+    border: none;
+    border-right: none;
+    padding: 0 1rem 0 1.25rem;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  
+  .site-header__search-input {
+    border: none !important;
+    background: white;
+    padding: 0.55rem 0;
+    font-size: 0.95rem;
+    color: #333;
+    
+    &::placeholder {
+      color: #999;
+      font-weight: 400;
+    }
+    
+    &:focus {
+      box-shadow: none;
+      background: white;
+    }
+  }
+  
+  .voice-icon-wrapper {
+    background: white;
+    border: none;
+    border-left: 1px solid #f0f0f0;
+    padding: 0 1.25rem 0 1rem;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color var(--transition);
+    
+    &:hover {
+      color: #666;
+    }
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// ─── Updated Login Button ───────────────────────────────────────
+.site-header__login-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--brand-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition);
+  
+  &:hover {
+    color: var(--brand-white);
+  }
+  
+  svg {
+    width: 22px;
+    height: 22px;
   }
 }
 
