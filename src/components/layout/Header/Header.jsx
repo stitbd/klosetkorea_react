@@ -354,7 +354,7 @@ const DesktopSearchBox = ({ searchQuery, setSearchQuery, onSubmit }) => {
   };
 
   return (
-    <div ref={wrapRef} className="site-header__search-wrap" style={{ position: 'relative', flex: '1', maxWidth: '600px' }}>
+    <div ref={wrapRef} className="site-header__search-wrap" style={{ position: 'relative', flex: '1', maxWidth: '700px' }}>
       <Form onSubmit={(e) => { e.preventDefault(); setOpen(false); onSubmit(e); }} className="site-header__search">
         <InputGroup className="search-input-group">
           <InputGroup.Text className="search-icon-wrapper">
@@ -1188,7 +1188,7 @@ const Header = () => {
                     <Link to="/" className="site-header__nav-link">Home</Link>
                     <Link to="/categories" className="site-header__nav-link">Categories</Link>
                     <Link to="/about" className="site-header__nav-link">About</Link>
-                    <Link to="/contact" className="site-header__nav-link">Contact</Link>
+                    {/* <Link to="/contact" className="site-header__nav-link">Contact</Link> */}
                   </nav>
 
                   {/* Login & Cart */}

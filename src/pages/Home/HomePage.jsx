@@ -89,11 +89,11 @@ const HomePage = () => {
       </RevealSection>
 
       {/* Trust Bar */}
-      {data?.key_features?.length > 0 && (
+      {/* {data?.key_features?.length > 0 && (
         <RevealSection>
           <TrustBar features={data.key_features} />
         </RevealSection>
-      )}
+      )} */}
     </main>
   );
 };
