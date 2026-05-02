@@ -22,6 +22,8 @@ const ContactPage        = lazy(() => import('../pages/Contact/ContactPage'));
 
 const SearchResultsPage        = lazy(() => import('../pages/SearchResults/SearchResultsPage'));
 
+const GalleryFullPage = lazy(() => import('../pages/Gallery/GalleryFullPage'));
+
 const NotFoundPage          = lazy(() => import('../pages/NotFound/NotFoundPage'));
 
 const PageLoader = () => (
@@ -66,28 +68,6 @@ const AppRoutes = () => {
               {/* ── Product detail ── */}
               <Route path="/product/:slug" element={<ProductDetails />} />
 
-              {/*
-                ── Category / Subcategory routing ──────────────────────────────────
-                Routes ordered most-specific → least-specific.
-
-                1. /products/:catSlug
-                   → CatagoryProductPage  (category-only mode, subSlug is undefined)
-                   → "See All" button destination from homepage sections.
-                   → Fetches: GET /api/category/:catSlug
-                   → Shows:   all products of that category.
-
-                2. /categories/:catSlug/:subSlug
-                   → CatagoryProductPage  (subcategory mode)
-                   → Subcategory card click destination.
-                   → Fetches: GET /api/subcategory/:catSlug/:subSlug
-                   → Shows:   products of that subcategory.
-
-                3. /categories/:catSlug
-                   → SubCategories
-                   → Top-level category click (header nav / featured categories).
-                   → Fetches: GET /api/categories (module-level cached)
-                   → Shows:   subcategory grid for that category.
-              */}
               <Route path="/products/:catSlug"              element={<CatagoryProductPage />} />
               <Route path="/categories/:catSlug/:subSlug"   element={<CatagoryProductPage />} />
               <Route path="/categories/:catSlug"            element={<SubCategories />} />
@@ -107,6 +87,8 @@ const AppRoutes = () => {
               <Route path="/contact"  element={<ContactPage />} />
 
               <Route path="/search" element={<SearchResultsPage />} />
+
+              <Route path="/gallery" element={<GalleryFullPage />} />
 
               {/* ── 404 ── */}
               <Route path="*" element={<NotFoundPage />} />
