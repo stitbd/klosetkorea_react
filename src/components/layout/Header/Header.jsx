@@ -972,8 +972,8 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
   );
 
   // ✅ Data with fallbacks
-  const phone = contact?.hotline || contact?.phone || '01886-899103';
-  const address = contact?.address || 'Dhaka, Bangladesh';
+  const phone = contact?.hotline || contact?.phone || '+88 0177763 5373';
+  const address = contact?.address || '83 Bir Uttem C R Dotto Road. Haiterpool Dhaka-1205, Bangladesh';
   const fbLink = socialLinks?.facebook || '#';
   const igLink = socialLinks?.instagram || '#';
   const liLink = socialLinks?.linkedin || '#';
@@ -1172,9 +1172,9 @@ const Header = () => {
                 />
 
                 <div className="d-flex align-items-center gap-2">
-                  <Link to={phoneHref} className="site-header__phone-link d-flex align-items-center gap-1">
+                  {/* <Link to={phoneHref} className="site-header__phone-link d-flex align-items-center gap-1">
                     📞<span className="fw-bold">{phoneDisplay}</span>
-                  </Link>
+                  </Link> */}
 
                   <div className="site-header__login-wrap" ref={desktopLoginRef}>
                     {authState.isAuthenticated ? (

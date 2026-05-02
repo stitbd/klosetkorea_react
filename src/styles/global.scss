@@ -1,8 +1,11 @@
+// global.scss
+
 // ─── Google Fonts ────────────────────────────────────────────────
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap');
 
 // ─── CSS Custom Properties ───────────────────────────────────────
 :root {
+  // ── Brand Colors (Luxury Gold Theme) ───────────────────────────
   --brand-gold:        #D4AF37;
   --brand-gold-light:  #e8cc6a;
   --brand-gold-dark:   #b8962e;
@@ -13,14 +16,58 @@
   --brand-off-white:   #fafaf8;
   --brand-cream:       #f5f0e8;
   --brand-light:       #f8f8f6;
-  --text-muted:        #888880;
+  
+  // ── Text Colors ────────────────────────────────────────────────
+  --text-primary:      var(--brand-black);
   --text-secondary:    #555550;
+  --text-muted:        #888880;
+  --text-inverse:      var(--brand-white);
+  
+  // ── UI Colors ──────────────────────────────────────────────────
+  --border-color:      #e8e6df;
+  --border-light:      #f0efea;
+  --shadow-sm:         0 1px 3px rgba(10, 10, 10, 0.08);
+  --shadow-md:         0 4px 16px rgba(10, 10, 10, 0.12);
+  --shadow-lg:         0 12px 40px rgba(10, 10, 10, 0.18);
+  
+  // ── Status Colors (Dashboard) ──────────────────────────────────
+  --status-green:      #067d62;
+  --status-green-bg:   #e2f5f0;
+  --status-blue:       #0066c0;
+  --status-blue-bg:    #e5f2ff;
+  --status-amber:      #f0a500;
+  --status-amber-bg:   #fff8e5;
+  --status-red:        #b12704;
+  --status-red-bg:     #fce8e2;
+  --status-orange:     #c45500;
+  --status-orange-bg:  #fef3e2;
+  --status-gray:       #555f61;
+  --status-gray-bg:    #f0f2f2;
+  --status-primary:    var(--brand-gold);
+  --status-primary-bg: var(--brand-gold-muted);
+  
+  // ── Spacing & Layout ───────────────────────────────────────────
   --section-gap:       4rem;
   --card-radius:       2px;
+  --card-radius-lg:    8px;
+  --radius-sm:         4px;
+  --radius-pill:       40px;
+  
+  // ── Transitions & Animation ────────────────────────────────────
   --transition:        0.3s cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-expo:     cubic-bezier(0.22, 1, 0.36, 1);
+  
+  // ── Typography ─────────────────────────────────────────────────
   --font-display:      'Cormorant Garamond', Georgia, serif;
   --font-body:         'Jost', 'Segoe UI', sans-serif;
+  --font-ui:           'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  // ── Dashboard Specific ─────────────────────────────────────────
+  --dash-brand:        var(--brand-gold);
+  --dash-brand-dark:   var(--brand-gold-dark);
+  --dash-bg-page:      var(--brand-light);
+  --dash-bg-card:      var(--brand-white);
+  --dash-border:       var(--border-color);
 
   // Legacy compat
   --brand-red:         var(--brand-gold);
@@ -107,6 +154,25 @@ img {
 @keyframes shimmer {
   0%   { background-position: -600px 0; }
   100% { background-position:  600px 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(120%); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .fade-in-up { animation: fadeInUp 0.55s var(--ease-out-expo) forwards; }

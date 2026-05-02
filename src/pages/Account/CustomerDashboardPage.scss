@@ -1,63 +1,12 @@
 // CustomerDashboardPage.scss
-// Professional e-commerce dashboard — Amazon/Alibaba hybrid style
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap');
-
-// ── Design Tokens ──────────────────────────────────────────────────
-$brand:       #ff6600;
-$brand-light: #37475a;
-$accent:      #ff6601;
-$accent-dark: #ff6602;
-$text-1:      #000000;
-$text-2:      #565959;
-$text-3:      #8d9494;
-$border:      #dde0e0;
-$bg-page:     #f3f3f3;
-$bg-card:     #ffffff;
-$radius:      8px;
-$radius-lg:   12px;
-$shadow-sm:   0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
-$shadow-md:   0 4px 16px rgba(0,0,0,0.10);
-$shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
-
-// ── Status colors ───────────────────────────────────────────────────
-$colors: (
-  green:  (#067d62, #e2f5f0),
-  blue:   (#0066c0, #e5f2ff),
-  amber:  (#f0a500, #fff8e5),
-  red:    (#ff0000, #fce8e2),
-  orange: (#c45500, #fef3e2),
-  gray:   (#555f61, #f0f2f2),
-  primary:(#232f3e, #eaecee),
-);
-
-// ── Animations ──────────────────────────────────────────────────────
-@keyframes shimmer {
-  0%   { background-position: 200% 0 }
-  100% { background-position: -200% 0 }
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes toastIn {
-  from { opacity: 0; transform: translateX(120%); }
-  to   { opacity: 1; transform: translateX(0); }
-}
+// Professional e-commerce dashboard — Luxury Gold Theme (inherits from global.scss)
 
 // ── Base ─────────────────────────────────────────────────────────────
 .cdp {
-  font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-ui);
   font-size: 14px;
-  color: $text-1;
-  background: $bg-card;
+  color: var(--text-primary);
+  background: var(--dash-bg-card);
   min-height: 100vh;
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -77,8 +26,8 @@ $colors: (
   align-items: center;
   gap: 10px;
   padding: 12px 16px;
-  border-radius: $radius;
-  box-shadow: $shadow-lg;
+  border-radius: var(--card-radius-lg);
+  box-shadow: var(--shadow-lg);
   font-weight: 500;
   font-size: 13px;
   animation: toastIn 0.35s ease;
@@ -96,8 +45,8 @@ $colors: (
     &:hover { opacity: 1; }
   }
 
-  &--success { background: #067d62; color: white; }
-  &--error   { background: #ff0000; color: white; }
+  &--success { background: var(--status-green); color: white; }
+  &--error   { background: var(--status-red); color: white; }
 }
 
 // ── Skeleton ──────────────────────────────────────────────────────────
@@ -114,13 +63,13 @@ $colors: (
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background: $brand;
+  background: var(--dash-brand);
   .skeleton { display: inline-block; }
 }
 
 // ── Top Bar ───────────────────────────────────────────────────────────
 .cdp__topbar {
-  background: $brand;
+  background: var(--dash-brand);
   color: white;
   position: sticky;
   top: 0;
@@ -148,6 +97,7 @@ $colors: (
   font-weight: 700;
   font-size: 16px;
   letter-spacing: -0.3px;
+  font-family: var(--font-display);
 }
 
 .cdp__topbar-sep {
@@ -168,7 +118,7 @@ $colors: (
   border: 1px solid rgba(255,255,255,0.15);
   color: white;
   padding: 6px 14px;
-  border-radius: $radius;
+  border-radius: var(--card-radius-lg);
   font-size: 13px;
   font-weight: 500;
   transition: background 0.15s;
@@ -202,15 +152,15 @@ $colors: (
 }
 
 .cdp__profile-card {
-  background: $bg-card;
-  border-radius: $radius-lg;
+  background: var(--dash-bg-card);
+  border-radius: var(--card-radius-lg);
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  box-shadow: $shadow-sm;
-  border: 1px solid $border;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--dash-border);
 }
 
 .cdp__avatar-wrap {
@@ -223,14 +173,14 @@ $colors: (
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid $border;
+  border: 3px solid var(--dash-border);
 }
 
 .cdp__avatar-initials {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: $brand;
+  background: var(--dash-brand);
   color: white;
   font-size: 28px;
   font-weight: 700;
@@ -238,6 +188,7 @@ $colors: (
   align-items: center;
   justify-content: center;
   letter-spacing: -1px;
+  font-family: var(--font-display);
 
   &--sm {
     width: 80px;
@@ -253,10 +204,10 @@ $colors: (
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: $text-3;
+  background: var(--text-muted);
   border: 2px solid white;
 
-  &--ok { background: #067d62; }
+  &--ok { background: var(--status-green); }
 }
 
 .cdp__profile-info {
@@ -267,12 +218,13 @@ $colors: (
   font-size: 15px;
   font-weight: 700;
   margin: 0 0 4px;
-  color: $text-1;
+  color: var(--text-primary);
+  font-family: var(--font-display);
 }
 
 .cdp__profile-contact {
   font-size: 12px;
-  color: $text-2;
+  color: var(--text-secondary);
   margin: 0 0 8px;
   word-break: break-all;
 }
@@ -281,18 +233,18 @@ $colors: (
   display: inline-block;
   font-size: 11px;
   font-weight: 600;
-  color: #067d62;
-  background: #e2f5f0;
+  color: var(--status-green);
+  background: var(--status-green-bg);
   padding: 2px 8px;
-  border-radius: 40px;
+  border-radius: var(--radius-pill);
 }
 
 // ── Sidebar Nav ───────────────────────────────────────────────────────
 .cdp__nav {
-  background: $bg-card;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  border: 1px solid $border;
+  background: var(--dash-bg-card);
+  border-radius: var(--card-radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--dash-border);
   overflow: hidden;
 }
 
@@ -304,9 +256,9 @@ $colors: (
   padding: 13px 16px;
   background: none;
   border: none;
-  border-bottom: 1px solid #f0f2f2;
+  border-bottom: 1px solid var(--border-light);
   text-align: left;
-  color: $text-2;
+  color: var(--text-secondary);
   font-size: 13.5px;
   font-weight: 500;
   transition: all 0.15s;
@@ -314,18 +266,18 @@ $colors: (
   &:last-child { border-bottom: none; }
 
   &:hover {
-    background: #f7f8f8;
-    color: $text-1;
+    background: var(--brand-light);
+    color: var(--text-primary);
   }
 
   &--active {
-    background: #fff8e5;
-    color: $brand;
-    border-left: 3px solid $accent;
+    background: var(--status-amber-bg);
+    color: var(--dash-brand);
+    border-left: 3px solid var(--dash-brand-dark);
     font-weight: 600;
 
-    .cdp__nav-icon svg { stroke: $accent-dark; }
-    .cdp__nav-arrow { opacity: 1; color: $accent-dark; }
+    .cdp__nav-icon svg { stroke: var(--dash-brand-dark); }
+    .cdp__nav-arrow { opacity: 1; color: var(--dash-brand-dark); }
   }
 }
 
@@ -339,12 +291,12 @@ $colors: (
 .cdp__nav-label { flex: 1; }
 
 .cdp__nav-badge {
-  background: $brand;
+  background: var(--dash-brand);
   color: white;
   font-size: 10px;
   font-weight: 700;
   padding: 2px 6px;
-  border-radius: 40px;
+  border-radius: var(--radius-pill);
   min-width: 20px;
   text-align: center;
 }
@@ -358,10 +310,10 @@ $colors: (
 
 // ── Mini stats ─────────────────────────────────────────────────────────
 .cdp__mini-stats {
-  background: $bg-card;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  border: 1px solid $border;
+  background: var(--dash-bg-card);
+  border-radius: var(--card-radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--dash-border);
   display: grid;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
@@ -370,8 +322,8 @@ $colors: (
 .cdp__mini-stat {
   padding: 14px 12px;
   text-align: center;
-  border-right: 1px solid $border;
-  border-bottom: 1px solid $border;
+  border-right: 1px solid var(--dash-border);
+  border-bottom: 1px solid var(--dash-border);
 
   &:nth-child(2n) { border-right: none; }
   &:nth-child(3), &:nth-child(4) { border-bottom: none; }
@@ -383,11 +335,12 @@ $colors: (
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 4px;
+  font-family: var(--font-display);
 }
 
 .cdp__mini-stat-label {
   font-size: 10.5px;
-  color: $text-3;
+  color: var(--text-muted);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.4px;
@@ -410,11 +363,12 @@ $colors: (
     font-size: 20px;
     font-weight: 700;
     margin: 0 0 4px;
-    color: $text-1;
+    color: var(--text-primary);
+    font-family: var(--font-display);
   }
   p {
     font-size: 13px;
-    color: $text-2;
+    color: var(--text-secondary);
     margin: 0;
   }
 }
@@ -430,31 +384,33 @@ $colors: (
 }
 
 .cdp__stat-card {
-  background: $bg-card;
-  border-radius: $radius-lg;
+  background: var(--dash-bg-card);
+  border-radius: var(--card-radius-lg);
   padding: 18px 16px;
   display: flex;
   align-items: center;
   gap: 14px;
-  box-shadow: $shadow-sm;
-  border: 1px solid $border;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--dash-border);
   cursor: pointer;
   transition: all 0.18s;
 
-  &:hover { transform: translateY(-2px); box-shadow: $shadow-md; }
+  &:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-  @each $name, $vals in $colors {
-    &--#{$name} .cdp__stat-icon {
-      background: nth($vals, 2);
-      color: nth($vals, 1);
-    }
-  }
+  // Status color variants using CSS custom properties
+  &--green  .cdp__stat-icon { background: var(--status-green-bg);  color: var(--status-green); }
+  &--blue   .cdp__stat-icon { background: var(--status-blue-bg);   color: var(--status-blue); }
+  &--amber  .cdp__stat-icon { background: var(--status-amber-bg);  color: var(--status-amber); }
+  &--red    .cdp__stat-icon { background: var(--status-red-bg);    color: var(--status-red); }
+  &--orange .cdp__stat-icon { background: var(--status-orange-bg); color: var(--status-orange); }
+  &--gray   .cdp__stat-icon { background: var(--status-gray-bg);   color: var(--status-gray); }
+  &--primary.cdp__stat-icon { background: var(--status-primary-bg);color: var(--status-primary); }
 }
 
 .cdp__stat-icon {
   width: 44px;
   height: 44px;
-  border-radius: $radius;
+  border-radius: var(--card-radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -471,13 +427,14 @@ $colors: (
 .cdp__stat-val {
   font-size: 26px;
   font-weight: 800;
-  color: $text-1;
+  color: var(--text-primary);
   line-height: 1;
+  font-family: var(--font-display);
 }
 
 .cdp__stat-label {
   font-size: 11.5px;
-  color: $text-2;
+  color: var(--text-secondary);
   font-weight: 500;
   margin-top: 4px;
   white-space: nowrap;
@@ -485,10 +442,10 @@ $colors: (
 
 // ── Cards ─────────────────────────────────────────────────────────────
 .cdp__card {
-  background: $bg-card;
-  border-radius: $radius-lg;
-  border: 1px solid $border;
-  box-shadow: $shadow-sm;
+  background: var(--dash-bg-card);
+  border-radius: var(--card-radius-lg);
+  border: 1px solid var(--dash-border);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   padding: 10px;
 
@@ -501,13 +458,14 @@ $colors: (
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid var(--dash-border);
 
   h3 {
     font-size: 14px;
     font-weight: 700;
     margin: 0;
-    color: $text-1;
+    color: var(--text-primary);
+    font-family: var(--font-display);
   }
 }
 
@@ -530,14 +488,14 @@ $colors: (
   align-items: flex-start;
   gap: 12px;
   padding: 10px 20px;
-  border-bottom: 1px solid #f7f8f8;
+  border-bottom: 1px solid var(--border-light);
 
   &:last-child { border-bottom: none; }
 }
 
 .cdp__field-label {
   font-size: 12px;
-  color: $text-3;
+  color: var(--text-muted);
   font-weight: 500;
   flex-shrink: 0;
   padding-top: 1px;
@@ -547,7 +505,7 @@ $colors: (
 .cdp__field-val {
   font-size: 13px;
   font-weight: 500;
-  color: $text-1;
+  color: var(--text-primary);
   text-align: right;
 }
 
@@ -562,11 +520,11 @@ $colors: (
   align-items: center;
   gap: 12px;
   padding: 10px 20px;
-  border-bottom: 1px solid #f7f8f8;
+  border-bottom: 1px solid var(--border-light);
   transition: background 0.12s;
 
   &:last-child { border-bottom: none; }
-  &:hover { background: #fafafa; }
+  &:hover { background: var(--brand-light); }
 }
 
 .cdp__recent-order-left {
@@ -579,24 +537,25 @@ $colors: (
 .cdp__recent-order-icon {
   width: 34px;
   height: 34px;
-  background: #f0f2f2;
-  border-radius: $radius;
+  background: var(--status-gray-bg);
+  border-radius: var(--card-radius);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  svg { width: 16px; height: 16px; color: $text-2; }
+  svg { width: 16px; height: 16px; color: var(--text-secondary); }
 }
 
 .cdp__recent-order-id {
   font-size: 13px;
   font-weight: 600;
   margin: 0 0 2px;
+  font-family: var(--font-display);
 }
 
 .cdp__recent-order-date {
   font-size: 11px;
-  color: $text-3;
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -611,7 +570,8 @@ $colors: (
 .cdp__recent-order-amt {
   font-size: 13px;
   font-weight: 700;
-  color: $text-1;
+  color: var(--text-primary);
+  font-family: var(--font-display);
 }
 
 // ── Status badges ─────────────────────────────────────────────────────
@@ -621,15 +581,16 @@ $colors: (
   font-size: 11px;
   font-weight: 600;
   padding: 3px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   text-transform: capitalize;
 
-  @each $name, $vals in $colors {
-    &--#{$name} {
-      color: nth($vals, 1);
-      background: nth($vals, 2);
-    }
-  }
+  &--green  { color: var(--status-green);  background: var(--status-green-bg); }
+  &--blue   { color: var(--status-blue);   background: var(--status-blue-bg); }
+  &--amber  { color: var(--status-amber);  background: var(--status-amber-bg); }
+  &--red    { color: var(--status-red);    background: var(--status-red-bg); }
+  &--orange { color: var(--status-orange); background: var(--status-orange-bg); }
+  &--gray   { color: var(--status-gray);   background: var(--status-gray-bg); }
+  &--primary{ color: var(--status-primary);background: var(--status-primary-bg); }
 }
 
 // ── Orders list ───────────────────────────────────────────────────────
@@ -642,32 +603,32 @@ $colors: (
 
 .cdp__order-filter {
   padding: 6px 14px;
-  background: $bg-card;
-  border: 1px solid $border;
-  border-radius: $radius;
+  background: var(--dash-bg-card);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--card-radius);
   font-size: 12.5px;
   font-weight: 500;
-  color: $text-2;
+  color: var(--text-secondary);
   transition: all 0.12s;
 
-  &:hover { border-color: $brand; color: $brand; }
+  &:hover { border-color: var(--dash-brand); color: var(--dash-brand); }
   &--active {
-    background: $brand;
-    border-color: $brand;
+    background: var(--dash-brand);
+    border-color: var(--dash-brand);
     color: white;
   }
 }
 
 .cdp__order-card {
-  background: $bg-card;
-  border: 1px solid $border;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
+  background: var(--dash-bg-card);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--card-radius-lg);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   transition: box-shadow 0.15s;
   animation: slideIn 0.2s ease both;
 
-  &:hover { box-shadow: $shadow-md; }
+  &:hover { box-shadow: var(--shadow-md); }
   display: flex;
   flex-direction: column;
 
@@ -681,8 +642,8 @@ $colors: (
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background: #fafbfb;
-  border-bottom: 1px solid $border;
+  background: var(--brand-light);
+  border-bottom: 1px solid var(--dash-border);
 }
 
 .cdp__order-meta {
@@ -690,13 +651,13 @@ $colors: (
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
-  color: $text-2;
+  color: var(--text-secondary);
 }
 
-.cdp__order-dot { color: $border; }
+.cdp__order-dot { color: var(--dash-border); }
 
 .cdp__order-invoice {
-  strong { color: $text-1; font-weight: 700; }
+  strong { color: var(--text-primary); font-weight: 700; font-family: var(--font-display); }
 }
 
 .cdp__order-date {
@@ -708,12 +669,12 @@ $colors: (
 
 .cdp__order-card-body {
   padding: 16px 20px;
-  border-bottom: 1px solid #f7f8f8;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .cdp__order-amounts {
-  background: #ffffff;
-  border-radius: $radius;
+  background: var(--brand-white);
+  border-radius: var(--card-radius);
   padding: 12px 16px;
   display: flex;
   flex-direction: column;
@@ -725,16 +686,17 @@ $colors: (
   display: flex;
   justify-content: space-between;
   font-size: 12.5px;
-  color: $text-2;
+  color: var(--text-secondary);
 
-  &--discount { color: #ff0000; }
+  &--discount { color: var(--status-red); }
   &--total {
     font-weight: 700;
     font-size: 14px;
-    color: $text-1;
+    color: var(--text-primary);
     padding-top: 6px;
-    border-top: 1px solid $border;
+    border-top: 1px solid var(--dash-border);
     margin-top: 2px;
+    font-family: var(--font-display);
   }
 }
 
@@ -749,7 +711,7 @@ $colors: (
 
 .cdp__order-note {
   font-size: 12px;
-  color: $text-3;
+  color: var(--text-muted);
   font-style: italic;
   max-width: 300px;
 }
@@ -771,8 +733,8 @@ $colors: (
 
 .cdp__info-block {
   padding: 16px 20px;
-  border-bottom: 1px solid $border;
-  border-right: 1px solid $border;
+  border-bottom: 1px solid var(--dash-border);
+  border-right: 1px solid var(--dash-border);
 
   &:nth-child(2n) { border-right: none; }
   &:nth-last-child(-n+2) { border-bottom: none; }
@@ -788,7 +750,7 @@ $colors: (
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: $text-3;
+  color: var(--text-muted);
   font-weight: 600;
   margin-bottom: 6px;
 }
@@ -796,7 +758,8 @@ $colors: (
 .cdp__info-val {
   font-size: 14px;
   font-weight: 500;
-  color: $text-1;
+  color: var(--text-primary);
+  font-family: var(--font-display);
 }
 
 // ── Change password ───────────────────────────────────────────────────
@@ -812,14 +775,14 @@ $colors: (
   width: 40px;
   background: none;
   border: none;
-  color: $text-3;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.12s;
 
   svg { width: 16px; height: 16px; }
-  &:hover { color: $text-1; }
+  &:hover { color: var(--text-primary); }
 }
 
 .cdp__pwd-strength {
@@ -838,24 +801,23 @@ $colors: (
   width: 40px;
   height: 4px;
   border-radius: 2px;
-  background: $border;
+  background: var(--dash-border);
   transition: background 0.2s;
 
-  &--s1 { background: #ff0000; }
-  &--s2 { background: #f0a500; }
-  &--s3 { background: #007185; }
-  &--s4 { background: #067d62; }
+  &--s1 { background: var(--status-red); }
+  &--s2 { background: var(--status-amber); }
+  &--s3 { background: var(--status-blue); }
+  &--s4 { background: var(--status-green); }
 }
 
 .cdp__pwd-strength-label {
   font-size: 11px;
-  color: $text-2;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
 .cdp__pwd-tips {
-  // background: #f7f8f8;
-  border-radius: $radius;
+  border-radius: var(--card-radius);
   padding: 5px 16px;
   margin: 8px 0 16px;
 }
@@ -863,17 +825,17 @@ $colors: (
 .cdp__pwd-tip-title {
   font-size: 12px;
   font-weight: 700;
-  color: $text-1;
+  color: var(--text-primary);
   margin: 0 0 8px;
 }
 
 .cdp__pwd-tip {
   font-size: 12px;
-  color: $text-3;
+  color: var(--text-muted);
   margin: 4px 0;
   transition: color 0.15s;
 
-  &--ok { color: #067d62; font-weight: 500; }
+  &--ok { color: var(--status-green); font-weight: 500; }
 }
 
 // ── Addresses ─────────────────────────────────────────────────────────
@@ -891,14 +853,14 @@ $colors: (
 }
 
 .cdp__addr-card {
-  background: $bg-card;
-  border: 1px solid $border;
-  border-radius: $radius-lg;
+  background: var(--dash-bg-card);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--card-radius-lg);
   overflow: hidden;
-  box-shadow: $shadow-sm;
+  box-shadow: var(--shadow-sm);
   transition: box-shadow 0.15s;
 
-  &:hover { box-shadow: $shadow-md; }
+  &:hover { box-shadow: var(--shadow-md); }
 }
 
 .cdp__addr-card-head {
@@ -906,16 +868,17 @@ $colors: (
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: #fafbfb;
-  border-bottom: 1px solid $border;
+  background: var(--brand-light);
+  border-bottom: 1px solid var(--dash-border);
 
-  svg { width: 16px; height: 16px; color: $text-3; }
+  svg { width: 16px; height: 16px; color: var(--text-muted); }
 }
 
 .cdp__addr-type {
   font-size: 13px;
   font-weight: 700;
-  color: $text-1;
+  color: var(--text-primary);
+  font-family: var(--font-display);
 }
 
 .cdp__addr-body {
@@ -924,21 +887,21 @@ $colors: (
   p {
     margin: 0 0 4px;
     font-size: 13px;
-    color: $text-2;
-    &:first-child { color: $text-1; font-weight: 500; }
+    color: var(--text-secondary);
+    &:first-child { color: var(--text-primary); font-weight: 500; font-family: var(--font-display); }
     &:last-child { margin: 0; }
   }
 }
 
-.cdp__addr-area   { color: $text-2 !important; }
-.cdp__addr-district { color: $text-2 !important; }
-.cdp__addr-phone  { color: $text-3 !important; font-size: 12px !important; }
+.cdp__addr-area   { color: var(--text-secondary) !important; }
+.cdp__addr-district { color: var(--text-secondary) !important; }
+.cdp__addr-phone  { color: var(--text-muted) !important; font-size: 12px !important; }
 
 .cdp__addr-actions {
   display: flex;
   gap: 8px;
   padding: 12px 16px;
-  border-top: 1px solid #f7f8f8;
+  border-top: 1px solid var(--border-light);
 }
 
 // ── Buttons ───────────────────────────────────────────────────────────
@@ -947,16 +910,17 @@ $colors: (
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: #ff0000;
+  background: var(--dash-brand);
   color: #fff;
-  border: 1px solid #ff0000;
+  border: 1px solid var(--dash-brand);
   padding: 9px 18px;
-  border-radius: $radius;
+  border-radius: var(--card-radius);
   font-size: 13.5px;
   font-weight: 700;
   transition: background 0.15s;
+  font-family: var(--font-ui);
 
-  &:hover { background: #dd1e10; }
+  &:hover { background: var(--dash-brand-dark); }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
   &--full { width: 100%; }
 
@@ -968,16 +932,17 @@ $colors: (
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: white;
-  color: $text-1;
-  border: 1px solid $border;
+  background: var(--brand-white);
+  color: var(--text-primary);
+  border: 1px solid var(--dash-border);
   padding: 9px 18px;
-  border-radius: $radius;
+  border-radius: var(--card-radius);
   font-size: 13.5px;
   font-weight: 600;
   transition: background 0.15s;
+  font-family: var(--font-ui);
 
-  &:hover { background: #f0f2f2; }
+  &:hover { background: var(--brand-light); }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
 }
 
@@ -986,77 +951,86 @@ $colors: (
   align-items: center;
   gap: 5px;
   background: none;
-  border: 1px solid $border;
-  color: $text-2;
+  border: 1px solid var(--dash-border);
+  color: var(--text-secondary);
   padding: 5px 12px;
-  border-radius: $radius;
+  border-radius: var(--card-radius);
   font-size: 12.5px;
   font-weight: 600;
   transition: all 0.12s;
+  font-family: var(--font-ui);
 
   svg { width: 13px; height: 13px; }
-  &:hover { background: #f0f2f2; border-color: #c8cacc; color: $text-1; }
+  &:hover { background: var(--brand-light); border-color: var(--border-color); color: var(--text-primary); }
 }
 
 .cdp__btn-sm {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: $bg-card;
-  border: 1px solid $border;
-  color: $text-2;
+  background: var(--dash-bg-card);
+  border: 1px solid var(--dash-border);
+  color: var(--text-secondary);
   padding: 5px 12px;
-  border-radius: $radius;
+  border-radius: var(--card-radius);
   font-size: 12px;
   font-weight: 500;
   transition: all 0.12s;
+  font-family: var(--font-ui);
 
   svg { width: 13px; height: 13px; }
-  &:hover { background: #f0f2f2; border-color: #c8cacc; }
+  &:hover { background: var(--brand-light); border-color: var(--border-color); }
 
   &--danger {
-    &:hover { background: #fce8e2; border-color: #f5a797; color: #b12704; }
+    &:hover { background: var(--status-red-bg); border-color: #f5a797; color: var(--status-red); }
   }
 
   &--star {
-    color: #f0a500;
-    svg { fill: #f0a500; }
+    color: var(--status-amber);
+    svg { fill: var(--status-amber); }
+  }
+  
+  &--default {
+    color: var(--status-green);
+    border-color: var(--status-green);
+    &:hover { background: var(--status-green-bg); }
   }
 }
 
 .cdp__text-link {
   background: none;
   border: none;
-  color: #0066c0;
+  color: var(--status-blue);
   font-size: 13px;
   font-weight: 500;
   padding: 0;
   transition: color 0.12s;
+  font-family: var(--font-ui);
 
-  &:hover { color: #c45500; text-decoration: underline; }
+  &:hover { color: var(--status-orange); text-decoration: underline; }
 }
 
 // ── Empty states ──────────────────────────────────────────────────────
 .cdp__empty {
   padding: 32px 20px;
   text-align: center;
-  color: $text-3;
+  color: var(--text-muted);
 
   svg { width: 40px; height: 40px; margin-bottom: 10px; }
   p { margin: 0; font-size: 13px; }
 }
 
 .cdp__empty-lg {
-  background: $bg-card;
-  border: 1px solid $border;
-  border-radius: $radius-lg;
+  background: var(--dash-bg-card);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--card-radius-lg);
   padding: 60px 20px;
   text-align: center;
-  color: $text-2;
+  color: var(--text-secondary);
 
-  svg { width: 52px; height: 52px; color: $text-3; margin-bottom: 16px; }
-  h3 { font-size: 17px; font-weight: 700; margin: 0 0 8px; color: $text-1; }
-  p  { font-size: 13px; color: $text-2; margin: 0 0 20px; }
+  svg { width: 52px; height: 52px; color: var(--text-muted); margin-bottom: 16px; }
+  h3 { font-size: 17px; font-weight: 700; margin: 0 0 8px; color: var(--text-primary); font-family: var(--font-display); }
+  p  { font-size: 13px; color: var(--text-secondary); margin: 0 0 20px; }
 }
 
 // ── Forms ─────────────────────────────────────────────────────────────
@@ -1077,27 +1051,28 @@ $colors: (
 .cdp__form-label {
   font-size: 12px;
   font-weight: 600;
-  color: $text-2;
+  color: var(--text-secondary);
 }
 
 .cdp__form-input,
 .cdp__form-select {
   padding: 9px 12px;
-  border: 1px solid $border;
-  border-radius: $radius;
+  border: 1px solid var(--dash-border);
+  border-radius: var(--card-radius);
   font-size: 13.5px;
-  color: $text-1;
-  background: white;
+  color: var(--text-primary);
+  background: var(--brand-white);
   transition: border-color 0.15s, box-shadow 0.15s;
   width: 100%;
+  font-family: var(--font-ui);
 
   &:focus {
     outline: none;
-    border-color: #007185;
-    box-shadow: 0 0 0 2px rgba(0,113,133,0.15);
+    border-color: var(--status-blue);
+    box-shadow: 0 0 0 2px rgba(0,102,192,0.15);
   }
 
-  &:disabled { background: #f7f8f8; color: $text-3; }
+  &:disabled { background: var(--brand-light); color: var(--text-muted); }
 }
 
 .cdp__form-input { padding-right: 40px; }
@@ -1116,9 +1091,9 @@ $colors: (
 }
 
 .cdp__modal {
-  background: $bg-card;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-lg;
+  background: var(--dash-bg-card);
+  border-radius: var(--card-radius-lg);
+  box-shadow: var(--shadow-lg);
   width: 100%;
   max-width: 560px;
   max-height: 90vh;
@@ -1133,11 +1108,11 @@ $colors: (
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid $border;
-  background: $brand;
+  border-bottom: 1px solid var(--dash-border);
+  background: var(--dash-brand);
   color: white;
 
-  h3 { margin: 0; font-size: 16px; font-weight: 700; }
+  h3 { margin: 0; font-size: 16px; font-weight: 700; font-family: var(--font-display); }
 }
 
 .cdp__modal-close {
@@ -1145,7 +1120,7 @@ $colors: (
   border: none;
   width: 30px;
   height: 30px;
-  border-radius: $radius;
+  border-radius: var(--card-radius);
   color: white;
   display: flex;
   align-items: center;
@@ -1187,7 +1162,7 @@ $colors: (
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid $border;
+    border: 3px solid var(--dash-border);
   }
 }
 
@@ -1198,20 +1173,20 @@ $colors: (
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: $accent;
+  background: var(--dash-brand);
   border: 2px solid white;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $text-1;
+  color: var(--text-primary);
 
   svg { width: 12px; height: 12px; }
-  &:hover { background: $accent-dark; }
+  &:hover { background: var(--dash-brand-dark); }
 }
 
 .cdp__avatar-hint {
   font-size: 11.5px;
-  color: $text-3;
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -1227,11 +1202,102 @@ $colors: (
   flex-shrink: 0;
 }
 
+.cdp__spinner--sm {
+  width: 11px;
+  height: 11px;
+  border-width: 2px;
+  border-color: rgba(6,125,98,0.3);
+  border-top-color: var(--status-green);
+}
+
 // ── Orders list container ─────────────────────────────────────────────
 .cdp__orders-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.cdp__orders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+
+  > .cdp__order-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Paid / Due amount rows in order card
+.cdp__order-amount-row--paid {
+  color: var(--status-green);
+  font-weight: 600;
+}
+.cdp__order-amount-row--due {
+  color: var(--dash-brand);
+  font-weight: 600;
+}
+
+// Pagination
+.cdp__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.cdp__page-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  background: var(--brand-white);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--card-radius);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-charcoal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: var(--font-ui);
+
+  svg { width: 14px; height: 14px; }
+
+  &:hover:not(:disabled) { background: var(--brand-light); border-color: var(--border-color); }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  &--active {
+    background: var(--dash-brand);
+    border-color: var(--dash-brand);
+    color: #fff;
+  }
+}
+
+.cdp__page-info {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.cdp__page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  font-size: 13px;
+  color: var(--text-muted);
+  user-select: none;
 }
 
 // ── Responsive ────────────────────────────────────────────────────────
@@ -1246,105 +1312,4 @@ $colors: (
   .cdp__order-card-actions { flex-direction: column; align-items: flex-start; }
   .cdp__order-btns { margin-left: 0; }
   .cdp__stat-val { font-size: 20px; }
-}
-
-.cdp__orders-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  align-items: start;
-
-  // Make cards in same row equal height
-  > .cdp__order-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (max-width: 700px) {
-    grid-template-columns: 1fr;
-  }
-}
- 
-// Paid / Due amount rows in order card  (CHANGE 30)
-.cdp__order-amount-row--paid {
-  color: #067d62;
-  font-weight: 600;
-}
-.cdp__order-amount-row--due {
-  color: #ff6600;
-  font-weight: 600;
-}
- 
-// Pagination  (CHANGE 31)
-.cdp__pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
- 
-.cdp__page-btn {
-  min-width: 36px;
-  height: 36px;
-  padding: 0 10px;
-  background: #fff;
-  border: 1px solid #dde0e0;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #232f3e;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.12s;
-
-  svg { width: 14px; height: 14px; }
-
-  &:hover:not(:disabled) { background: #f0f2f2; border-color: #c8cacc; }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  &--active {
-    background: #ff6600;
-    border-color: #ff6600;
-    color: #fff;
-  }
-}
- 
-.cdp__page-info {
-  font-size: 12px;
-  color: #8d9494;
-  margin-left: 4px;
-}
-
-
-// Set Default button in address card  (CHANGE bonus)
-.cdp__btn-sm--default {
-  color: #067d62;
-  border-color: #067d62;
-  &:hover { background: #e2f5f0; }
-}
- 
-// Small spinner variant for inline use
-.cdp__spinner--sm {
-  width: 11px;
-  height: 11px;
-  border-width: 2px;
-  border-color: rgba(6,125,98,0.3);
-  border-top-color: #067d62;
-}
- 
-
-.cdp__page-ellipsis {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  height: 36px;
-  font-size: 13px;
-  color: #8d9494;
-  user-select: none;
 }
