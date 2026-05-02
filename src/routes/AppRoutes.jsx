@@ -19,6 +19,7 @@ const CustomerDashboardPage = lazy(() => import('../pages/Account/CustomerDashbo
 const PageDetailPage        = lazy(() => import('../pages/CompanyPage/PageDetailPage'));
             
 const ContactPage        = lazy(() => import('../pages/Contact/ContactPage'));
+const AboutPage        = lazy(() => import('../pages/about/AboutPage'));
 
 const SearchResultsPage        = lazy(() => import('../pages/SearchResults/SearchResultsPage'));
 
@@ -85,6 +86,8 @@ const AppRoutes = () => {
               <Route path="/page/:slug" element={<PageDetailPage />} />
               
               <Route path="/contact"  element={<ContactPage />} />
+              
+              <Route path="/about"  element={<AboutPage />} />
 
               <Route path="/search" element={<SearchResultsPage />} />
 
