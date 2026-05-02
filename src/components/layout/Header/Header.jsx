@@ -1186,7 +1186,7 @@ const Header = () => {
                   {/* Navigation Menu */}
                   <nav className="site-header__nav">
                     <Link to="/" className="site-header__nav-link">Home</Link>
-                    <Link to="/category" className="site-header__nav-link">Shop Appliances</Link>
+                    <Link to="/category" className="site-header__nav-link">Categories</Link>
                     <Link to="/about" className="site-header__nav-link">About</Link>
                     <Link to="/contact" className="site-header__nav-link">Contact</Link>
                   </nav>
