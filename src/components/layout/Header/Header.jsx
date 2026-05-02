@@ -11,6 +11,13 @@ import { apiGet } from '../../../utils/api';
 import './Header.scss';
 
 
+// Social Icons (Static)
+import fbIcon from '../../../assets/icons/facebook.png';
+import igIcon from '../../../assets/icons/instagram.png';
+import liIcon from '../../../assets/icons/linkedin.png';
+import ttIcon from '../../../assets/icons/tiktok.png';
+import ytIcon from '../../../assets/icons/youtube.png';
+
 // ─── Icons ───────────────────────────────────────────────────────
 const HomeIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -948,25 +955,61 @@ const MobileSearchOverlay = ({ onClose }) => {
   };
 
 // ─── Announcement Top Bar ─────────────────────────────────────────
-const AnnouncementBar = ({ messages = [] }) => {
-  if (!messages.length) return null;
+const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
+  
+  // ✅ SVG Icons for Contact (আগের মতো)
+  const PhoneIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+  );
 
-  if (messages.length === 1) {
-    return (
-      <div className="announcement-bar">
-        <span className="announcement-bar__text">{messages[0]}</span>
-      </div>
-    );
-  }
+  const LocationIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+  );
+
+  // ✅ Data with fallbacks
+  const phone = contact?.hotline || contact?.phone || '01886-899103';
+  const address = contact?.address || 'Dhaka, Bangladesh';
+  const fbLink = socialLinks?.facebook || '#';
+  const igLink = socialLinks?.instagram || '#';
+  const liLink = socialLinks?.linkedin || '#';
 
   return (
     <div className="announcement-bar">
-      <div className="announcement-bar__track">
-        {/* Duplicate for seamless loop */}
-        {[...messages, ...messages].map((msg, i) => (
-          <span key={i} className="announcement-bar__slide">{msg}</span>
-        ))}
-      </div>
+      <Container fluid="xl" className="h-100">
+        <div className="d-flex align-items-center justify-content-between h-100">
+          
+          {/* LEFT: Contact Info with SVG Icons */}
+          <div className="announcement-bar__left">
+            <a href={`tel:${phone.replace(/\s/g, '')}`} className="announcement-bar__contact">
+              <PhoneIcon />
+              <span>{phone}</span>
+            </a>
+            <span className="announcement-bar__contact">
+              <LocationIcon />
+              <span>{address}</span>
+            </span>
+          </div>
+
+          {/* RIGHT: Social Icons with PNG Images */}
+          <div className="announcement-bar__right">
+            <a href={fbLink} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label="Facebook">
+              <img src={fbIcon} alt="Facebook" className="announcement-bar__social-icon" />
+            </a>
+            <a href={igLink} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label="Instagram">
+              <img src={igIcon} alt="Instagram" className="announcement-bar__social-icon" />
+            </a>
+            <a href={liLink} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label="LinkedIn">
+              <img src={liIcon} alt="LinkedIn" className="announcement-bar__social-icon" />
+            </a>
+          </div>
+
+        </div>
+      </Container>
     </div>
   );
 };
@@ -1085,7 +1128,10 @@ const Header = () => {
     <>
 
       {/* ── Announcement Bar ── */}
-      <AnnouncementBar messages={announcementMessages} />
+      <AnnouncementBar 
+        contact={contact} 
+        socialLinks={settings?.social_links || {}}
+      />
 
       {showMobileSearch && <MobileSearchOverlay onClose={() => setShowMobileSearch(false)} />}
 

@@ -9,38 +9,77 @@
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: center;
+  text-transform: capitalize;
   height: 32px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;  // ✅ NEW: separates left/right sections
   overflow: hidden;
   position: relative;
   z-index: 901;
+  padding: 0 1rem;  // ✅ NEW: adds horizontal spacing
 
-  &__text {
-    padding: 0 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__track {
+  // ✅ NEW: Left section (contact info)
+  &__left {
     display: flex;
     align-items: center;
+    gap: 1rem;
     white-space: nowrap;
-    animation: marquee 40s linear infinite;
-
-    &:hover { animation-play-state: paused; }
   }
 
-  &__slide { padding: 0 3rem; flex-shrink: 0; }
-}
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  &__contact {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--brand-black);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+
+    &:hover { opacity: 0.85; }
+
+    // ✅ SVG contact icons
+    svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      stroke: var(--brand-black);
+    }
+
+    span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  // ✅ NEW: Social icon link
+  &__social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    // ✅ PNG social icons
+    .announcement-bar__social-icon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      transition: filter 0.2s ease, transform 0.2s ease;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
 
 // ─── Site Header ────────────────────────────────────────────────
