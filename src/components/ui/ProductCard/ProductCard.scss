@@ -150,12 +150,12 @@
 
     &--buy {
       background: transparent;
-      color: var(--brand-gold-dark);
+      color: var(--brand-gold);
       border: 1px solid var(--brand-gold);
 
       &:hover {
         background: var(--brand-gold);
-        color: var(--brand-black);
+        color: var(--brand-white);
       }
     }
 
@@ -182,7 +182,7 @@
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 700;
-  color: var(--brand-gold-dark);
+  color: var(--brand-gold);
   letter-spacing: 0.02em;
 }
 
@@ -428,13 +428,13 @@
     &--buy {
       background: var(--brand-gold);
       color: var(--brand-black);
-      &:hover:not(:disabled) { background: var(--brand-gold-dark); }
+      &:hover:not(:disabled) { background: var(--brand-gold); }
     }
 
     &--preorder {
       background: var(--brand-gold);
       color: var(--brand-black);
-      &:hover:not(:disabled) { background: var(--brand-gold-dark); }
+      &:hover:not(:disabled) { background: var(--brand-gold); }
     }
 
     &:disabled {

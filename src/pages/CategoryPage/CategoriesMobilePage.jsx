@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import './CategoriesPage.scss';
+import './CategoriesMobilePage.scss';
 import { useCategories } from '../../hooks/useCategories';
 import { BASE_IMAGE_URL, PLACEHOLDER_IMG } from '../../utils';
 
@@ -26,10 +26,10 @@ const CategoryCard = ({ cat }) => {
   );
 };
 
-const CategoriesPage = () => {
+const CategoriesMobilePage = () => {
   const { categories, loading, error } = useCategories();
 
-  // ✅ Sort categories alphabetically (A-Z) by name/label
+  // ✅ FIXED: Sort categories alphabetically (A-Z) by name/label
   const sortedCategories = useMemo(() => {
     return [...categories].sort((a, b) =>
       (a.label || a.name || '').localeCompare(
@@ -50,11 +50,11 @@ const CategoriesPage = () => {
 
   if (loading) return (
     <section className="featured-cats section-wrapper">
-      <Container fluid="xl" className="featured-cats__container">
+      <Container fluid className="featured-cats__container">
         {heading}
         <div className="featured-cats__grid">
           <div className="featured-cats__row featured-cats__row--tall">
-            {[...Array(6)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <div key={i} className="cat-card cat-card--loading">
                 <div className="cat-card__img-wrap" />
                 <p className="cat-card__label" />
@@ -68,7 +68,7 @@ const CategoriesPage = () => {
 
   if (error) return (
     <section className="featured-cats section-wrapper">
-      <Container fluid="xl" className="featured-cats__container">
+      <Container fluid className="featured-cats__container">
         {heading}
         <p className="text-center text-danger">Error: {error}</p>
       </Container>
@@ -77,13 +77,11 @@ const CategoriesPage = () => {
 
   return (
     <section className="featured-cats section-wrapper">
-      <Container fluid="xl" className="featured-cats__container">
+      <Container fluid className="featured-cats__container">
         {heading}
         <div className="featured-cats__grid">
           <div className="featured-cats__row featured-cats__row--tall">
-            {sortedCategories.map((cat) => (
-              <CategoryCard key={cat.id} cat={cat} />
-            ))}
+            {sortedCategories.map((cat) => <CategoryCard key={cat.id} cat={cat} />)}
           </div>
         </div>
       </Container>
@@ -91,4 +89,4 @@ const CategoriesPage = () => {
   );
 };
 
-export default CategoriesPage;
+export default CategoriesMobilePage;

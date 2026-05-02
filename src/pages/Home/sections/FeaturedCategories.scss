@@ -91,10 +91,10 @@
     transform: translateY(-5px);
     box-shadow:
       0 20px 60px rgba(0, 0, 0, 0.18),
-      0 0 0 1px rgba(212, 175, 55, 0.3);
+      0 0 0 1px var(--color-brand-red);
 
     &::before {
-      border-color: rgba(212, 175, 55, 0.5);
+      border-color: var(--color-brand-red);
     }
 
     .cat-card__img {

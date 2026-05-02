@@ -6,7 +6,8 @@ import Header from '../components/layout/Header/Header';
 import Footer from '../components/layout/Footer/Footer';
 
 const HomePage              = lazy(() => import('../pages/Home/HomePage'));
-const CategoriesMobilePage  = lazy(() => import('../pages/CategoryPage/CategoriesPage'));
+const CategoriesPage  = lazy(() => import('../pages/CategoryPage/CategoriesPage'));
+const CategoriesMobilePage  = lazy(() => import('../pages/CategoryPage/CategoriesMobilePage'));
 const NewArrivalsPage       = lazy(() => import('../pages/CategoryPage/NewArrivalsPage'));
 const ProductDetails        = lazy(() => import('../pages/ProductDetails/ProductDetailsPage'));
 const CatagoryProductPage   = lazy(() => import('../pages/CategoryPage/CatagoryProductPage'));
@@ -62,6 +63,7 @@ const AppRoutes = () => {
 
               {/* ── Mobile: all top-level categories list ── */}
               <Route path="/category" element={<CategoriesMobilePage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
 
               {/* ── New Arrivals ── */}
               <Route path="/new-arrivals" element={<NewArrivalsPage />} />

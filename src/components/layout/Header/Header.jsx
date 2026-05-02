@@ -456,7 +456,7 @@ const DesktopNav = ({ navLinks }) => {
 
   return (
     <div ref={navRef} className="desktop-nav" onMouseLeave={scheduleClose} onMouseEnter={cancelClose}>
-      <div className="desktop-nav__top-bar" ref={topBarRef}>
+      {/* <div className="desktop-nav__top-bar" ref={topBarRef}>
         <Container fluid="xl">
           <div className="d-flex align-items-center">
             <Link
@@ -484,7 +484,7 @@ const DesktopNav = ({ navLinks }) => {
             ))}
           </div>
         </Container>
-      </div>
+      </div> */}
 
       {activeTopItem?.children?.length > 0 && (
         <div ref={subBarRef} className="desktop-nav__sub-bar" style={{ top: subBarTop }} onMouseEnter={cancelClose}>
@@ -1186,7 +1186,7 @@ const Header = () => {
                   {/* Navigation Menu */}
                   <nav className="site-header__nav">
                     <Link to="/" className="site-header__nav-link">Home</Link>
-                    <Link to="/category" className="site-header__nav-link">Categories</Link>
+                    <Link to="/categories" className="site-header__nav-link">Categories</Link>
                     <Link to="/about" className="site-header__nav-link">About</Link>
                     <Link to="/contact" className="site-header__nav-link">Contact</Link>
                   </nav>
