@@ -1,11 +1,9 @@
-// Header.scss — FIXED: Menu bar freezes while scrolling
-
 // ─── Global body padding for fixed header ─────────────────────────
 body {
-  padding-top: 94px; // announcement (32px) + desktop header (~80px)
+  padding-top: 80px; // desktop header only (announcement bar is hidden on mobile)
   
   @media (max-width: 991.98px) {
-    padding-top: 94px; // announcement (32px) + mobile top bar (~62px)
+    padding-top: 66px; // mobile top bar only (no announcement bar)
     padding-bottom: 62px; // mobile bottom nav
   }
   
@@ -29,12 +27,17 @@ body {
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  position: fixed; // ✅ Fixed position
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1001;
   padding: 0 1rem;
+
+  // ✅ Hide on mobile screens
+  @media (max-width: 991.98px) {
+    display: none;
+  }
 
   &__left {
     display: flex;
@@ -97,14 +100,18 @@ body {
 
 // ─── Site Header ────────────────────────────────────────────────
 .site-header {
-  // ✅ FIXED: Changed from sticky to fixed for reliable freeze-on-scroll
   position: fixed;
-  top: 28px;
+  top: 0; // Changed from 28px to 0 since announcement bar is hidden on mobile
   left: 0;
   right: 0;
   z-index: 1000;
   background: var(--brand-white);
   transition: box-shadow 0.3s ease, top 0.3s ease;
+
+  // For desktop, keep it below announcement bar
+  @media (min-width: 992px) {
+    top: 28px;
+  }
 
   &--scrolled {
     box-shadow:
@@ -271,9 +278,9 @@ body {
     align-items: center;
     gap: 0.4rem;
     background: none;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 0;
-    padding: 0.4rem 0.85rem;
+    padding: 0.4rem 0.5rem;
     cursor: pointer;
     color: var(--brand-white);
     font-family: var(--font-body);
@@ -285,7 +292,6 @@ body {
     transition: border-color var(--transition), color var(--transition), background var(--transition);
 
     &:hover {
-      border-color: var(--brand-gold);
       color: var(--brand-gold);
     }
   }
@@ -300,7 +306,7 @@ body {
 
   &__offcanvas { 
     max-width: 300px;
-    z-index: 1002;
+    z-index: 1050;
   }
 
   &__offcanvas-link {
@@ -324,17 +330,74 @@ body {
   }
 }
 
+// Fix for offcanvas backdrop - ensure menu is clickable
+.offcanvas-backdrop {
+  z-index: 1040 !important;
+}
+
+// ─── Offcanvas Close Button Styles ───────────────────────────────
+.offcanvas-header {
+  background: var(--brand-black);
+  
+  .btn-close {
+    --bs-btn-close-color: #e31e24;
+    --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23e31e24'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+    background-size: 1rem;
+    opacity: 1;
+    filter: none;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+    
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+}
+
+// ─── Offcanvas Close Button - Mobile Only ────────────────────────
+@media (max-width: 991.98px) {
+  .offcanvas-header {
+    background: var(--brand-black);
+    
+    .btn-close {
+      --bs-btn-close-color: #e31e24;
+      --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23e31e24'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+      background-size: 1rem;
+      opacity: 1;
+      filter: none;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+      
+      &:focus {
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+}
+
 // ─── Mobile Search Overlay ───────────────────────────────────────
 .mobile-search-overlay {
   position: fixed;
-  top: 32px; // Below announcement bar
-  left: 0; right: 0;
+  top: 0; // Changed from 28px to 0 since announcement bar is hidden on mobile
+  left: 0; 
+  right: 0;
   z-index: 9999;
   background: var(--brand-white);
   border-bottom: 2px solid var(--brand-gold);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
   animation: slideDown 0.22s ease both;
   padding: 0.65rem 1rem;
+
+  // For desktop, keep it below announcement bar
+  @media (min-width: 992px) {
+    top: 28px;
+  }
 
   &__form { display: flex; align-items: center; gap: 0.5rem; }
 
@@ -577,7 +640,6 @@ body {
     &--open { transform: rotate(180deg); opacity: 1; }
   }
 
-  // ✅ FIXED: Sub-bars positioned relative to header
   &__sub-bar {
     position: absolute;
     top: 100%;
@@ -733,7 +795,7 @@ body {
     width: 100%;
     height: 40px;
     border: 1px solid #ddd;
-    border-radius: 0;
+    border-radius: 8px;
     padding: 0 0.75rem;
     font-family: var(--font-body);
     font-size: 0.85rem;
@@ -766,9 +828,9 @@ body {
   &__btn {
     width: 100%;
     background: var(--brand-black);
-    color: var(--brand-gold);
+    color: var(--brand-white);
     border: none;
-    border-radius: 0;
+    border-radius: 8px;
     padding: 0.65rem;
     font-family: var(--font-body);
     font-size: 0.65rem;
@@ -779,7 +841,7 @@ body {
     margin-top: 0.5rem;
     transition: background var(--transition), color var(--transition);
 
-    &:hover { background: var(--brand-charcoal); color: var(--brand-gold-light); }
+    &:hover { background: var(--brand-charcoal); color: var(--brand-gold); }
   }
 
   &__forgot {
@@ -808,14 +870,14 @@ body {
       &:hover { color: var(--brand-gold-dark); } }
   }
 
-  &__remember-me {
+  &__remember {
     margin: 12px 0;
     padding: 10px 0;
     border-top: 1px solid #f0f0f0;
     border-bottom: 1px solid #f0f0f0;
   }
 
-  &__checkbox-label {
+  &__remember-label {
     display: flex;
     align-items: center;
     cursor: pointer;

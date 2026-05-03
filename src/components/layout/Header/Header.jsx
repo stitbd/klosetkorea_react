@@ -1031,18 +1031,16 @@ const Header = () => {
     if (settings?.name) document.title = settings.name;
   }, [settings?.name]);
 
-  // ✅ FIXED: Handle scroll for header effects
+  // Handle scroll for header effects
   useEffect(() => {
     const onScroll = () => {
       const isScrolled = window.scrollY > 10;
       setScrolled(isScrolled);
-      document.body.classList.toggle('header-fixed', true);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', onScroll);
-      document.body.classList.remove('header-fixed');
     };
   }, []);
 
@@ -1109,7 +1107,7 @@ const Header = () => {
 
       {showMobileSearch && <MobileSearchOverlay onClose={() => setShowMobileSearch(false)} />}
 
-      {/* ✅ FIXED: Header with fixed positioning */}
+      {/* Header with fixed positioning */}
       <header className={`site-header ${scrolled ? 'site-header--scrolled' : ''}`}>
 
         {/* ══ MOBILE TOP BAR ══ */}
@@ -1188,8 +1186,14 @@ const Header = () => {
           <DesktopNav navLinks={navLinks} />
         </div>
 
-        {/* ══ MOBILE OFFCANVAS ══ */}
-        <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} className="site-header__offcanvas">
+        {/* ══ MOBILE OFFCANVAS - FIXED Z-INDEX ISSUE ══ */}
+        <Offcanvas 
+          show={showOffcanvas} 
+          onHide={() => setShowOffcanvas(false)} 
+          className="site-header__offcanvas"
+          backdropClassName="offcanvas-backdrop"
+          scroll={true}
+        >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>
               <LogoImg style={{ height: '36px', width: 'auto' }} />
