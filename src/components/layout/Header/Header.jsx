@@ -10,7 +10,6 @@ import axios from 'axios';
 import { apiGet } from '../../../utils/api';
 import './Header.scss';
 
-
 // Social Icons (Static)
 import fbIcon from '../../../assets/icons/facebook.png';
 import igIcon from '../../../assets/icons/instagram.png';
@@ -99,7 +98,6 @@ const uniqueBy = (items, getKey) => {
   });
 };
 
-// ✅ FIXED: Sub-categories & child-categories sorted alphabetically (A-Z)
 const buildNavLinks = (categories) =>
   uniqueBy(
     [...categories].sort((a, b) => Number(a.serial_no) - Number(b.serial_no)),
@@ -309,7 +307,6 @@ const highlightMatch = (text, query) => {
   );
 };
 
-
 // ─── Desktop Search Box with live suggestions ─────────────────────
 const DesktopSearchBox = ({ searchQuery, setSearchQuery, onSubmit }) => {
   const [open, setOpen]           = useState(false);
@@ -456,36 +453,6 @@ const DesktopNav = ({ navLinks }) => {
 
   return (
     <div ref={navRef} className="desktop-nav" onMouseLeave={scheduleClose} onMouseEnter={cancelClose}>
-      {/* <div className="desktop-nav__top-bar" ref={topBarRef}>
-        <Container fluid="xl">
-          <div className="d-flex align-items-center">
-            <Link
-              to="/"
-              className="desktop-nav__home"
-              onClick={() => { closeAll(); }}
-            >
-              <HomeIcon />
-            </Link>
-            {navLinks.map((item) => (
-              <Link
-                key={item.key}
-                to={item.href}
-                className={`desktop-nav__top-item ${activeTop === item.label ? 'desktop-nav__top-item--active' : ''}`}
-                onMouseEnter={() => handleTopEnter(item)}
-                onClick={() => { closeAll(); }}
-              >
-                {item.label}
-                {item.children?.length > 0 && (
-                  <span className={`desktop-nav__chevron ${activeTop === item.label ? 'desktop-nav__chevron--open' : ''}`}>
-                    <ChevronDown />
-                  </span>
-                )}
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </div> */}
-
       {activeTopItem?.children?.length > 0 && (
         <div ref={subBarRef} className="desktop-nav__sub-bar" style={{ top: subBarTop }} onMouseEnter={cancelClose}>
           <Container fluid="xl">
@@ -533,7 +500,6 @@ const DesktopNav = ({ navLinks }) => {
     </div>
   );
 };
-
 
 // ─── Login Form ───────────────────────────────────────────────────
 const LoginForm = ({ onClose, position = 'desktop' }) => {
@@ -689,7 +655,6 @@ const LoginForm = ({ onClose, position = 'desktop' }) => {
   );
 };
 
-
 // ─── Logged-In User Menu ──────────────────────────────────────────
 const UserMenu = ({ onClose, position = 'desktop' }) => {
   const navigate = useNavigate();
@@ -731,7 +696,6 @@ const UserMenu = ({ onClose, position = 'desktop' }) => {
     </div>
   );
 };
-
 
 // ─── Mobile Bottom Nav ────────────────────────────────────────────
 const MobileBottomNav = ({ showMobileLogin, onMobileLoginToggle, onMobileLoginClose }) => {
@@ -918,57 +882,55 @@ const MobileSearchOverlay = ({ onClose }) => {
   );
 };
 
-  // ─── Hook: fetch announcements ────────────────────────────────────
-  let _announcementsCache = null;
-  let _announcementsFetchPromise = null;
+// ─── Hook: fetch announcements ────────────────────────────────────
+let _announcementsCache = null;
+let _announcementsFetchPromise = null;
 
-  const useAnnouncements = () => {
-    const [messages, setMessages] = useState(() =>
-      _announcementsCache ? _announcementsCache.map((a) => a.announcement) : []
-    );
+const useAnnouncements = () => {
+  const [messages, setMessages] = useState(() =>
+    _announcementsCache ? _announcementsCache.map((a) => a.announcement) : []
+  );
 
-    useEffect(() => {
-      if (_announcementsCache) {
-        setMessages(_announcementsCache.map((a) => a.announcement));
-        return;
-      }
+  useEffect(() => {
+    if (_announcementsCache) {
+      setMessages(_announcementsCache.map((a) => a.announcement));
+      return;
+    }
 
-      if (_announcementsFetchPromise) {
-        _announcementsFetchPromise.then((msgs) => setMessages(msgs));
-        return;
-      }
-
-      _announcementsFetchPromise = apiGet('/announcement')
-        .then((res) => {
-          if (res.data?.status && Array.isArray(res.data.data)) {
-            const sorted = [...res.data.data].sort(
-              (a, b) => Number(a.sl_no) - Number(b.sl_no)
-            );
-            _announcementsCache = sorted;
-            return sorted.map((a) => a.announcement);
-          }
-          _announcementsCache = [];
-          return [];
-        })
-        .catch((err) => {
-          console.error('Announcements error:', err);
-          _announcementsCache = [];
-          return [];
-        })
-        .finally(() => {
-          _announcementsFetchPromise = null;
-        });
-
+    if (_announcementsFetchPromise) {
       _announcementsFetchPromise.then((msgs) => setMessages(msgs));
-    }, []);
+      return;
+    }
 
-    return messages;
-  };
+    _announcementsFetchPromise = apiGet('/announcement')
+      .then((res) => {
+        if (res.data?.status && Array.isArray(res.data.data)) {
+          const sorted = [...res.data.data].sort(
+            (a, b) => Number(a.sl_no) - Number(b.sl_no)
+          );
+          _announcementsCache = sorted;
+          return sorted.map((a) => a.announcement);
+        }
+        _announcementsCache = [];
+        return [];
+      })
+      .catch((err) => {
+        console.error('Announcements error:', err);
+        _announcementsCache = [];
+        return [];
+      })
+      .finally(() => {
+        _announcementsFetchPromise = null;
+      });
+
+    _announcementsFetchPromise.then((msgs) => setMessages(msgs));
+  }, []);
+
+  return messages;
+};
 
 // ─── Announcement Top Bar ─────────────────────────────────────────
 const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
-  
-  // ✅ SVG Icons for Contact (আগের মতো)
   const PhoneIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
@@ -982,7 +944,6 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
     </svg>
   );
 
-  // ✅ Data with fallbacks
   const phone = contact?.hotline || contact?.phone || '+88 0177763 5373';
   const address = contact?.address || '83 Bir Uttem C R Dotto Road. Haiterpool Dhaka-1205, Bangladesh';
   const fbLink = socialLinks?.facebook || '#';
@@ -993,8 +954,6 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
     <div className="announcement-bar">
       <Container fluid="xl" className="h-100">
         <div className="d-flex align-items-center justify-content-between h-100">
-          
-          {/* LEFT: Contact Info with SVG Icons */}
           <div className="announcement-bar__left">
             <a href={`tel:${phone.replace(/\s/g, '')}`} className="announcement-bar__contact">
               <PhoneIcon />
@@ -1005,8 +964,6 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
               <span>{address}</span>
             </span>
           </div>
-
-          {/* RIGHT: Social Icons with PNG Images */}
           <div className="announcement-bar__right">
             <a href={fbLink} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label="Facebook">
               <img src={fbIcon} alt="Facebook" className="announcement-bar__social-icon" />
@@ -1018,7 +975,6 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
               <img src={liIcon} alt="LinkedIn" className="announcement-bar__social-icon" />
             </a>
           </div>
-
         </div>
       </Container>
     </div>
@@ -1075,10 +1031,19 @@ const Header = () => {
     if (settings?.name) document.title = settings.name;
   }, [settings?.name]);
 
+  // ✅ FIXED: Handle scroll for header effects
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      setScrolled(isScrolled);
+      document.body.classList.toggle('header-fixed', true);
+    };
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      document.body.classList.remove('header-fixed');
+    };
   }, []);
 
   useEffect(() => {
@@ -1133,12 +1098,10 @@ const Header = () => {
       />
     );
 
-    const announcementMessages = useAnnouncements();
+  const announcementMessages = useAnnouncements();
 
   return (
     <>
-
-      {/* ── Announcement Bar ── */}
       <AnnouncementBar 
         contact={contact} 
         socialLinks={settings?.social_links || {}}
@@ -1146,6 +1109,7 @@ const Header = () => {
 
       {showMobileSearch && <MobileSearchOverlay onClose={() => setShowMobileSearch(false)} />}
 
+      {/* ✅ FIXED: Header with fixed positioning */}
       <header className={`site-header ${scrolled ? 'site-header--scrolled' : ''}`}>
 
         {/* ══ MOBILE TOP BAR ══ */}
@@ -1169,13 +1133,12 @@ const Header = () => {
         <div className="site-header__desktop d-none d-lg-block">
           <div className="site-header__main">
             <Container>
-              <div className="d-flex align-items-center justify-content-between gap-3 py-3">
+              <div className="d-flex align-items-center justify-content-between gap-3 py-2">
 
                 <Link to="/" className="site-header__logo">
                   <LogoImg />
                 </Link>
 
-                {/* ── Live Search Box ── */}
                 <DesktopSearchBox
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
@@ -1183,15 +1146,12 @@ const Header = () => {
                 />
 
                 <div className="d-flex align-items-center gap-4">
-                  {/* Navigation Menu */}
                   <nav className="site-header__nav">
                     <Link to="/" className="site-header__nav-link">Home</Link>
                     <Link to="/categories" className="site-header__nav-link">Categories</Link>
                     <Link to="/about" className="site-header__nav-link">About</Link>
-                    {/* <Link to="/contact" className="site-header__nav-link">Contact</Link> */}
                   </nav>
 
-                  {/* Login & Cart */}
                   <div className="d-flex align-items-center gap-3">
                     <div className="site-header__login-wrap" ref={desktopLoginRef}>
                       {authState.isAuthenticated ? (

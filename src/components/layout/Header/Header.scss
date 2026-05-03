@@ -1,4 +1,18 @@
-// Header.scss — Luxury Redesign
+// Header.scss — FIXED: Menu bar freezes while scrolling
+
+// ─── Global body padding for fixed header ─────────────────────────
+body {
+  padding-top: 94px; // announcement (32px) + desktop header (~80px)
+  
+  @media (max-width: 991.98px) {
+    padding-top: 94px; // announcement (32px) + mobile top bar (~62px)
+    padding-bottom: 62px; // mobile bottom nav
+  }
+  
+  &.header-fixed {
+    scroll-behavior: smooth;
+  }
+}
 
 // ─── Announcement Top Bar ────────────────────────────────────────
 .announcement-bar {
@@ -10,16 +24,18 @@
   font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: capitalize;
-  height: 32px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  position: relative;
-  z-index: 901;
+  position: fixed; // ✅ Fixed position
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
   padding: 0 1rem;
 
-  // ✅ NEW: Left section (contact info)
   &__left {
     display: flex;
     align-items: center;
@@ -43,7 +59,6 @@
 
     &:hover { opacity: 0.85; }
 
-    // ✅ SVG contact icons
     svg {
       width: 14px;
       height: 14px;
@@ -58,7 +73,6 @@
     }
   }
 
-  // ✅ NEW: Social icon link
   &__social {
     display: flex;
     align-items: center;
@@ -68,7 +82,6 @@
     text-decoration: none;
     transition: transform 0.2s ease, opacity 0.2s ease;
 
-    // ✅ PNG social icons
     .announcement-bar__social-icon {
       width: 16px;
       height: 16px;
@@ -84,11 +97,14 @@
 
 // ─── Site Header ────────────────────────────────────────────────
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 900;
+  // ✅ FIXED: Changed from sticky to fixed for reliable freeze-on-scroll
+  position: fixed;
+  top: 28px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: var(--brand-white);
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, top 0.3s ease;
 
   &--scrolled {
     box-shadow:
@@ -168,11 +184,8 @@
   &__desktop { background: var(--brand-white); }
 
   &__main {
-    // border-bottom: 1px solid #ebebeb;
     background: var(--brand-gold);
   }
-
-  // &__search { max-width: 520px; }
 
   &__search-input {
     border-right: none;
@@ -285,7 +298,10 @@
     &--open { transform: rotate(180deg); }
   }
 
-  &__offcanvas { max-width: 300px; }
+  &__offcanvas { 
+    max-width: 300px;
+    z-index: 1002;
+  }
 
   &__offcanvas-link {
     padding: 0.6rem 0;
@@ -311,7 +327,8 @@
 // ─── Mobile Search Overlay ───────────────────────────────────────
 .mobile-search-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 32px; // Below announcement bar
+  left: 0; right: 0;
   z-index: 9999;
   background: var(--brand-white);
   border-bottom: 2px solid var(--brand-gold);
@@ -496,6 +513,8 @@
 // ─── Desktop Hover Nav ───────────────────────────────────────────
 .desktop-nav {
   background: var(--brand-white);
+  position: relative;
+  z-index: 999;
 
   &__top-bar {
     background: var(--brand-white);
@@ -555,8 +574,10 @@
     &--open { transform: rotate(180deg); opacity: 1; }
   }
 
+  // ✅ FIXED: Sub-bars positioned relative to header
   &__sub-bar {
-    position: fixed;
+    position: absolute;
+    top: 100%;
     left: 0;
     width: 100%;
     z-index: 9999;
@@ -607,7 +628,8 @@
   }
 
   &__child-bar {
-    position: fixed;
+    position: absolute;
+    top: 100%;
     left: 0;
     width: 100%;
     z-index: 9998;
@@ -644,7 +666,6 @@
 
 // ─── Login Dropdown ──────────────────────────────────────────────
 .login-dropdown {
-
   &--desktop {
     position: absolute;
     top: calc(100% + 8px);
@@ -654,7 +675,7 @@
     border-radius: 0;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
     padding: 1.25rem 1.1rem;
-    z-index: 99999;
+    z-index: 10001;
     border: 1px solid #ebebeb;
     border-top: 2px solid var(--brand-gold);
     animation: dropDown 0.18s ease both;
@@ -1189,7 +1210,3 @@
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
-
-body {
-  @media (max-width: 991.98px) { padding-bottom: 62px; }
-}
