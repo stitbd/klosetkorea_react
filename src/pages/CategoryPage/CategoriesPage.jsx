@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import './CategoriesPage.scss';
@@ -28,17 +28,6 @@ const CategoryCard = ({ cat }) => {
 
 const CategoriesPage = () => {
   const { categories, loading, error } = useCategories();
-
-  // ✅ Sort categories alphabetically (A-Z) by name/label
-  const sortedCategories = useMemo(() => {
-    return [...categories].sort((a, b) =>
-      (a.label || a.name || '').localeCompare(
-        b.label || b.name || '',
-        'en',
-        { sensitivity: 'base' }
-      )
-    );
-  }, [categories]);
 
   const heading = (
     <div className="featured-cats__heading">
@@ -81,7 +70,7 @@ const CategoriesPage = () => {
         {heading}
         <div className="featured-cats__grid">
           <div className="featured-cats__row featured-cats__row--tall">
-            {sortedCategories.map((cat) => (
+            {categories.map((cat) => (
               <CategoryCard key={cat.id} cat={cat} />
             ))}
           </div>
