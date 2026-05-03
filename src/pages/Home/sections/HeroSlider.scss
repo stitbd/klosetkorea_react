@@ -182,7 +182,7 @@ $heights: (
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: var(--cta-bg, #{$accent});
+    background: var(--cta-bg, #{var(--brand-gold)});
     color: $white;
     font-size: clamp(0.72rem, 3vw, 0.88rem);
     font-weight: 700;
@@ -260,8 +260,8 @@ $heights: (
       content: '';
       width: 30px;
       height: 30px;
-      border: 3px solid rgba($accent, 0.2);
-      border-top-color: $accent;
+      border: 3px solid rgba(var(--brand-gold), 0.2);
+      border-top-color: var(--brand-gold);
       border-radius: 50%;
       animation: spin 0.75s linear infinite;
     }
@@ -299,9 +299,9 @@ $heights: (
   }
 
   &:hover {
-    background: $accent;
-    border-color: $accent;
-    box-shadow: 0 4px 20px $accent-glow;
+    background: var(--brand-gold);
+    border-color: var(--brand-gold);
+    box-shadow: 0 4px 20px var(--brand-gold-light);
     transform: translateY(-50%) scale(1.1);
   }
 
@@ -310,7 +310,7 @@ $heights: (
   }
 
   &:focus-visible {
-    outline: 2px solid $accent;
+    outline: 2px solid var(--brand-gold);
     outline-offset: 2px;
   }
 
@@ -382,8 +382,8 @@ $heights: (
 
     &--active {
       width: 20px;
-      background: $accent;
-      box-shadow: 0 2px 8px $accent-glow;
+      background: var(--brand-gold);
+      // box-shadow: 0 2px 8px var(--brand-gold-light);
 
       @media (min-width: 480px) { width: 28px; }
     }
@@ -393,7 +393,7 @@ $heights: (
     }
 
     &:focus-visible {
-      outline: 2px solid $accent;
+      outline: 2px solid var(--brand-gold);
       outline-offset: 2px;
     }
   }
@@ -483,7 +483,7 @@ $heights: (
   .hero-btn:focus,
   .hero-dots__dot:focus,
   .hero-slider__cta:focus {
-    outline: 2px solid $accent;
+    outline: 2px solid var(--brand-gold);
     outline-offset: 2px;
   }
 }

@@ -1008,14 +1008,14 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     input[type="checkbox"] {
       width: 16px;
       height: 16px;
-      accent-color: #ff0000;
+      accent-color: var(--brand-gold);
       cursor: pointer;
     }
   }
 
   &__btn {
     width: 100%;
-    background: #FF6600;
+    background: var(--brand-gold);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -1029,7 +1029,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     justify-content: center;
     min-height: 44px;
 
-    &:hover:not(:disabled) { background: #ff0000; transform: translateY(-1px); }
+    &:hover:not(:disabled) { background: var(--brand-gold-dark); transform: translateY(-1px); }
     &:disabled             { opacity: 0.65; cursor: not-allowed; }
   }
 
@@ -1061,7 +1061,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     gap: 6px;
     justify-content: center;
     flex-wrap: wrap;
-    a { color: #FF6600; font-weight: 600; text-decoration: none; }
+    a { color: var(--brand-gold); font-weight: 600; text-decoration: none; }
   }
 }
 

@@ -9,7 +9,7 @@
 
 // ─── Product Card ─────────────────────────────────────────────────
 .product-card {
-  border: 1px solid #e8e5de;
+  border: 1px solid #e8dede;
   border-radius: 0;
   overflow: hidden;
   transition:
@@ -36,7 +36,7 @@
   &:hover {
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
     transform: translateY(-4px);
-    border-color: rgba(212, 175, 55, 0.3);
+    border-color: rgba(212, 55, 55, 0.3);
 
     &::after { transform: scaleX(1); }
   }
@@ -62,8 +62,8 @@
     position: absolute;
     top: 8px;
     left: 8px;
-    background: var(--brand-black);
-    color: var(--brand-gold);
+    background: var(--brand-gold);
+    color: var(--brand-white);
     font-family: var(--font-body);
     font-size: 8px;
     font-weight: 700;
@@ -76,19 +76,19 @@
     &--stockout {
       left: auto;
       right: 8px;
-      background: rgba(0, 0, 0, 0.75);
-      color: #bbb;
+      background: var(--brand-gold);
+      color: var(--brand-white);
     }
 
     &--preorder {
-      background: var(--brand-gold);
+      background: var(--brand-illusion);
       color: var(--brand-white);
     }
   }
 
   &__body {
     padding: 10px 10px 12px;
-    border-top: 1px solid #f0ede6;
+    border-top: 1px solid #f0e6e6;
   }
 
   &__name {
@@ -160,13 +160,13 @@
     }
 
     &--preorder {
-      background: var(--brand-gold);
+      background: var(--brand-illusion);
       color: var(--brand-white);
-      border: 1px solid var(--brand-gold);
+      border: 1px solid var(--brand-illusion);
 
       &:hover {
-        background: var(--brand-gold-dark);
-        color: var(--brand-black);
+        background: var(--brand-illusion-dark);
+        color: var(--brand-white);
       }
     }
 
@@ -216,7 +216,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px 10px;
-    border-bottom: 1px solid #f0ede6;
+    border-bottom: 1px solid #f0e6e6;
     gap: 6px;
     background: var(--brand-off-white);
   }
@@ -365,7 +365,7 @@
     &--active {
       border-color: var(--brand-gold);
       background: var(--brand-gold);
-      color: var(--brand-black);
+      color: var(--brand-white);
     }
 
     &--disabled {
@@ -382,7 +382,7 @@
 
   &__out-tag {
     font-size: 8px;
-    background: #f5ede0;
+    background: #f5e0e0;
     color: var(--brand-gold-dark);
     padding: 1px 4px;
     border-radius: 0;
@@ -398,7 +398,7 @@
 
   &__footer {
     padding: 8px 10px;
-    border-top: 1px solid #f0ede6;
+    border-top: 1px solid #f0e6e6;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -422,19 +422,20 @@
 
     &:hover:not(:disabled) {
       background: var(--brand-charcoal);
-      color: var(--brand-gold);
+      color: var(--brand-white);
     }
 
     &--buy {
       background: var(--brand-gold);
-      color: var(--brand-black);
-      &:hover:not(:disabled) { background: var(--brand-gold); }
+      color: var(--brand-white);
+      border: 1px solid var(--brand-gold);
+      &:hover:not(:disabled) { background: var(--brand-gold-dark); }
     }
 
     &--preorder {
-      background: var(--brand-gold);
-      color: var(--brand-black);
-      &:hover:not(:disabled) { background: var(--brand-gold); }
+      background: var(--brand-illusion);
+      color: var(--brand-white);
+      &:hover:not(:disabled) { background: var(--brand-illusion-dark); }
     }
 
     &:disabled {
