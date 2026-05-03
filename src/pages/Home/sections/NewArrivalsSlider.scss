@@ -17,7 +17,7 @@
     align-items: baseline;
     justify-content: space-between;
     padding: 0 16px 1rem;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(212, 55, 55, 0.2);
     margin-bottom: 1.75rem !important;
     position: relative;
 
@@ -156,7 +156,7 @@
 .sk-pulse {
   display: block;
   border-radius: 1px;
-  background: linear-gradient(90deg, #f2f0eb 25%, #e8e5de 50%, #f2f0eb 75%);
+  background: linear-gradient(90deg, #f2ebeb 25%, #e8dede 50%, #f2ebeb 75%);
   background-size: 1200px 100%;
   animation: na-shimmer 1.6s ease infinite;
 }
@@ -200,7 +200,7 @@
     color: inherit;
     transform: translateY(-6px);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
-    border-color: rgba(212, 175, 55, 0.3);
+    border-color: rgba(212, 55, 55, 0.3);
 
     &::before { transform: scaleX(1); }
   }
@@ -250,8 +250,8 @@
     top: 10px;
     left: 10px;
     z-index: 5;
-    background: var(--brand-black);
-    color: var(--brand-gold);
+    background: var(--brand-gold);
+    color: var(--brand-white);
     font-family: var(--font-body);
     font-size: 8px;
     font-weight: 700;
@@ -265,13 +265,13 @@
     &--stockout {
       left: auto;
       right: 8px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #ccc;
+      background: var(--brand-gold);
+      color: var(--brand-white);
     }
 
     &--preorder {
-      background: var(--brand-gold);
-      color: var(--brand-black);
+      background: var(--brand-illusion);
+      color: var(--brand-white);
     }
 
     @media (max-width: 767px) {
@@ -286,7 +286,7 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    border-top: 1px solid #f0ede6;
+    border-top: 1px solid #f0e6e6;
 
     @media (max-width: 767px) { padding: 6px 6px 8px; gap: 2px; }
   }
