@@ -388,6 +388,9 @@ body {
   }
 }
 
+.offcanvas-header{
+  background: var(--brand-black);
+}
 // ─── Navigation Menu ─────────────────────────────────────────────
 .site-header__nav {
   display: flex;
