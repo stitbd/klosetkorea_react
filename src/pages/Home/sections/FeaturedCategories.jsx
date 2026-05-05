@@ -35,11 +35,18 @@ const FeaturedCategories = ({ categories = [] }) => (
       </div>
 
       <div className="featured-cats__grid">
-        <div className="featured-cats__row featured-cats__row--tall">
-          {categories.map((cat) => (
-            <CategoryCard key={cat.id} cat={cat} />
-          ))}
-        </div>
+        {Array.from({ length: Math.ceil(categories.length / 4) }, (_, i) =>
+          categories.slice(i * 4, i * 4 + 4)
+        ).map((rowCats, rowIdx) => (
+          <div
+            key={rowIdx}
+            className="featured-cats__row featured-cats__row--tall"
+          >
+            {rowCats.map((cat) => (
+              <CategoryCard key={cat.id} cat={cat} />
+            ))}
+          </div>
+        ))}
       </div>
     </Container>
   </section>

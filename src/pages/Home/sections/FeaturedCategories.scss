@@ -72,6 +72,11 @@
   border: 1px solid var(--brand-gold);
   overflow: hidden;
   background: var(--brand-charcoal);
+  width: calc(50% - 0.25rem);
+
+  @media (min-width: 576px) {
+    width: calc(25% - 0.375rem);
+  }
   transform: translateZ(0);
   transition:
     transform 0.55s var(--ease-out-expo),
