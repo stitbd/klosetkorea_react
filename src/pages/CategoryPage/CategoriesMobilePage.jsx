@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import './CategoriesMobilePage.scss';
-import { useCategories } from '../../hooks/useCategories';
+import './CategoriesPage.scss';
+import { useHomeData } from '../Home/useHomeData';
 import { BASE_IMAGE_URL, PLACEHOLDER_IMG } from '../../utils';
 
 const CategoryCard = ({ cat }) => {
@@ -10,6 +10,7 @@ const CategoryCard = ({ cat }) => {
   const label = cat.label || cat.name || 'Category';
 
   return (
+    // ✅ FIXED: /categories/ so it matches the SubCategories route in AppRoutes
     <Link to={`/categories/${cat.slug}`} className="cat-card">
       <div className="cat-card__img-wrap">
         <img
@@ -27,36 +28,22 @@ const CategoryCard = ({ cat }) => {
 };
 
 const CategoriesMobilePage = () => {
-  const { categories, loading, error } = useCategories();
-
-  // ✅ FIXED: Sort categories alphabetically (A-Z) by name/label
-  const sortedCategories = useMemo(() => {
-    return [...categories].sort((a, b) =>
-      (a.label || a.name || '').localeCompare(
-        b.label || b.name || '',
-        'en',
-        { sensitivity: 'base' }
-      )
-    );
-  }, [categories]);
-
-  const heading = (
-    <div className="featured-cats__heading">
-      <span className="featured-cats__heading-line" />
-      <h2 className="featured-cats__heading-text">Shop by CATEGORIES</h2>
-      <span className="featured-cats__heading-line" />
-    </div>
-  );
+  const { data, loading } = useHomeData();
+  const categories = data?.featuredCategories || [];
 
   if (loading) return (
     <section className="featured-cats section-wrapper">
       <Container fluid className="featured-cats__container">
-        {heading}
+        <div className="featured-cats__heading">
+          <span className="featured-cats__heading-line" />
+          <h2 className="featured-cats__heading-text">Shop by CATEGORY</h2>
+          <span className="featured-cats__heading-line" />
+        </div>
         <div className="featured-cats__grid">
           <div className="featured-cats__row featured-cats__row--tall">
-            {[...Array(4)].map((_, i) => (
+            {[...Array(2)].map((_, i) => (
               <div key={i} className="cat-card cat-card--loading">
-                <div className="cat-card__img-wrap" />
+                <div className="cat-card__img-wrap" style={{ aspectRatio: '1/1' }} />
                 <p className="cat-card__label" />
               </div>
             ))}
@@ -66,23 +53,24 @@ const CategoriesMobilePage = () => {
     </section>
   );
 
-  if (error) return (
-    <section className="featured-cats section-wrapper">
-      <Container fluid className="featured-cats__container">
-        {heading}
-        <p className="text-center text-danger">Error: {error}</p>
-      </Container>
-    </section>
-  );
-
   return (
     <section className="featured-cats section-wrapper">
       <Container fluid className="featured-cats__container">
-        {heading}
+        <div className="featured-cats__heading">
+          <span className="featured-cats__heading-line" />
+          <h2 className="featured-cats__heading-text">CATEGORY</h2>
+          <span className="featured-cats__heading-line" />
+        </div>
         <div className="featured-cats__grid">
-          <div className="featured-cats__row featured-cats__row--tall">
-            {sortedCategories.map((cat) => <CategoryCard key={cat.id} cat={cat} />)}
-          </div>
+          {Array.from({ length: Math.ceil(categories.length / 2) }, (_, i) =>
+            categories.slice(i * 2, i * 2 + 2)
+          ).map((rowCats, rowIdx) => (
+            <div key={rowIdx} className="featured-cats__row featured-cats__row--tall">
+              {rowCats.map((cat) => (
+                <CategoryCard key={cat.id} cat={cat} />
+              ))}
+            </div>
+          ))}
         </div>
       </Container>
     </section>

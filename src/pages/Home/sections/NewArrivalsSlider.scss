@@ -75,8 +75,12 @@
   &__slider-wrap {
     position: relative;
     width: 100%;
-    overflow: visible;
+    overflow: hidden;            // ← changed (hides side peek on mobile)
     clip-path: inset(0 -50vw);
+  
+    @media (min-width: 768px) {
+      overflow: visible;          // ← restore peek for tablet+
+    }
   }
 
   &__swiper {

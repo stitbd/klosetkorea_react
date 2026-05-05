@@ -1168,8 +1168,8 @@ export const InvoicePage = ({ orderData, token }) => {
   
   const grandAmt    = Number(invoice.final_amount ?? (subtotalAmt - discountAmt + shippingAmt));
   
-  const paidAmt     = Number(invoice.payment?.paid_amount ?? 0);
-  const dueAmt      = grandAmt - paidAmt;
+  const paidAmt     = Number(invoice.paid_amount ?? 0);
+  const dueAmt      = Number(invoice.due_amount ?? (grandAmt - paidAmt));
 
   const paymentMethod = invoice.payment?.payment_method
     ?? invoice.payment_method

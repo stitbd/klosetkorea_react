@@ -21,7 +21,7 @@ $heights: (
   'sm':   380px,
   'md':   460px,
   'lg':   540px,
-  'xl':   620px,
+  'xl':   700px,
 );
 
 // ══════════════════════════════════════════════════════════════════
@@ -446,7 +446,7 @@ $heights: (
 
 // Extra-small screens
 @media (max-width: 359px) {
-  .hero-slider__swiper  { height: 130px; }
+  // .hero-slider__swiper  { height: 130px; }
   .hero-slider__title   { font-size: clamp(0.82rem, 6vw, 1.1rem); }
   .hero-slider__content { padding: 0.5rem 1rem; }
   .hero-slider__cta     { font-size: 0.68rem; padding: 0.3rem 0.8rem; }
