@@ -1,9 +1,9 @@
 // ── CheckoutPage.scss ─────────────────────────────────────────────────────
 // ── Design Tokens ──────────────────────────────────────────────────
-$brand:       #ff6600;
+$brand:       #e31e24;
 $brand-light: #37475a;
-$accent:      #ff6601;
-$accent-dark: #ff6602;
+$accent:      #f3262d;
+$accent-dark: #c90910;
 $text-1:      #000000;
 $text-2:      #565959;
 $text-3:      #8d9494;
@@ -49,7 +49,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     flex-wrap: wrap;
     gap: 8px;
     background: #fff9f2;
-    border: 1.5px dashed #ffb870;
+    border: 1.5px dashed #ff7070;
     border-radius: 10px;
     padding: 12px 16px;
   }
@@ -531,14 +531,14 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
 
-  &.active { border-color: #FF6600; background: #fff5f6; }
+  &.active { border-color: var(--brand-gold); background: #fff5f6; }
 
   input[type="radio"] { display: none; }
 
   &__content { display: flex; align-items: center; gap: 10px; flex: 1; }
   &__icon    { font-size: 1.3rem; }
   &__label   { font-weight: 600; color: #333; font-size: 0.95rem; }
-  &__check   { color: #ff0000; font-size: 1.1rem; margin-left: auto; }
+  &__check   { color: var(--brand-red); font-size: 1.1rem; margin-left: auto; }
 }
 
 // ══ INVOICE STYLES ═══════════════════════════════════════════════════════════
@@ -585,7 +585,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &:hover { opacity: 0.85; transform: translateY(-1px); }
 
   &--print    { color: #fff;  background: #000; border-color: #000; }
-  &--pdf      { color: #fff;  background: #FF6600; border-color: #FF6600; }
+  &--pdf      { color: #fff;  background: var(--brand-gold); border-color: var(--brand-gold); }
   &--continue { color: #555;  background: #fff; }
 }
 
@@ -605,7 +605,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 5px;
-    background: #ff6b35;
+    background: var(--brand-gold);
   }
 
   &__header {
@@ -631,7 +631,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &__brand-name  {
     font-size: 1.8rem;
     font-weight: 900;
-    color: #FF6600;
+    color: var(--brand-gold);
     letter-spacing: -0.5px;
     margin: 0;
   }
@@ -697,7 +697,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 2px;
-    color: #FF6600;
+    color: var(--brand-gold);
     text-transform: uppercase;
     margin-bottom: 8px;
   }
@@ -715,7 +715,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
   &__coupon-tag {
     margin-top: 6px !important;
     font-size: 0.82rem !important;
-    color: #ff0000 !important;
+    color: var(--brand-red) !important;
     background: #fde6e5;
     padding: 4px 8px;
     border-radius: 4px;
@@ -781,7 +781,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
     border-bottom: 1px solid #f0f0f0;
 
     &:last-child  { border-bottom: none; }
-    &--discount   { color: #ff0000; }
+    &--discount   { color: var(--brand-red); }
 
     &--grand {
       font-weight: 600;
@@ -793,7 +793,7 @@ $shadow-lg:   0 12px 40px rgba(0,0,0,0.15);
       font-weight: 600;
     }
     &--due {
-      color: #ff6600;
+      color: var(--brand-gold);
       font-weight: 600;
     }
   }

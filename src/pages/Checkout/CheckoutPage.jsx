@@ -1211,11 +1211,11 @@ export const InvoicePage = ({ orderData, token }) => {
   const couponCode = orderData?._couponCode || invoice.coupon_code || null;
 
   const siteName    = settings?.name                                        || 'Kloset Korea';
-  const siteAddress = settings?.contact?.address                            || 'Dhaka, Bangladesh';
-  const sitePhone   = settings?.contact?.hotline || settings?.contact?.phone || '+88 01757-769498';
-  const siteEmail   = settings?.contact?.hotmail || settings?.contact?.email || 'info@admin-klosetkorea.stitbd.app';
+  const siteAddress = settings?.contact?.address                            || '83 Bir Uttem, C R Dotto Road. Haiterpool Dhaka-1205, Bangladesh';
+  const sitePhone   = settings?.contact?.hotline || settings?.contact?.phone || '+88 0177763 5373';
+  const siteEmail   = settings?.contact?.hotmail || settings?.contact?.email || 'info@klosetbd.com';
   const logoPath    = settings?.dark_logo        || settings?.white_logo    || null;
-  const logoUrl     = logoPath ? `https://admin.admin-klosetkorea.stitbd.app/${logoPath}`  : null;
+  const logoUrl     = logoPath ? `https://admin.klosetbd.com/${logoPath}`  : null;
 
   const invoiceNo = invoice.invoice_id ?? orderId;
 

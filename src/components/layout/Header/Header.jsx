@@ -1103,11 +1103,15 @@ const Header = () => {
   const { navLinks } = useNavLinks();
   const { settings, contact } = useGeneralSettings();
 
-  const logoSrc  = settings?.dark_logo
-    ? `${BASE_IMAGE_URL}${settings.dark_logo}`
-    : settings?.white_logo
-      ? `${BASE_IMAGE_URL}${settings.white_logo}`
-      : null;
+  // const logoSrc  = settings?.dark_logo
+  //   ? `${BASE_IMAGE_URL}${settings.dark_logo}`
+  //   : settings?.white_logo
+  //     ? `${BASE_IMAGE_URL}${settings.white_logo}`
+  //     : null;
+
+  const logoSrc = settings?.white_logo
+  ? `${BASE_IMAGE_URL}${settings.white_logo}`
+  : null;
 
   const siteName     = settings?.name || 'Kloset Korea';
   const phoneDisplay = contact?.hotline || contact?.phone || PHONE;

@@ -60,9 +60,13 @@ const Footer = () => {
   // ── Pages (Company menu) state ──
   const [pages, setPages] = useState([]);
 
-  const logo = settings?.dark_logo
-    ? `${BASE_IMAGE_URL}/${settings.dark_logo}`
-    : logoFallback;
+  // const logo = settings?.dark_logo
+  //   ? `${BASE_IMAGE_URL}/${settings.dark_logo}`
+  //   : logoFallback;
+
+    const logo = settings?.light_logo
+  ? `${BASE_IMAGE_URL}/${settings.light_logo}`
+  : logoFallback;
 
   const showToast = (type, text) => {
     setToast({ type, text });
