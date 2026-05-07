@@ -115,7 +115,7 @@ body {
 
   &--scrolled {
     box-shadow:
-      0 1px 0 rgba(212, 175, 55, 0.15),
+      0 1px 0 rgba(212, 55, 55, 0.15),
       0 4px 20px rgba(0, 0, 0, 0.06);
   }
 
@@ -699,7 +699,7 @@ body {
     width: 100%;
     z-index: 9998;
     background: var(--brand-cream);
-    border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+    border-bottom: 2px solid rgba(212, 55, 55, 0.3);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     animation: navBarIn 0.16s ease both;
   }
