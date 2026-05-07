@@ -94,9 +94,9 @@ const ContactPage = () => {
       })
       .catch(() => {
         setContactInfo({
-          hotline: '+88 01886 899103',
-          email: 'info@elonis.com.bd',
-          address: 'BA - 64/3 South Badda, Dhaka - 1212',
+          hotline: '+88 0177763 5373',
+          email: 'info@klosetbd.com',
+          address: '83 Bir Uttem, C R Dotto Road. Haiterpool Dhaka-1205, Bangladesh',
           businessHours: 'Sat-Thu: 10 AM - 9 PM, Fri: 2 PM - 9 PM'
         });
       })

@@ -30,20 +30,25 @@
   &__grid {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 0.5rem;
   }
 
   // ── Rows ──────────────────────────────────────────────────────
   &__row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-    margin-bottom: 0.75rem;
-  
+    display: grid;
+    gap: 0.5rem;
+
+    // 4 equal columns for both rows on md+
+    grid-template-columns: repeat(2, 1fr);
+
+    @media (min-width: 576px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    // All cards — same fixed height across both rows
     &--tall .cat-card__img,
     &--normal .cat-card__img {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 3 / 4;
     }
   }
 }
@@ -54,7 +59,6 @@
   text-decoration: none;
   position: relative;
   border-radius: 8px;
-  border: 1px solid #ddd;
   overflow: hidden;
   background: #f5f5f5;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
