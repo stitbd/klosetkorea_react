@@ -269,7 +269,7 @@
     &--stockout {
       left: auto;
       right: 8px;
-      background: var(--brand-gold);
+      background: var(--brand-black);
       color: var(--brand-white);
     }
 
@@ -322,7 +322,7 @@
     font-family: var(--font-body);
     font-size: 13px;
     font-weight: 600;
-    color: var(--brand-gold);
+    color: var(--brand-black);
     letter-spacing: 0.03em;
 
     @media (max-width: 767px) { font-size: 11px; }

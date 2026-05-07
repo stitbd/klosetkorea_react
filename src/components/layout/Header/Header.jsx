@@ -983,6 +983,110 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
 
 // ─── Main Header ──────────────────────────────────────────────────
 const Header = () => {
+
+    // ─── Categories Mega Dropdown ─────────────────────────────────────
+    const CategoriesDropdown = ({ navLinks }) => {
+      const [open, setOpen]           = useState(false);
+      const [activeTopKey, setActiveTopKey] = useState(null);
+      const [activeSubKey, setActiveSubKey] = useState(null);
+      const wrapRef                   = useRef(null);
+      const leaveTimer                = useRef(null);
+      const navigate                  = useNavigate();
+
+      const cancelClose  = () => { if (leaveTimer.current) clearTimeout(leaveTimer.current); };
+      const scheduleClose = () => { leaveTimer.current = setTimeout(() => { setOpen(false); setActiveTopKey(null); setActiveSubKey(null); }, 150); };
+
+      useEffect(() => () => cancelClose(), []);
+
+      const activeTopItem = navLinks.find((n) => n.key === activeTopKey) || navLinks.find((n) => n.children?.length > 0);
+      const activeSubItem = activeTopItem?.children?.find((s) => s.key === activeSubKey);
+
+      const handleTopEnter = (item) => {
+        cancelClose();
+        setActiveTopKey(item.key);
+        setActiveSubKey(null);
+      };
+
+      const handleSubEnter = (sub) => {
+        cancelClose();
+        setActiveSubKey(sub.children?.length ? sub.key : null);
+      };
+
+      return (
+        <div
+          ref={wrapRef}
+          className="site-header__nav-dropdown-wrap"
+          onMouseEnter={() => { cancelClose(); setOpen(true); }}
+          onMouseLeave={scheduleClose}
+        >
+          <button
+            className="site-header__nav-link site-header__nav-link--btn"
+            onClick={() => navigate('/categories')}
+          >
+            Categories
+            <span className={`site-header__nav-chevron ${open ? 'site-header__nav-chevron--open' : ''}`}>
+              <ChevronDown />
+            </span>
+          </button>
+
+          {open && (
+            <div className="site-header__cat-dropdown" onMouseEnter={cancelClose} onMouseLeave={scheduleClose}>
+
+              {/* Col 1 — Top-level categories */}
+              <div className="site-header__cat-col site-header__cat-col--main">
+                {navLinks.map((item) => (
+                  <button
+                    key={item.key}
+                    className={`site-header__cat-item ${activeTopItem?.key === item.key ? 'site-header__cat-item--active' : ''}`}
+                    onMouseEnter={() => handleTopEnter(item)}
+                    onClick={() => { setOpen(false); navigate(item.href); }}
+                  >
+                    {item.label}
+                    {item.children?.length > 0 && <span className="site-header__cat-arrow">›</span>}
+                  </button>
+                ))}
+              </div>
+
+              {/* Col 2 — Subcategories of active top item */}
+              {activeTopItem?.children?.length > 0 && (
+                <div className="site-header__cat-col site-header__cat-col--sub">
+                  {activeTopItem.children.map((sub) => (
+                    <Link
+                      key={sub.key}
+                      to={sub.href}
+                      className={`site-header__cat-subitem ${activeSubItem?.key === sub.key ? 'site-header__cat-subitem--active' : ''}`}
+                      onMouseEnter={() => handleSubEnter(sub)}
+                      onClick={() => { setOpen(false); setActiveTopKey(null); setActiveSubKey(null); }}
+                    >
+                      {sub.label}
+                      {sub.children?.length > 0 && <span className="site-header__cat-arrow">›</span>}
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {/* Col 3 — Child categories of active sub item */}
+              {activeSubItem?.children?.length > 0 && (
+                <div className="site-header__cat-col site-header__cat-col--child">
+                  {activeSubItem.children.map((child) => (
+                    <Link
+                      key={child.key}
+                      to={child.href}
+                      className="site-header__cat-subitem"
+                      onClick={() => { setOpen(false); setActiveTopKey(null); setActiveSubKey(null); }}
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+            </div>
+          )}
+        </div>
+      );
+    };
+    
   const [showOffcanvas,    setShowOffcanvas]    = useState(false);
   const [scrolled,         setScrolled]         = useState(false);
   const [searchQuery,      setSearchQuery]      = useState('');
@@ -1146,7 +1250,7 @@ const Header = () => {
                 <div className="d-flex align-items-center gap-4">
                   <nav className="site-header__nav">
                     <Link to="/" className="site-header__nav-link">Home</Link>
-                    <Link to="/categories" className="site-header__nav-link">Categories</Link>
+                    <CategoriesDropdown navLinks={navLinks} />
                     <Link to="/about" className="site-header__nav-link">About</Link>
                   </nav>
 

@@ -78,12 +78,12 @@ const NewArrivalsSlider = ({
           centeredSlides={false}
           breakpoints={{
             768: {
-              slidesPerView: 3.4,
+              slidesPerView: 4,
               centeredSlides: true,
               spaceBetween: 10,
             },
             1280: {
-              slidesPerView: 5.4,
+              slidesPerView: 4,
               centeredSlides: true,
               spaceBetween: 10,
             },
