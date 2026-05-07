@@ -412,7 +412,7 @@
     font-family: 'Jost', 'DM Sans', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
-    color:  var(--brand-gold);
+    color:  var(--brand-black);
     letter-spacing: 0.05em;
     font-style: normal;
     white-space: nowrap;
@@ -426,7 +426,7 @@
     font-size: 0.7rem;
     color:  var(--brand-black);
     letter-spacing: 0.08em;
-    text-transform: uppercase;
+    text-transform: capitalize;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
