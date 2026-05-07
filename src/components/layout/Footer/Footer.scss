@@ -259,50 +259,6 @@
         gap: 0.75rem;
       }
     }
-
-    .site-footer__social-bottom {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-
-      @media (max-width: 767px) { justify-content: center; }
-    }
-
-    .site-footer__social-link-bottom {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 30px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(212, 175, 55, 0.15);
-      border-radius: 0;
-      transition: background var(--transition), border-color var(--transition), transform var(--transition);
-      padding: 2px;
-      text-decoration: none;
-
-      &:hover {
-        background: rgba(212, 175, 55, 0.12);
-        border-color: var(--brand-gold);
-        transform: translateY(-2px);
-      }
-    }
-
-    .site-footer__social-icon-bottom {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .site-footer__copyright {
-      margin: 0;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.25);
-      letter-spacing: 0.04em;
-
-      @media (max-width: 767px) { order: 2; }
-    }
   }
 
   &__brand {
@@ -385,6 +341,50 @@
       }
     }
   }
+  .site-footer__social-bottom {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.75rem;
+    }
+
+    .site-footer__social-link-bottom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 0;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+      padding: 2px;
+      text-decoration: none;
+
+      &:hover {
+        background: rgba(212, 175, 55, 0.12);
+        border-color: var(--brand-gold);
+        transform: translateY(-2px);
+      }
+    }
+
+    .site-footer__social-icon-bottom {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .site-footer__copyright {
+      margin: 0;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.25);
+      letter-spacing: 0.04em;
+
+      @media (max-width: 767px) { order: 2; }
+    }
 }
 
 .visually-hidden {

@@ -32,7 +32,7 @@ const CategoriesPage = () => {
   const heading = (
     <div className="featured-cats__heading">
       <span className="featured-cats__heading-line" />
-      <h2 className="featured-cats__heading-text">Shop by CATEGORIES</h2>
+      <h2 className="featured-cats__heading-text">CATEGORIES</h2>
       <span className="featured-cats__heading-line" />
     </div>
   );

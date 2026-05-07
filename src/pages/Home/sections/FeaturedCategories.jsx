@@ -27,25 +27,16 @@ const CategoryCard = ({ cat }) => {
 
 const FeaturedCategories = ({ categories = [] }) => (
   <section className="featured-cats section-wrapper">
-    <Container fluid="xl">
+    <Container fluid className="featured-cats__container">
       <div className="featured-cats__heading">
         <span className="featured-cats__heading-line" />
         <h2 className="featured-cats__heading-text">Shop by CATEGORIES</h2>
         <span className="featured-cats__heading-line" />
       </div>
 
-      <div className="featured-cats__grid">
-        {Array.from({ length: Math.ceil(categories.length / 4) }, (_, i) =>
-          categories.slice(i * 4, i * 4 + 4)
-        ).map((rowCats, rowIdx) => (
-          <div
-            key={rowIdx}
-            className="featured-cats__row featured-cats__row--tall"
-          >
-            {rowCats.map((cat) => (
-              <CategoryCard key={cat.id} cat={cat} />
-            ))}
-          </div>
+      <div className="featured-cats__row featured-cats__row--tall">
+        {categories.map((cat) => (
+          <CategoryCard key={cat.id} cat={cat} />
         ))}
       </div>
     </Container>

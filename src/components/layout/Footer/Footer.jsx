@@ -145,6 +145,16 @@ const Footer = () => {
                 <li>📧 {contact?.email}</li>
                 <li>📍 {contact?.address}</li>
               </ul>
+              
+              {/* Social */}
+              <div className="site-footer__social-bottom">
+                {SOCIALS.map((s, i) => (
+                  <a key={i} href={s.href} target="_blank" rel="noreferrer"
+                    className="site-footer__social-link-bottom">
+                    <img src={s.icon} alt={s.label} className="site-footer__social-icon-bottom"/>
+                  </a>
+                ))}
+              </div>
             </Col>
 
             {/* Newsletter */}
@@ -230,26 +240,16 @@ const Footer = () => {
         <Container>
           <div className="site-footer__bottom-content">
 
-            {/* Social */}
-            <div className="site-footer__social-bottom">
-              {SOCIALS.map((s, i) => (
-                <a key={i} href={s.href} target="_blank" rel="noreferrer"
-                  className="site-footer__social-link-bottom">
-                  <img src={s.icon} alt={s.label} className="site-footer__social-icon-bottom"/>
-                </a>
-              ))}
-            </div>
-
             {/* Copyright */}
             <p className="site-footer__copyright">
               {settings?.copyright
                 ? settings.copyright
-                : `© ${new Date().getFullYear()} ${settings?.name || 'ELONIS'} | All rights reserved`
+                : `© ${new Date().getFullYear()} ${settings?.name || 'Kloset Korea'} | All rights reserved`
               }{' '}
-              | Powered by{' '}
+              {/* | Powered by{' '}
               <Link to="https://stitbd.com/" className="site-footer__brand" target="_blank" rel="noopener noreferrer">
                 STITBD
-              </Link>
+              </Link> */}
             </p>
 
           </div>
