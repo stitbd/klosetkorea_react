@@ -162,7 +162,7 @@ const Footer = () => {
             </Col>
 
             {/* Newsletter */}
-            <Col xs={12} sm={6} lg={3}>
+            {/* <Col xs={12} sm={6} lg={3}>
               <h6 className="site-footer__heading">Newsletter Signup</h6>
               <p className="site-footer__newsletter-text">
                 Subscribe with email for exclusive offers
@@ -194,21 +194,23 @@ const Footer = () => {
                   </div>
                 )}
               </form>
-            </Col>
+            </Col> */}
 
             {/* Account */}
-            <Col xs={12} sm={6} lg={2}>
-              <h6 className="site-footer__heading">My Account</h6>
+            <Col xs={12} sm={6} lg={3}>
+              <h6 className="site-footer__heading">Quick Links</h6>
               <ul className="site-footer__links list-unstyled">
                 <li><Link to="/register">Create Account</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/gallery">Gallery</Link></li>
+                <li><Link to="/about">About</Link></li>
                 {/* <li><Link to="/wishlist">Wishlist</Link></li> */}
                 {/* <li><Link to="/account/orders">Orders</Link></li> */}
               </ul>
             </Col>
 
             {/* Company — dynamic pages from API (sorted alphabetically) */}
-            <Col xs={12} sm={6} lg={2}>
+            <Col xs={12} sm={6} lg={3}>
               <h6 className="site-footer__heading">Company</h6>
               <ul className="site-footer__links list-unstyled">
                 {/* Dynamic pages from API - already sorted alphabetically */}
@@ -221,7 +223,7 @@ const Footer = () => {
             </Col>
 
             {/* Payments */}
-            <Col xs={12} sm={6} lg={2}>
+            <Col xs={12} sm={6} lg={3}>
               <div className="site-footer__heading-wrapper">
                 <h6 className="site-footer__heading">Secure Payments</h6>
                 <img src={sslCommerzIcon} alt="SSLCommerz" className="site-footer__sslcommerz-logo"/>

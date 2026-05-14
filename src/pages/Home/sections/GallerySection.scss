@@ -1,11 +1,11 @@
 .gallery-section {
   background: var(--brand-off-white, #fafafa);
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 
   @media (min-width: 992px) {
-    padding-top: var(--section-gap, 5rem);
-    padding-bottom: var(--section-gap, 5rem);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }
 
@@ -188,9 +188,9 @@
 .gallery-footer {
   display: flex;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 0;
 
-  @media (min-width: 768px) { padding: 2.5rem 2rem; }
+  @media (min-width: 768px) { padding: 2rem 1rem 0;}
 }
 
 .gallery-btn {

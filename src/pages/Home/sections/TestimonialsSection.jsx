@@ -100,18 +100,15 @@ const TestimonialsSection = ({ title = "What Our Clients Say", subtitle = "Clien
 
       <Container fluid="xl" className="testimonials-container">
 
-        {/* ── Header ── */}
-        <header className="testimonials-header">
-          <div className="testimonials-header__eyebrow">
-            <span className="testimonials-header__rule" />
-            <span className="testimonials-header__subtitle">{subtitle}</span>
-            <span className="testimonials-header__rule" />
+          {/* Header */}
+          <div className="gallery-header">
+            <span className="gallery-header__line" />
+            <div className="gallery-header__text">
+              <span className="gallery-header__subtitle">{subtitle}</span>
+              <h2 className="gallery-header__title">{title}</h2>
+            </div>
+            <span className="gallery-header__line" />
           </div>
-          <h2 className="testimonials-header__title">{title}</h2>
-          <p className="testimonials-header__desc">
-            Trusted by discerning clients who value craftsmanship above all else.
-          </p>
-        </header>
 
         {/* ── Slider ── */}
         <div className="testimonials-track">
@@ -171,24 +168,6 @@ const TestimonialsSection = ({ title = "What Our Clients Say", subtitle = "Clien
           {/* Custom pagination dots */}
           <div className="testimonials-pagination" role="tablist" aria-label="Testimonial slides" />
         </div>
-
-        {/* ── Trust Bar ── */}
-        {/* <div className="testimonials-trust" aria-label="Trust indicators">
-          <div className="testimonials-trust__item">
-            <span className="testimonials-trust__number">2,400+</span>
-            <span className="testimonials-trust__label">Happy Clients</span>
-          </div>
-          <div className="testimonials-trust__divider" aria-hidden="true" />
-          <div className="testimonials-trust__item">
-            <span className="testimonials-trust__number">4.9</span>
-            <span className="testimonials-trust__label">Average Rating</span>
-          </div>
-          <div className="testimonials-trust__divider" aria-hidden="true" />
-          <div className="testimonials-trust__item">
-            <span className="testimonials-trust__number">98%</span>
-            <span className="testimonials-trust__label">Return Rate</span>
-          </div>
-        </div> */}
 
       </Container>
     </section>

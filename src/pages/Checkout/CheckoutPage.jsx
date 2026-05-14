@@ -889,9 +889,9 @@ const CheckoutPage = () => {
                     label={
                       <>
                         I have read and agree to the{' '}
-                        <Link to="/terms-conditions" target="_blank" className="checkout-page__policy-link">Terms &amp; Conditions</Link>,{' '}
-                        <Link to="/returns"          target="_blank" className="checkout-page__policy-link">Refund Policy</Link> and{' '}
-                        <Link to="/privacy-policy"   target="_blank" className="checkout-page__policy-link">Privacy Policy</Link>.
+                        <Link to="/page/terms-and-conditions" target="_blank" className="checkout-page__policy-link">Terms &amp; Conditions</Link>,{' '}
+                        <Link to="/page/refund-and-return-policy"          target="_blank" className="checkout-page__policy-link">Refund Policy</Link> and{' '}
+                        <Link to="/page/privacy-policy"   target="_blank" className="checkout-page__policy-link">Privacy Policy</Link>.
                       </>
                     }
                   />

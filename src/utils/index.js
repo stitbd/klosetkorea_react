@@ -10,7 +10,7 @@ export const PLACEHOLDER_IMG = new URL('../assets/images/placehold.jpg', import.
 export const CALCULATE_API = 'https://admin.klosetbd.com/api/cart/calculate';
 
 export const SITE_NAME = 'Kloset Korea';
-export const PHONE = '+88 01757-769498';
+export const PHONE = '+88 01618 34 18 52';
 
 if (window.location.hostname === "www.admin.klosetbd.com") {
   window.location.replace("https://admin.klosetbd.com" + window.location.pathname);

@@ -1,36 +1,12 @@
+// src/pages/Gallery/GalleryFullPage.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';  // ✅ Added missing import
+import { Link } from 'react-router-dom';
 import { Container, Modal } from 'react-bootstrap';
-import { PLACEHOLDER_IMG } from '../../utils';
+import { PLACEHOLDER_IMG, BASE_IMAGE_URL } from '../../utils'; 
+import { apiGet } from '../../utils/api'; 
 import './GalleryFullPage.scss';
 
-// ── Static Image Imports ──
-import gallery01 from '../../assets/images/gallery/01.jpg';
-import gallery02 from '../../assets/images/gallery/02.jpg';
-import gallery03 from '../../assets/images/gallery/03.jpg';
-import gallery04 from '../../assets/images/gallery/04.jpg';
-import gallery05 from '../../assets/images/gallery/05.jpg';
-import gallery06 from '../../assets/images/gallery/06.jpg';
-import gallery07 from '../../assets/images/gallery/07.jpg';
-import gallery08 from '../../assets/images/gallery/08.jpg';
-import gallery09 from '../../assets/images/gallery/09.jpg';
-import gallery10 from '../../assets/images/gallery/10.jpg';
-import gallery11 from '../../assets/images/gallery/11.jpg';
-import gallery12 from '../../assets/images/gallery/12.jpg';
-import gallery13 from '../../assets/images/gallery/13.jpg';
-
-const GALLERY_IMAGES = [
-  { id: 1, src: gallery01 }, { id: 2, src: gallery02 },
-  { id: 3, src: gallery03 }, { id: 4, src: gallery04 },
-  { id: 5, src: gallery05 }, { id: 6, src: gallery06 },
-  { id: 7, src: gallery07 }, { id: 8, src: gallery08 },
-  { id: 9, src: gallery09 }, { id: 10, src: gallery10 },
-  { id: 11, src: gallery11 }, { id: 12, src: gallery12 },
-  { id: 13, src: gallery13 }, { id: 14, src: gallery01 },
-  { id: 15, src: gallery02 }, { id: 16, src: gallery03 },
-  { id: 17, src: gallery04 }, { id: 18, src: gallery05 },
-  { id: 19, src: gallery06 }, { id: 20, src: gallery07 },
-];
+// ── ALL STATIC IMPORTS AND GALLERY_IMAGES ARRAY REMOVED ──
 
 // ── SVG Icons ──
 const ChevronLeft = () => (
@@ -54,23 +30,35 @@ const ExpandIcon = () => (
   </svg>
 );
 
-const GalleryFullPage = ({ title = "OUR GALLERY", subtitle = "Behind the Craft", images = [] }) => {
+const GalleryFullPage = ({ title = "OUR GALLERY", subtitle = "Behind the Craft" }) => {
+  // ── UPDATED: fetch from API instead of accepting images prop ──
+  const [galleryData, setGalleryData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
-  const galleryData = images.length > 0 
-    ? images.map((img, idx) => ({
-        id: img.id || idx + 1,
-        src: img.url?.startsWith('http') ? img.url : (window[`gallery${img.url}`] || gallery01)
-      }))
-    : GALLERY_IMAGES;
+  // ── ADD: fetch gallery from API ──
+  useEffect(() => {
+    apiGet('/gallery')
+      .then((res) => {
+        const raw = res.data?.data || [];
+        const normalized = raw
+          .slice()
+          .sort((a, b) => Number(a.serial_no) - Number(b.serial_no))
+          .map((img) => ({
+            id: img.id,
+            src: `${BASE_IMAGE_URL}${img.image}`,
+            caption: img.title || '',
+          }));
+        setGalleryData(normalized);
+      })
+      .catch((err) => console.error('Gallery API error:', err))
+      .finally(() => setLoading(false));
+  }, []);
 
-  if (!galleryData?.length) return null;
-  const previewItems = galleryData.slice(0, 20);
-
-  // Keyboard navigation
   useEffect(() => {
     if (!selectedImage) return;
     const handleKeyDown = (e) => {
@@ -86,7 +74,6 @@ const GalleryFullPage = ({ title = "OUR GALLERY", subtitle = "Behind the Craft",
     };
   }, [selectedImage, currentIndex]);
 
-  // Touch swipe
   const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX);
   const handleTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
   const handleTouchEnd = () => {
@@ -112,11 +99,22 @@ const GalleryFullPage = ({ title = "OUR GALLERY", subtitle = "Behind the Craft",
 
   const currentImage = selectedImage ? galleryData[currentIndex] : null;
 
+  if (loading) {
+    return (
+      <main className="pdp">
+        <Container fluid="xl" className="py-3">
+          <div className="text-center py-5">Loading...</div>
+        </Container>
+      </main>
+    );
+  }
+
+  if (!galleryData.length) return null;
+
   return (
     <main className="pdp">
       <Container fluid="xl" className="py-3">
-        
-        {/* Breadcrumb + Back */}
+
         <div className="pdp__topbar d-flex align-items-center justify-content-between mb-3">
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb pdp__breadcrumb mb-0">
@@ -132,23 +130,22 @@ const GalleryFullPage = ({ title = "OUR GALLERY", subtitle = "Behind the Craft",
           </Link>
         </div>
 
-        {/* Gallery Grid - 5×4 */}
         <div className="gallery-grid">
-          {previewItems.map((img, idx) => (
-            <button 
-              key={img.id || idx} 
-              className="gallery-item" 
-              onClick={() => openModal(img, idx)} 
+          {galleryData.map((img, idx) => (
+            <button
+              key={img.id || idx}
+              className="gallery-item"
+              onClick={() => openModal(img, idx)}
               aria-label={`View image ${idx + 1}`}
             >
               <div className="gallery-item__wrap">
-                <img 
-                  src={img.src} 
-                  alt={`Gallery ${idx + 1}`} 
-                  className="gallery-item__img" 
-                  loading="lazy" 
-                  decoding="async" 
-                  onError={(e) => { e.target.src = PLACEHOLDER_IMG; }} 
+                <img
+                  src={img.src}
+                  alt={img.caption || `Gallery ${idx + 1}`}
+                  className="gallery-item__img"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => { e.target.src = PLACEHOLDER_IMG; }}
                 />
                 <div className="gallery-item__overlay">
                   <span className="gallery-item__icon"><ExpandIcon /></span>
@@ -160,18 +157,17 @@ const GalleryFullPage = ({ title = "OUR GALLERY", subtitle = "Behind the Craft",
         </div>
       </Container>
 
-      {/* Lightbox Modal */}
-      <Modal 
-        show={!!selectedImage} 
-        onHide={closeModal} 
-        centered 
+      <Modal
+        show={!!selectedImage}
+        onHide={closeModal}
+        centered
         className="gallery-modal"
         dialogClassName="gallery-modal__dialog"
         backdropClassName="gallery-modal__backdrop"
       >
         <Modal.Body className="p-0">
           {currentImage && (
-            <div 
+            <div
               className="gallery-modal__content"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
@@ -180,45 +176,28 @@ const GalleryFullPage = ({ title = "OUR GALLERY", subtitle = "Behind the Craft",
               <button className="gallery-modal__close" onClick={closeModal} aria-label="Close">
                 <CloseIcon />
               </button>
-              
               {galleryData.length > 1 && (
                 <>
-                  <button 
-                    className="gallery-modal__nav gallery-modal__nav--prev" 
-                    onClick={(e) => { e.stopPropagation(); navigateImage(-1); }} 
-                    aria-label="Previous"
-                  >
+                  <button className="gallery-modal__nav gallery-modal__nav--prev" onClick={(e) => { e.stopPropagation(); navigateImage(-1); }} aria-label="Previous">
                     <ChevronLeft />
                   </button>
-                  <button 
-                    className="gallery-modal__nav gallery-modal__nav--next" 
-                    onClick={(e) => { e.stopPropagation(); navigateImage(1); }} 
-                    aria-label="Next"
-                  >
+                  <button className="gallery-modal__nav gallery-modal__nav--next" onClick={(e) => { e.stopPropagation(); navigateImage(1); }} aria-label="Next">
                     <ChevronRight />
                   </button>
                 </>
               )}
-              
               {galleryData.length > 1 && (
                 <div className="gallery-modal__counter">
                   {currentIndex + 1} <span>/</span> {galleryData.length}
                 </div>
               )}
-              
               <div className="gallery-modal__image-wrap">
-                <img 
-                  src={currentImage.src} 
-                  alt="Preview" 
-                  className="gallery-modal__img" 
-                  loading="eager" 
-                />
+                <img src={currentImage.src} alt={currentImage.caption || 'Preview'} className="gallery-modal__img" loading="eager" />
               </div>
             </div>
           )}
         </Modal.Body>
       </Modal>
-
     </main>
   );
 };

@@ -7,11 +7,12 @@ let homeDataPromise = null;
 
 export const useHomeData = () => {
   const [data, setData] = useState(homeDataCache || {
-    featuredCategories: [],  // ← ADD
+    featuredCategories: [],
     categories: [],
     banners: [],
     new_arrivals: [],
     key_features: [],
+    gallery: [],           // ← ADD
   });
   const [loading, setLoading] = useState(!homeDataCache);
 
@@ -25,17 +26,16 @@ export const useHomeData = () => {
     if (!homeDataPromise) {
       homeDataPromise = apiGet("/home")
         .then((res) => {
-          if (!res.data?.success) {
-            throw new Error("API returned success=false");
-          }
+          if (!res.data?.success) throw new Error("API returned success=false");
 
           const responseData = res.data.data || {};
           const normalized = {
-            featuredCategories: responseData.featuredCategories || [],  // ← ADD
+            featuredCategories: responseData.featuredCategories || [],
             categories: responseData.categories || [],
             banners: responseData.banners || [],
             new_arrivals: responseData.new_arrivals || [],
             key_features: responseData.key_features || [],
+            gallery: responseData.gallery || [],           // ← ADD
           };
 
           homeDataCache = normalized;
@@ -44,22 +44,19 @@ export const useHomeData = () => {
         .catch((err) => {
           console.error("Home API error:", err);
           return {
-            featuredCategories: [],  // ← ADD
+            featuredCategories: [],
             categories: [],
             banners: [],
             new_arrivals: [],
             key_features: [],
+            gallery: [],           // ← ADD
           };
         })
-        .finally(() => {
-          homeDataPromise = null;
-        });
+        .finally(() => { homeDataPromise = null; });
     }
 
     homeDataPromise
-      .then((normalized) => {
-        setData(normalized);
-      })
+      .then((normalized) => setData(normalized))
       .finally(() => setLoading(false));
   }, []);
 

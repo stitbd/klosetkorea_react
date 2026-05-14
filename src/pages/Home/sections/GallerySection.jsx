@@ -1,39 +1,11 @@
+// src/pages/Home/sections/GallerySection.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { PLACEHOLDER_IMG } from '../../../utils';
+import { PLACEHOLDER_IMG, BASE_IMAGE_URL } from '../../../utils';   // ← UPDATED: added BASE_IMAGE_URL
 import './GallerySection.scss';
 
-// ── Static Image Imports (Vite compatible) ──
-import gallery01 from '../../../assets/images/gallery/01.jpg';
-import gallery02 from '../../../assets/images/gallery/02.jpg';
-import gallery03 from '../../../assets/images/gallery/03.jpg';
-import gallery04 from '../../../assets/images/gallery/04.jpg';
-import gallery05 from '../../../assets/images/gallery/05.jpg';
-import gallery06 from '../../../assets/images/gallery/06.jpg';
-import gallery07 from '../../../assets/images/gallery/07.jpg';
-import gallery08 from '../../../assets/images/gallery/08.jpg';
-import gallery09 from '../../../assets/images/gallery/09.jpg';
-import gallery10 from '../../../assets/images/gallery/10.jpg';
-import gallery11 from '../../../assets/images/gallery/11.jpg';
-import gallery12 from '../../../assets/images/gallery/12.jpg';
-import gallery13 from '../../../assets/images/gallery/13.jpg';
-
-const GALLERY_IMAGES = [
-  { id: 1, src: gallery01, caption: '' },
-  { id: 2, src: gallery02, caption: '' },
-  { id: 3, src: gallery03, caption: '' },
-  { id: 4, src: gallery04, caption: '' },
-  { id: 5, src: gallery05, caption: '' },
-  { id: 6, src: gallery06, caption: '' },
-  { id: 7, src: gallery07, caption: '' },
-  { id: 8, src: gallery08, caption: '' },
-  { id: 9, src: gallery09, caption: '' },
-  { id: 10, src: gallery10, caption: '' },
-  { id: 11, src: gallery11, caption: '' },
-  { id: 12, src: gallery12, caption: '' },
-  { id: 13, src: gallery13, caption: '' },
-];
+// ── ALL STATIC IMPORTS AND GALLERY_IMAGES ARRAY REMOVED ──
 
 // ── SVG Icons ──
 const ChevronLeft = () => (
@@ -41,28 +13,25 @@ const ChevronLeft = () => (
     <polyline points="15 18 9 12 15 6" />
   </svg>
 );
-
 const ChevronRight = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="9 18 15 12 9 6" />
   </svg>
 );
-
 const CloseIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
-
 const ExpandIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
   </svg>
 );
 
-const GallerySection = ({ 
-  title = "OUR GALLERY", 
-  subtitle = "Behind the Craft", 
+const GallerySection = ({
+  title = "OUR GALLERY",
+  subtitle = "Behind the Craft",
   images = [],
   viewAllLabel = "View All Images",
   viewAllRoute = "/gallery"
@@ -73,60 +42,44 @@ const GallerySection = ({
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
-  // Use API images if provided, otherwise fallback to local
-  const galleryData = images.length > 0 
-    ? images.map((img, idx) => ({
-        id: img.id || idx + 1,
-        src: img.url?.startsWith('http') ? img.url : (window[`gallery${img.url}`] || gallery01),
-        caption: img.caption
-      }))
-    : GALLERY_IMAGES;
+  // ── UPDATED: sort by serial_no, build src from BASE_IMAGE_URL + image path ──
+  const galleryData = images
+    .slice()
+    .sort((a, b) => Number(a.serial_no) - Number(b.serial_no))
+    .map((img) => ({
+      id: img.id,
+      src: `${BASE_IMAGE_URL}${img.image}`,
+      caption: img.title || '',
+    }));
 
   if (!galleryData?.length) return null;
 
-  // Preview: show first 10 images in grid
   const previewItems = galleryData.slice(0, 10);
   const hasMoreImages = galleryData.length > 10;
 
-  // ── Keyboard Navigation ──
   useEffect(() => {
     if (!selectedImage) return;
-
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        closeModal();
-      } else if (e.key === 'ArrowLeft') {
-        navigateImage(-1);
-      } else if (e.key === 'ArrowRight') {
-        navigateImage(1);
-      }
+      if (e.key === 'Escape') closeModal();
+      else if (e.key === 'ArrowLeft') navigateImage(-1);
+      else if (e.key === 'ArrowRight') navigateImage(1);
     };
-
     document.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
-    
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
   }, [selectedImage, currentIndex]);
 
-  // ── Touch/Swipe Handlers ──
-  const handleTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
+  const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX);
+  const handleTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-    if (distance > 50) navigateImage(1);      // Swipe left → next
-    if (distance < -50) navigateImage(-1);    // Swipe right → prev
-    setTouchStart(null);
-    setTouchEnd(null);
+    if (distance > 50) navigateImage(1);
+    if (distance < -50) navigateImage(-1);
+    setTouchStart(null); setTouchEnd(null);
   };
 
   const handleImageClick = (image, index) => {
@@ -138,9 +91,7 @@ const GallerySection = ({
     navigate(viewAllRoute, { state: { images: galleryData, title, subtitle } });
   };
 
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
+  const closeModal = () => setSelectedImage(null);
 
   const navigateImage = useCallback((direction) => {
     if (!galleryData.length) return;
@@ -158,7 +109,6 @@ const GallerySection = ({
     <>
       <section className="gallery-section section-wrapper">
         <Container fluid="xl" className="py-3">
-          {/* Header */}
           <div className="gallery-header">
             <span className="gallery-header__line" />
             <div className="gallery-header__text">
@@ -168,7 +118,6 @@ const GallerySection = ({
             <span className="gallery-header__line" />
           </div>
 
-          {/* Gallery Grid */}
           <div className="gallery-grid">
             {previewItems.map((img, idx) => (
               <button
@@ -195,10 +144,9 @@ const GallerySection = ({
             ))}
           </div>
 
-          {/* View All Button */}
           {hasMoreImages && (
             <div className="gallery-footer">
-              <button 
+              <button
                 className="gallery-btn gallery-btn--primary"
                 onClick={handleViewAll}
                 aria-label="View all gallery images"
@@ -214,67 +162,42 @@ const GallerySection = ({
         </Container>
       </section>
 
-      {/* Lightbox Modal with Navigation */}
-      <Modal 
-        show={!!selectedImage} 
-        onHide={closeModal} 
-        centered 
+      <Modal
+        show={!!selectedImage}
+        onHide={closeModal}
+        centered
         className="gallery-modal"
         dialogClassName="gallery-modal__dialog"
         backdropClassName="gallery-modal__backdrop"
       >
         <Modal.Body className="p-0">
           {currentImage && (
-            <div 
+            <div
               className="gallery-modal__content"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
-              {/* Close Button */}
-              <button 
-                className="gallery-modal__close" 
-                onClick={closeModal} 
-                aria-label="Close preview"
-              >
+              <button className="gallery-modal__close" onClick={closeModal} aria-label="Close preview">
                 <CloseIcon />
               </button>
-
-              {/* Navigation Arrows */}
               {galleryData.length > 1 && (
                 <>
-                  <button 
-                    className="gallery-modal__nav gallery-modal__nav--prev"
-                    onClick={(e) => { e.stopPropagation(); navigateImage(-1); }}
-                    aria-label="Previous image"
-                  >
+                  <button className="gallery-modal__nav gallery-modal__nav--prev" onClick={(e) => { e.stopPropagation(); navigateImage(-1); }} aria-label="Previous image">
                     <ChevronLeft />
                   </button>
-                  <button 
-                    className="gallery-modal__nav gallery-modal__nav--next"
-                    onClick={(e) => { e.stopPropagation(); navigateImage(1); }}
-                    aria-label="Next image"
-                  >
+                  <button className="gallery-modal__nav gallery-modal__nav--next" onClick={(e) => { e.stopPropagation(); navigateImage(1); }} aria-label="Next image">
                     <ChevronRight />
                   </button>
                 </>
               )}
-
-              {/* Image Counter */}
               {galleryData.length > 1 && (
                 <div className="gallery-modal__counter">
                   {currentIndex + 1} <span>/</span> {galleryData.length}
                 </div>
               )}
-
-              {/* Main Image */}
               <div className="gallery-modal__image-wrap">
-                <img 
-                  src={currentImage.src} 
-                  alt={currentImage.caption || 'Gallery preview'} 
-                  className="gallery-modal__img"
-                  loading="eager"
-                />
+                <img src={currentImage.src} alt={currentImage.caption || 'Gallery preview'} className="gallery-modal__img" loading="eager" />
               </div>
             </div>
           )}
