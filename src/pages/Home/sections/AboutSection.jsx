@@ -15,7 +15,7 @@ const AboutSection = ({
   const displayImage = image ? `${BASE_IMAGE_URL}${image}` : PLACEHOLDER_IMG;
 
   return (
-    <section className="about-section section-wrapper">
+    <section className="about-section">
       <Container fluid="xl">
         <Row className="align-items-center g-0">
 

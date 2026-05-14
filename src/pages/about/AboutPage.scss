@@ -107,10 +107,7 @@
 }
 
 .about-content__text {
-  // font-family: var(--font-body, system-ui, sans-serif);
-  font-size: 1.05rem;
   font-weight: 400;
-  // line-height: 1.8;
   color: var(--text-primary);
   margin: 0 0 1.5rem;
 
@@ -330,7 +327,7 @@
 
 // ── Mission, Promise, Vision Section ────────────────────────────
 .mpv-section {
-  padding-top: 4rem;
+  padding-top: 0rem;
 
 }
 
