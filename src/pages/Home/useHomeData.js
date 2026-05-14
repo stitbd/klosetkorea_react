@@ -12,7 +12,8 @@ export const useHomeData = () => {
     banners: [],
     new_arrivals: [],
     key_features: [],
-    gallery: [],           // ← ADD
+    gallery: [],
+    testimonials: [],        // ← ADD
   });
   const [loading, setLoading] = useState(!homeDataCache);
 
@@ -24,18 +25,23 @@ export const useHomeData = () => {
     }
 
     if (!homeDataPromise) {
-      homeDataPromise = apiGet("/home")
-        .then((res) => {
-          if (!res.data?.success) throw new Error("API returned success=false");
+      // ← CHANGED: fetch both /home and /reviews in parallel
+      homeDataPromise = Promise.all([
+        apiGet("/home"),
+        apiGet("/reviews"),
+      ])
+        .then(([homeRes, reviewsRes]) => {
+          if (!homeRes.data?.success) throw new Error("API returned success=false");
 
-          const responseData = res.data.data || {};
+          const responseData = homeRes.data.data || {};
           const normalized = {
             featuredCategories: responseData.featuredCategories || [],
             categories: responseData.categories || [],
             banners: responseData.banners || [],
             new_arrivals: responseData.new_arrivals || [],
             key_features: responseData.key_features || [],
-            gallery: responseData.gallery || [],           // ← ADD
+            gallery: responseData.gallery || [],
+            testimonials: reviewsRes.data?.data || [],   // ← ADD: from /reviews
           };
 
           homeDataCache = normalized;
@@ -49,7 +55,8 @@ export const useHomeData = () => {
             banners: [],
             new_arrivals: [],
             key_features: [],
-            gallery: [],           // ← ADD
+            gallery: [],
+            testimonials: [],   // ← ADD
           };
         })
         .finally(() => { homeDataPromise = null; });

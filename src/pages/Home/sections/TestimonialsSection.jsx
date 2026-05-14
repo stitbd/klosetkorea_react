@@ -3,87 +3,26 @@ import React, { useRef, useCallback, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Pagination } from 'swiper/modules';
+import { PLACEHOLDER_IMG, BASE_IMAGE_URL } from '../../../utils';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './TestimonialsSection.scss';
 
-// ── Static Avatar Imports (Vite compatible) ──
-import avatar01 from '../../../assets/images/testimonials/01.jpg';
-import avatar02 from '../../../assets/images/testimonials/02.jpg';
-import avatar03 from '../../../assets/images/testimonials/03.jpg';
-import avatar04 from '../../../assets/images/testimonials/04.jpg';
-import avatar05 from '../../../assets/images/testimonials/05.jpg';
-import avatar06 from '../../../assets/images/testimonials/06.jpg';
-
-const TESTIMONIALS = [
-  {
-    id: 1,
-    name: "Sarah Ahmed",
-    role: "Fashion Blogger",
-    company: "Vogue Arabia",
-    text: "The attention to detail and premium quality exceeded my expectations. Truly luxury redefined for the modern connoisseur.",
-    avatar: avatar01,
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    role: "Style Curator",
-    company: "Harper's Bazaar",
-    text: "Every piece tells a story. The craftsmanship is unparalleled and the service is exceptional — exactly what luxury should feel like.",
-    avatar: avatar02,
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "Fatima Rahman",
-    role: "Luxury Collector",
-    company: "Independent",
-    text: "From selection to delivery, everything was seamless. This is what a premium experience truly feels like at every touchpoint.",
-    avatar: avatar03,
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: "Emma Wilson",
-    role: "Interior Designer",
-    company: "Studio Wilson",
-    text: "Absolutely stunning collection. The quality speaks for itself and the customer service is top-notch — I keep coming back.",
-    avatar: avatar04,
-    rating: 5,
-  },
-  {
-    id: 5,
-    name: "David Park",
-    role: "Luxury Enthusiast",
-    company: "Park & Associates",
-    text: "Every purchase feels like an investment in timeless elegance. The curation is impeccable. Highly recommended without reservation.",
-    avatar: avatar05,
-    rating: 5,
-  },
-  {
-    id: 6,
-    name: "Layla Hassan",
-    role: "Fashion Editor",
-    company: "Elle Middle East",
-    text: "The perfect blend of tradition and modernity. Each piece is a work of art that deserves a permanent place in one's wardrobe.",
-    avatar: avatar06,
-    rating: 5,
-  },
-];
-
-const TestimonialsSection = ({ title = "What Our Clients Say", subtitle = "Client Testimonials", testimonials = [] }) => {
+const TestimonialsSection = ({
+  title = "What Our Clients Say",
+  subtitle = "Client Testimonials",
+  testimonials = [],
+}) => {
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const testData = testimonials.length > 0 ? testimonials : TESTIMONIALS;
 
-  if (!testData?.length) return null;
+  if (!testimonials?.length) return null;
 
   const MIN_LOOP_SLIDES = 7;
-  let loopData = testData;
+  let loopData = testimonials;
   while (loopData.length < MIN_LOOP_SLIDES) {
-    loopData = [...loopData, ...testData];
+    loopData = [...loopData, ...testimonials];
   }
 
   const handlePrev = useCallback(() => swiperRef.current?.swiper?.slidePrev(), []);
@@ -100,27 +39,28 @@ const TestimonialsSection = ({ title = "What Our Clients Say", subtitle = "Clien
 
       <Container fluid="xl" className="testimonials-container">
 
-          {/* Header */}
-          <div className="gallery-header">
-            <span className="gallery-header__line" />
-            <div className="gallery-header__text">
-              <span className="gallery-header__subtitle">{subtitle}</span>
-              <h2 className="gallery-header__title">{title}</h2>
-            </div>
-            <span className="gallery-header__line" />
+        {/* Header */}
+        <div className="gallery-header">
+          <span className="gallery-header__line" />
+          <div className="gallery-header__text">
+            <span className="gallery-header__subtitle">{subtitle}</span>
+            <h2 className="gallery-header__title">{title}</h2>
           </div>
+          <span className="gallery-header__line" />
+        </div>
 
-        {/* ── Slider ── */}
+        {/* Slider */}
         <div className="testimonials-track">
 
-          {/* Navigation */}
+          {/* Navigation Buttons */}
           <button
             className="testimonials-nav testimonials-nav--prev"
             onClick={handlePrev}
             aria-label="Previous testimonial"
             type="button"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
@@ -131,7 +71,8 @@ const TestimonialsSection = ({ title = "What Our Clients Say", subtitle = "Clien
             aria-label="Next testimonial"
             type="button"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
@@ -165,7 +106,7 @@ const TestimonialsSection = ({ title = "What Our Clients Say", subtitle = "Clien
             ))}
           </Swiper>
 
-          {/* Custom pagination dots */}
+          {/* Pagination dots */}
           <div className="testimonials-pagination" role="tablist" aria-label="Testimonial slides" />
         </div>
 
@@ -201,7 +142,10 @@ const QuoteIcon = () => (
 );
 
 const TestimonialCard = ({ testimonial, isActive }) => {
-  const { name, role, company, text, avatar, rating = 5 } = testimonial;
+  const { name, designation, review, image, rating = 5 } = testimonial;
+
+  const displayAvatar = image ? `${BASE_IMAGE_URL}${image}` : null;
+  const displayRating = Number(rating) || 5;
 
   return (
     <article className={`testimonial-card ${isActive ? 'testimonial-card--active' : ''}`}>
@@ -211,11 +155,11 @@ const TestimonialCard = ({ testimonial, isActive }) => {
         <QuoteIcon />
 
         {/* Stars */}
-        <StarRating rating={rating} />
+        <StarRating rating={displayRating} />
 
-        {/* Text */}
+        {/* Review text */}
         <blockquote className="testimonial-card__text">
-          {text}
+          {review}
         </blockquote>
 
         {/* Divider */}
@@ -224,25 +168,29 @@ const TestimonialCard = ({ testimonial, isActive }) => {
         {/* Author */}
         <footer className="testimonial-card__author">
           <div className="testimonial-card__avatar-wrap">
-            {avatar ? (
+            {displayAvatar ? (
               <img
-                src={avatar}
+                src={displayAvatar}
                 alt={name}
                 className="testimonial-card__avatar"
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextSibling.style.display = 'flex';
+                }}
               />
-            ) : (
-              <div className="testimonial-card__avatar-fallback" aria-hidden="true">
-                {name.charAt(0)}
-              </div>
-            )}
+            ) : null}
+            <div
+              className="testimonial-card__avatar-fallback"
+              aria-hidden="true"
+              style={{ display: displayAvatar ? 'none' : 'flex' }}
+            >
+              {name?.charAt(0)?.toUpperCase()}
+            </div>
             <div className="testimonial-card__avatar-ring" aria-hidden="true" />
           </div>
           <div className="testimonial-card__meta">
             <cite className="testimonial-card__name">{name}</cite>
-            <span className="testimonial-card__role">
-              {role}{company ? ` · ${company}` : ''}
-            </span>
+            <span className="testimonial-card__role">{designation}</span>
           </div>
         </footer>
 

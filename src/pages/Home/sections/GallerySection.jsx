@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { PLACEHOLDER_IMG, BASE_IMAGE_URL } from '../../../utils';   // ← UPDATED: added BASE_IMAGE_URL
+import { PLACEHOLDER_IMG, BASE_IMAGE_URL } from '../../../utils';
 import './GallerySection.scss';
 
 // ── ALL STATIC IMPORTS AND GALLERY_IMAGES ARRAY REMOVED ──
