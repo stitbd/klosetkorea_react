@@ -35,13 +35,15 @@ export const useHomeData = () => {
 
           const responseData = homeRes.data.data || {};
           const normalized = {
+            about: responseData.about || {},           // ← ADD
+            statistics: responseData.statistics || [], // ← ADD
             featuredCategories: responseData.featuredCategories || [],
             categories: responseData.categories || [],
             banners: responseData.banners || [],
             new_arrivals: responseData.new_arrivals || [],
             key_features: responseData.key_features || [],
             gallery: responseData.gallery || [],
-            testimonials: reviewsRes.data?.data || [],   // ← ADD: from /reviews
+            testimonials: reviewsRes.data?.data || [],
           };
 
           homeDataCache = normalized;
@@ -50,6 +52,8 @@ export const useHomeData = () => {
         .catch((err) => {
           console.error("Home API error:", err);
           return {
+            about: {},        // ← ADD
+            statistics: [],   // ← ADD
             featuredCategories: [],
             categories: [],
             banners: [],

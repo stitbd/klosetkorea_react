@@ -32,16 +32,12 @@ const HomePage = () => {
 
       {/* 2. About Section */}
       <RevealSection delay={0.04}>
-        <AboutSection 
-          heading="Crafting Luxury Since 2010"
-          description="We believe true luxury lies in the details. Every piece we create is a testament to timeless craftsmanship, ethical sourcing, and an unwavering commitment to quality."
-          stats={[
-            { value: "15+", label: "Years of Excellence" },
-            { value: "50K+", label: "Happy Clients" },
-            { value: "100%", label: "Handcrafted" },
-          ]}
-          ctaText="Discover Our Journey"
-          ctaLink="/about"
+        <AboutSection
+          subtitle={data?.about?.title}
+          heading={data?.about?.sub_title}
+          description={data?.about?.description}
+          image={data?.about?.image}
+          stats={data?.statistics || []}
         />
       </RevealSection>
 
