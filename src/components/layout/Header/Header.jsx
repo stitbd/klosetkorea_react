@@ -108,9 +108,12 @@ const buildNavLinks = (categories) =>
     href: `/categories/${cat.slug}`,
     slug: cat.slug,
     children: uniqueBy(
-      [...(cat.subcategories || [])].sort((a, b) =>
-        (a.subcategoryName || '').localeCompare(b.subcategoryName || '', 'en', { sensitivity: 'base' })
-      ),
+      [...(cat.subcategories || [])].sort((a, b) => {
+        const aSerial = a.serial_no != null ? Number(a.serial_no) : Infinity;
+        const bSerial = b.serial_no != null ? Number(b.serial_no) : Infinity;
+        if (aSerial !== bSerial) return aSerial - bSerial;
+        return (a.subcategoryName || '').localeCompare(b.subcategoryName || '', 'en', { sensitivity: 'base' });
+      }),
       (sub, subIndex) => `${cat.slug}-${sub.id ?? sub.slug ?? subIndex}`
     ).map((sub, subIndex) => ({
       key: `sub-${cat.id ?? cat.slug ?? catIndex}-${sub.id ?? sub.slug ?? subIndex}`,
@@ -1042,7 +1045,7 @@ const Header = () => {
                     onClick={() => { setOpen(false); navigate(item.href); }}
                   >
                     {item.label}
-                    {item.children?.length > 0 && <span className="site-header__cat-arrow">›</span>}
+                    {item.children?.length > 0 && <span className="site-header__cat-arrow">‹</span>}
                   </button>
                 ))}
               </div>
@@ -1059,7 +1062,7 @@ const Header = () => {
                       onClick={() => { setOpen(false); setActiveTopKey(null); setActiveSubKey(null); }}
                     >
                       {sub.label}
-                      {sub.children?.length > 0 && <span className="site-header__cat-arrow">›</span>}
+                      {sub.children?.length > 0 && <span className="site-header__cat-arrow">‹</span>}
                     </Link>
                   ))}
                 </div>

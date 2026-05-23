@@ -1314,15 +1314,12 @@ body {
 
 .site-header__cat-dropdown {
   position: absolute;
-  top: calc(100% + 14px);
-  // right: 0;       // ← anchored to right edge of trigger
-  left: 0;     // ← never left-anchored
+  top: 100%;
+  right: 0;
   z-index: 10000;
-  background: var(--brand-white);
-  border-top: 2px solid var(--brand-gold);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.13);
+  background: transparent;
   display: flex;
-  flex-direction: row;  // ← cols grow left→right
+  flex-direction: row;
   min-width: 200px;
   animation: dropDown 0.18s ease both;
 }
@@ -1335,9 +1332,11 @@ body {
   &--main {
     width: 200px;
     flex-shrink: 0;
-    background: var(--brand-off-white);
-    border-right: 1px solid #ebebeb;
+    background: var(--brand-white);
+    border-top: 2px solid var(--brand-gold);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.13);
     padding: 0.5rem 0;
+    order: 3;
   }
 
   // ── Col 2: subcategories ────────────────────────────────────────
@@ -1345,16 +1344,21 @@ body {
     width: 200px;
     flex-shrink: 0;
     background: var(--brand-white);
-    border-right: 1px solid #ebebeb;
+    border-top: 2px solid var(--brand-gold);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.13);
     padding: 0.5rem 0;
+    order: 2;
   }
 
   // ── Col 3: child categories ─────────────────────────────────────
   &--child {
     width: 200px;
     flex-shrink: 0;
-    background: var(--brand-cream);
+    background: var(--brand-white);
+    border-top: 2px solid var(--brand-gold);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.13);
     padding: 0.5rem 0;
+    order: 1;
   }
 }
 
