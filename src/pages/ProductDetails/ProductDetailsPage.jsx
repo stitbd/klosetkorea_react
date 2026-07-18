@@ -1269,12 +1269,12 @@ const ProductDetailsPage = () => {
                         </div>
                       </div>
                     )}
-                    {totalStock > 0 && (
+                    {/* {totalStock > 0 && (
                       <div className="pdp__info-row">
                         <span className="pdp__info-label">Total Stock:</span>
                         <span className="pdp__info-value pdp__info-value--stock">{totalStock} items</span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

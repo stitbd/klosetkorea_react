@@ -17,6 +17,14 @@ import liIcon from '../../../assets/icons/linkedin.png';
 import ttIcon from '../../../assets/icons/tiktok.png';
 import ytIcon from '../../../assets/icons/youtube.png';
 
+const SOCIAL_ICON_MAP = {
+  facebook:  fbIcon,
+  instagram: igIcon,
+  linkedin:  liIcon,
+  tiktok:    ttIcon,
+  youtube:   ytIcon,
+};
+
 // ─── Icons ───────────────────────────────────────────────────────
 const HomeIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -728,7 +736,7 @@ const MobileBottomNav = ({ showMobileLogin, onMobileLoginToggle, onMobileLoginCl
 
   const links = [
     { icon: <HomeIcon />,     label: 'Home',     href: '/',         onClick: () => { navigate('/');         onMobileLoginClose(); } },
-    { icon: <CategoryIcon />, label: 'Category', href: '/category', onClick: () => { navigate('/category'); onMobileLoginClose(); } },
+    { icon: <CategoryIcon />, label: 'Category', href: '/categories', onClick: () => { navigate('/categories'); onMobileLoginClose(); } },
     { icon: <CartIcon />,     label: 'Cart',     href: '/cart',     badge: totalItems, onClick: () => onMobileLoginClose() },
   ];
 
@@ -933,7 +941,7 @@ const useAnnouncements = () => {
 };
 
 // ─── Announcement Top Bar ─────────────────────────────────────────
-const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
+const AnnouncementBar = ({ contact = {}, socials = [] }) => {
   const PhoneIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
@@ -949,9 +957,11 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
 
   const phone = contact?.hotline || contact?.phone || '+88 0177763 5373';
   const address = contact?.address || '83 Bir Uttem C R Dotto Road. Haiterpool Dhaka-1205, Bangladesh';
-  const fbLink = socialLinks?.facebook || '#';
-  const igLink = socialLinks?.instagram || '#';
-  const liLink = socialLinks?.linkedin || '#';
+
+  const SOCIALS = socials.map((s) => {
+    const key = s.title?.toLowerCase();
+    return { href: s.href, label: s.title, icon: SOCIAL_ICON_MAP[key] || fbIcon };
+  });
 
   return (
     <div className="announcement-bar">
@@ -968,15 +978,11 @@ const AnnouncementBar = ({ contact = {}, socialLinks = {} }) => {
             </span>
           </div>
           <div className="announcement-bar__right">
-            <a href={fbLink} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label="Facebook">
-              <img src={fbIcon} alt="Facebook" className="announcement-bar__social-icon" />
-            </a>
-            <a href={igLink} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label="Instagram">
-              <img src={igIcon} alt="Instagram" className="announcement-bar__social-icon" />
-            </a>
-            <a href={liLink} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label="LinkedIn">
-              <img src={liIcon} alt="LinkedIn" className="announcement-bar__social-icon" />
-            </a>
+            {SOCIALS.map((s, i) => (
+              <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="announcement-bar__social" aria-label={s.label}>
+                <img src={s.icon} alt={s.label} className="announcement-bar__social-icon" />
+              </a>
+            ))}
           </div>
         </div>
       </Container>
@@ -1104,7 +1110,7 @@ const Header = () => {
   const totalItems      = useCartStore((s) => s.items.reduce((a, i) => a + i.quantity, 0));
 
   const { navLinks } = useNavLinks();
-  const { settings, contact } = useGeneralSettings();
+  const { settings, contact, socials } = useGeneralSettings();
 
   // const logoSrc  = settings?.dark_logo
   //   ? `${BASE_IMAGE_URL}${settings.dark_logo}`
@@ -1213,7 +1219,7 @@ const Header = () => {
     <>
       <AnnouncementBar 
         contact={contact} 
-        socialLinks={settings?.social_links || {}}
+        socials={socials || []}
       />
 
       {showMobileSearch && <MobileSearchOverlay onClose={() => setShowMobileSearch(false)} />}

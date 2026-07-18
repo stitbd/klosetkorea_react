@@ -30,19 +30,19 @@ const CategoriesPage = () => {
   const { categories, loading, error } = useCategories();
 
   const heading = (
-    <div className="featured-cats__heading">
-      <span className="featured-cats__heading-line" />
-      <h2 className="featured-cats__heading-text">CATEGORIES</h2>
-      <span className="featured-cats__heading-line" />
+    <div className="categories-grid__heading">
+      <span className="categories-grid__heading-line" />
+      <h2 className="categories-grid__heading-text">CATEGORIES</h2>
+      <span className="categories-grid__heading-line" />
     </div>
   );
 
   if (loading) return (
-    <section className="featured-cats section-wrapper">
+    <section className="categories-grid section-wrapper">
       <Container fluid="xl" className="featured-cats__container">
         {heading}
-        <div className="featured-cats__grid">
-          <div className="featured-cats__row featured-cats__row--tall">
+        <div className="categories-grid__grid">
+          <div className="categories-grid__row categories-grid__row--tall">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="cat-card cat-card--loading">
                 <div className="cat-card__img-wrap" />
@@ -56,7 +56,7 @@ const CategoriesPage = () => {
   );
 
   if (error) return (
-    <section className="featured-cats section-wrapper">
+    <section className="categories-grid section-wrapper">
       <Container fluid="xl" className="featured-cats__container">
         {heading}
         <p className="text-center text-danger">Error: {error}</p>
@@ -65,11 +65,11 @@ const CategoriesPage = () => {
   );
 
   return (
-    <section className="featured-cats section-wrapper">
+    <section className="categories-grid section-wrapper">
       <Container fluid="xl" className="featured-cats__container">
         {heading}
-        <div className="featured-cats__grid">
-          <div className="featured-cats__row featured-cats__row--tall">
+        <div className="categories-grid__grid">
+          <div className="categories-grid__row categories-grid__row--tall">
             {categories.map((cat) => (
               <CategoryCard key={cat.id} cat={cat} />
             ))}
